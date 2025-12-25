@@ -1,2 +1,244 @@
-/node-modules
+# .gitignore for Django Backend with Clerk Integration
 
+# ==============================================================================
+# CRITICAL - NEVER COMMIT THESE!
+# ==============================================================================
+
+# Environment variables (contains secrets!)
+.env
+.env.local
+.env.production
+.env.*.local
+*.env
+
+# ==============================================================================
+# Python
+# ==============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache/
+.hypothesis/
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+myvenv/
+.venv/
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# ==============================================================================
+# Django
+# ==============================================================================
+
+# Database
+*.sqlite3
+*.sqlite3-journal
+db.sqlite3
+db.sqlite3-journal
+
+# Django stuff
+*.log
+local_settings.py
+
+# Static files
+/static/
+/staticfiles/
+/static_root/
+
+# Media files (if you don't want to commit uploaded files)
+/media/
+/mediafiles/
+
+# Django migrations (optional - some teams commit these, some don't)
+# Uncomment the line below if you DON'T want to commit migrations
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# ==============================================================================
+# IDEs and Editors
+# ==============================================================================
+
+# VSCode
+.vscode/
+.history/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ==============================================================================
+# Operating System
+# ==============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ==============================================================================
+# Project Specific
+# ==============================================================================
+
+# Logs
+*.log
+logs/
+debug.log
+error.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Documentation builds
+docs/_build/
+site/
+
+# ==============================================================================
+# Security & Credentials
+# ==============================================================================
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.cert
+
+# SSH keys
+id_rsa
+id_rsa.pub
+*.ppk
+
+# API keys and secrets
+secrets.json
+credentials.json
+service-account.json
+
+# ==============================================================================
+# Database Backups
+# ==============================================================================
+
+*.sql
+*.dump
+*.backup
+
+# ==============================================================================
+# Misc
+# ==============================================================================
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Node (if you have any frontend tools in the same repo)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
