@@ -139,7 +139,7 @@ nav img:hover {
 .scrolling-text {
   display: inline-flex;
   white-space: nowrap;
-  animation: scroll-left 60s linear infinite;
+  animation: scroll-left 90s linear infinite;
 }
 
 .scroll-item {

@@ -147,3 +147,74 @@
     max-width: 300px;
   }
 }
+
+
+/* ============================ */
+/* SOCIAL ICONS STYLING         */
+/* ============================ */
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  border-radius: 50%;
+  color: #ccc;
+  background-color: #111;
+  transition: all 0.3s ease;
+  border: 1px solid #333;
+}
+
+.social-icons a:hover {
+  transform: translateY(-4px) scale(1.1);
+  color: white;
+}
+
+/* Specific platform colors on hover */
+.social-icons a.facebook:hover {
+  background-color: #1877f2;
+}
+
+.social-icons a.instagram:hover {
+  background: linear-gradient(45deg, #fd1d1d, #fcb045, #833ab4);
+}
+
+.social-icons a.whatsapp:hover {
+  background-color: #25d366;
+}
+
+.social-icons a.linkedin:hover {
+  background-color: #0077b5;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .social-icons {
+    justify-content: center;
+  }
+  .social-icons a {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-icons {
+    gap: 10px;
+  }
+  .social-icons a {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import {
-  FaCheckCircle,
   FaEnvelope,
-  FaExclamationCircle,
   FaGlobe,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-} from "react-icons/fa";
+  FaLocationDot,
+  FaPhone,
+} from "react-icons/fa6";
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +14,10 @@ const Contact = () => {
     email: "",
     subject: "",
     message: "",
-    smsConsent: false, // ✅ added correctly
+    smsConsent: false,
   });
+
+  const [showFullConsent, setShowFullConsent] = useState(false);
 
   const [status, setStatus] = useState({
     type: "",
@@ -60,7 +61,6 @@ const Contact = () => {
     try {
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-      // ❌ do NOT send smsConsent to backend
       const { smsConsent, ...payload } = formData;
 
       const response = await fetch(`${API_URL}/api/contact/`, {
@@ -83,7 +83,7 @@ const Contact = () => {
           email: "",
           subject: "",
           message: "",
-          smsConsent: false, // ✅ reset correctly
+          smsConsent: false,
         });
 
         setTimeout(() => setShowSuccessAnimation(false), 3000);
@@ -118,7 +118,7 @@ const Contact = () => {
       )}
 
       <div className="contact-wrapper">
-        {/* LEFT SECTION */}
+        {/* LEFT */}
         <div className="contact-left">
           <h2>
             Contact <span>Us</span>
@@ -138,7 +138,7 @@ const Contact = () => {
             </div>
 
             <div className="contact-card">
-              <FaPhoneAlt className="contact-icon" />
+              <FaPhone className="contact-icon" />
               <h4>Phone</h4>
               <p>+1 (888) 266-0007</p>
             </div>
@@ -150,14 +150,14 @@ const Contact = () => {
             </div>
 
             <div className="contact-card">
-              <FaMapMarkerAlt className="contact-icon" />
+              <FaLocationDot className="contact-icon" />
               <h4>Address</h4>
               <p>550 Congressional Blvd, Suite 350, Carmel, IN 46032</p>
             </div>
           </div>
         </div>
 
-        {/* RIGHT SECTION */}
+        {/* RIGHT */}
         <div className="contact-right">
           <div className="contact-form">
             <h3>Get in Touch with Nexxa Auto Parts</h3>
@@ -211,38 +211,64 @@ const Contact = () => {
 
             {/* SMS CONSENT */}
             <div className="sms-consent">
-              <label>
+              <label className="sms-consent-box">
                 <input
                   type="checkbox"
                   name="smsConsent"
                   checked={formData.smsConsent}
                   onChange={handleChange}
                 />
-                <span>
-                  By checking this box, you agree to receive customer care,
-                  account notifications and delivery notification SMS messages
-                  from <strong>NEXXA AUTO PARTS</strong>. You may reply{" "}
-                  <strong>STOP</strong> to opt-out at any time. Reply{" "}
-                  <strong>HELP</strong> to (463) 223-5914. Messages and data rates
-                  may apply. Learn more on our{" "}
-                  <a href="/privacy-policy" target="_blank">
-                    Privacy Policy
-                  </a>{" "}
-                  and{" "}
-                  <a href="/terms-and-conditions" target="_blank">
-                    Terms & Conditions
-                  </a>.
-                </span>
+
+                <div className="consent-content">
+                  <p className={`consent-text ${showFullConsent ? "expanded" : ""}`}>
+                    By checking this box, you agree to receive customer care,
+                    account notifications and delivery notification SMS messages
+                    from <strong>NEXXA AUTO PARTS</strong>. You may reply
+                    <strong> STOP </strong> to opt-out at any time. Reply
+                    <strong> HELP </strong> to (463) 223-5914. Messages and data
+                    rates may apply. Learn more on our
+                    <a href="/privacy-policy" target="_blank">
+                      {" "}Privacy Policy{" "}
+                    </a>
+                    and
+                    <a href="/terms-and-conditions" target="_blank">
+                      {" "}Terms & Conditions{" "}
+                    </a>
+                    .
+                  </p>
+
+                  <button
+                    type="button"
+                    className="read-more-btn"
+                    onClick={() => setShowFullConsent(!showFullConsent)}
+                  >
+                    {showFullConsent ? "Read Less" : "Read More"}
+                  </button>
+                </div>
               </label>
             </div>
 
-            <button onClick={handleSubmit} disabled={isSubmitting}>
+            <button onClick={handleSubmit} disabled={isSubmitting} className="submit-btn">
               {isSubmitting ? "Sending..." : "Submit"}
             </button>
           </div>
         </div>
       </div>
+<div className="map-section">
+
+  <div className="map-container">
+    <iframe
+      title="Nexxa Auto Parts Location"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2997.058808720441!2d-86.154107!3d39.964601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886b7313ef4748df%3A0x8a9c258d13d2aafd!2s550%20Congressional%20Blvd%20Suite%20350%2C%20Carmel%2C%20IN%2046032%2C%20USA!5e0!3m2!1sen!2sin!4v1712921400000!5m2!1sen!2sin"
+      allowFullScreen=""
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</div>
+
     </section>
+    
   );
 };
 

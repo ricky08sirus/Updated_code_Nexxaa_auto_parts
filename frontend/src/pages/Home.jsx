@@ -16,17 +16,53 @@ import part9 from "../assets/images/Engines.webp";
 import part10 from "../assets/images/Rims.webp";
 
 // Brand Images
-import brand1 from "../assets/images/brands/Group 50.png";
-import brand2 from "../assets/images/brands/Group 52.png";
-import brand3 from "../assets/images/brands/Group 53.png";
-import brand4 from "../assets/images/brands/Group 54.png";
-import brand5 from "../assets/images/brands/Group 55.png";
-import brand6 from "../assets/images/brands/Group 56.png";
-import brand7 from "../assets/images/brands/Group 57.png";
-import brand8 from "../assets/images/brands/Group 58.png";
-import brand9 from "../assets/images/brands/Group 59.png";
-import brand10 from "../assets/images/brands/Group 60.png";
-import brand11 from "../assets/images/brands/Group 61.png";
+
+import brand1 from "../assets/images/brands/accura.webp";
+import brand2 from "../assets/images/brands/american moters.webp";
+import brand3 from "../assets/images/brands/audi.webp";
+import brand4 from "../assets/images/brands/benz.webp";
+import brand5 from "../assets/images/brands/bmw.webp";
+import brand6 from "../assets/images/brands/buik.webp";
+import brand7 from "../assets/images/brands/cadillac.webp";
+import brand8 from "../assets/images/brands/chevrolet.webp";
+import brand9 from "../assets/images/brands/chrysler.webp";
+import brand10 from "../assets/images/brands/daewoo.webp";
+import brand11 from "../assets/images/brands/daihatsu.webp";
+
+
+import brand12 from "../assets/images/brands/dodge.webp";
+import brand13 from "../assets/images/brands/eagle.webp";
+import brand14 from "../assets/images/brands/ford.webp";
+import brand15 from "../assets/images/brands/gmc.webp";
+import brand16 from "../assets/images/brands/honda.webp";
+import brand17 from "../assets/images/brands/hyundai.webp";
+import brand18 from "../assets/images/brands/isuzu.webp";
+import brand19 from "../assets/images/brands/jaguar.webp";
+import brand20 from "../assets/images/brands/kia.webp";
+import brand21 from "../assets/images/brands/lamborghini.webp";
+import brand22 from "../assets/images/brands/lexus.webp";
+import brand23 from "../assets/images/brands/lincoln.webp";
+import brand24 from "../assets/images/brands/maybach.webp";
+import brand25 from "../assets/images/brands/mazda.webp";
+import brand26 from "../assets/images/brands/mercury.webp";
+import brand27 from "../assets/images/brands/minicooper.webp";
+import brand28 from "../assets/images/brands/mitsubishi.webp";
+import brand29 from "../assets/images/brands/nissan.webp";
+import brand30 from "../assets/images/brands/oldmobile.webp";
+import brand31 from "../assets/images/brands/plymouth.webp";
+import brand32 from "../assets/images/brands/pontiac.webp";
+import brand33 from "../assets/images/brands/porsche.webp";
+import brand34 from "../assets/images/brands/range rover.webp";
+import brand35 from "../assets/images/brands/saab.webp";
+import brand36 from "../assets/images/brands/saturn.webp";
+import brand37 from "../assets/images/brands/scion.webp";
+import brand38 from "../assets/images/brands/subaru.webp";
+import brand39 from "../assets/images/brands/suzuki.webp";
+import brand40 from "../assets/images/brands/tesla.webp";
+import brand41 from "../assets/images/brands/toyota.webp";
+import brand42 from "../assets/images/brands/volvo.webp";
+import brand43 from "../assets/images/brands/datsun.webp";
+
 
 
 // why nexxa images
@@ -70,11 +106,50 @@ const brands = [
   brand9,
   brand10,
   brand11,
+  brand12,
+  brand13,
+  brand14,
+  brand15,
+  brand16,
+  brand17,
+  brand18,
+  brand19,
+  brand20,
+  brand21,
+  brand22,
+  brand23,
+  brand24,
+  brand25,
+  brand26,
+  brand27,
+  brand28,
+  brand29,
+  brand30,
+  brand31,
+  brand32,
+  brand33,
+  brand34,
+  brand35,
+  brand36,
+  brand37,
+  brand38,
+  brand39,
+  brand40,
+  brand41,
+  brand42,
+  brand43,
+  
 ];
+
 
 const Home = () => {
   const navigate = useNavigate();
   const scrollRef = React.useRef(null);
+
+  useEffect(() => {
+    const preloadBanner = new Image();
+    preloadBanner.src = bannerImage;
+  }, []);
 
   // Form selections state
   const [selectedYear, setSelectedYear] = useState("");
@@ -175,11 +250,11 @@ const Home = () => {
   const handleManufacturerChange = (e) => {
     const value = e.target.value;
     setSelectedManufacturer(value);
-    setSelectedModel(""); // Reset model when manufacturer changes
+    setSelectedModel(""); 
   };
 
   const handleSearch = () => {
-    // Validation
+
     if (!selectedYear) {
       alert("Please select a year");
       return;
@@ -452,47 +527,73 @@ const Home = () => {
       </section>
 
       {/* Customer Reviews */}
-      <section className="customer-reviews">
-        <h2>
-          What Our <span>Customers Say</span>
-        </h2>
-        <div className="reviews-slider">
-          <div className="reviews-track">
-            {[
-              {
-                name: "Rahul Menon",
-                review: "Quality parts and fast delivery. Highly recommended!",
-              },
-              {
-                name: "Anjali Krishnan",
-                review: "Customer support was very helpful and polite.",
-              },
-              {
-                name: "Arjun Nair",
-                review: "Perfect fit for my car. Saved a lot of money.",
-              },
-              {
-                name: "Sreejith Kumar",
-                review: "Smooth experience from search to delivery.",
-              },
-              {
-                name: "Neha Sharma",
-                review: "Packaging was excellent and product was genuine.",
-              },
-            ].map((item, index) => (
-              <div className="review-card" key={index}>
-                <div className="review-header">
-                  <span className="user-icon">👤</span>
-                  <h4>{item.name}</h4>
-                </div>
-                <span className="review-time">2 weeks ago</span>
-                <div className="review-stars">★★★★★</div>
-                <p className="review-text">{item.review}</p>
-              </div>
-            ))}
+      {/* Customer Reviews */}
+<section className="customer-reviews">
+  <h2>
+    What Our <span>Customers Say</span>
+  </h2>
+  <div className="reviews-slider">
+    <div className="reviews-track">
+      {[
+        {
+          name: "Garza Prosser",
+          review:
+            "I found this company online — great service, excellent prices, and honest people. Deliveries are always on time. Honestly, I highly recommend them. I give them 10 out of 10!",
+        },
+        {
+          name: "Jon Heter",
+          review:
+            "I found this company online as I was hit with a big expense on my Jeep. Pete was so fast in finding exactly what I needed. It took about a week to get to me, and followed through every step to ensure I got a finished great driving Jeep! Their team is extremely empathetic and well deserving of this review!! Don’t hesitate in using them. You’ll be happy you did.",
+        },
+        {
+          name: "Melvin Vaughm",
+          review:
+            "Great auto parts service provider. Honest upfront throughout the entire process. They unfortunately couldn’t locate a respectable part in ideal condition. They were amenable to a complete and total refund. Although it took a bit of time, Dennis worked with me consistently.",
+        },
+        {
+          name: "Jake Carter",
+          review:
+            "Had to get a rear end for 06 Toyota, Pete was extremely helpful and professional. Replied promptly back to texts and calls.",
+        },
+      ]
+        // Duplicate the array for infinite loop effect
+        .concat([
+          {
+            name: "Garza Prosser",
+            review:
+              "I found this company online — great service, excellent prices, and honest people. Deliveries are always on time. Honestly, I highly recommend them. I give them 10 out of 10!",
+          },
+          {
+            name: "Jon Heter",
+            review:
+              "I found this company online as I was hit with a big expense on my Jeep. Pete was so fast in finding exactly what I needed. It took about a week to get to me, and followed through every step to ensure I got a finished great driving Jeep! Their team is extremely empathetic and well deserving of this review!! Don’t hesitate in using them. You’ll be happy you did.",
+          },
+          {
+            name: "Melvin Vaughm",
+            review:
+              "Great auto parts service provider. Honest upfront throughout the entire process. They unfortunately couldn’t locate a respectable part in ideal condition. They were amenable to a complete and total refund. Although it took a bit of time, Dennis worked with me consistently.",
+          },
+          {
+            name: "Jake Carter",
+            review:
+              "Had to get a rear end for 06 Toyota, Pete was extremely helpful and professional. Replied promptly back to texts and calls.",
+          },
+        ])
+        .map((item, index) => (
+          <div className="review-card" key={index}>
+            <div className="review-header">
+              <span className="user-icon">👤</span>
+              <h4>{item.name}</h4>
+            </div>
+            <span className="review-time">2 weeks ago</span>
+            <div className="review-stars">★★★★★</div>
+            <p className="review-text">{item.review}</p>
           </div>
-        </div>
-      </section>
+        ))}
+    </div>
+  </div>
+</section>
+
 
       {/* Brands Section */}
       <section className="brands-section">

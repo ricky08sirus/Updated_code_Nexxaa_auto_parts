@@ -21,6 +21,7 @@ body {
   background-position: center;
   color: white;
   overflow: hidden;
+  transition: background-image 0.3s ease-in-out;
 }
 
 .banner-overlay {
@@ -510,23 +511,32 @@ body {
 .reviews-slider {
   width: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 .reviews-track {
   display: flex;
   gap: 20px;
   width: max-content;
-  animation: scrollReviews 30s linear infinite;
+  animation: scrollReviews 45s linear infinite;
 }
 
 .review-card {
-  min-width: 280px;
-  max-width: 320px;
+  flex: 0 0 300px;
+  /* height: 380px;  */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: black;
   padding: 20px;
   box-shadow: 0 6px 20px rgb(0 0 0 / 19%);
   border-top-right-radius: 2rem;
   border: 14px solid #bb1313;
+  transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
 }
 
 .review-header {
@@ -575,28 +585,51 @@ body {
   font-size: 14px;
   color: #ddd;
   line-height: 1.5;
+  flex-grow: 1;
 }
 
+/* Infinite loop animation */
 @keyframes scrollReviews {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause animation on hover */
+.reviews-track:hover {
+  animation-play-state: paused;
 }
 
 /* Responsive Styles */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .customer-reviews {
     width: 95%;
     padding: 20px 10px;
   }
 
   .customer-reviews h2 {
+    font-size: 26px;
+  }
+
+  .review-card {
+    flex: 0 0 260px;
+    /* height: 360px; */
+  }
+}
+
+@media (max-width: 480px) {
+  .customer-reviews h2 {
     font-size: 22px;
     margin-bottom: 20px;
   }
 
   .review-card {
-    min-width: 240px;
-    padding: 16px;
+    flex: 0 0 240px;
+    /* height: 340px; */
+    /* padding: 16px; */
   }
 
   .review-header h4 {
@@ -605,30 +638,6 @@ body {
 
   .review-text {
     font-size: 13px;
-  }
-}
-
-@media (max-width: 768px) {
-  .customer-reviews h2 {
-    font-size: 26px;
-  }
-
-  .reviews-track {
-    gap: 14px;
-  }
-
-  .review-card {
-    min-width: 260px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .review-card {
-    min-width: 320px;
-  }
-
-  .reviews-track {
-    animation-duration: 40s;
   }
 }
 
@@ -725,7 +734,10 @@ body {
 }
 
 .brands-section h2 {
-  font-size: 2rem;
+  text-align: center;
+    font-size: 34px;
+    font-weight: 400;
+    text-shadow: 1px 2px 3px;
 }
 
 .brands-marquee {
@@ -743,6 +755,61 @@ body {
   flex: 0 0 auto;
   width: 150px;
   margin: 0 15px;
+}
+
+.brand-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@keyframes scrollInfinite {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+
+/* =========================
+   Brands Section
+========================= */
+.brands-section {
+  margin-top: 30px;
+  padding: 40px 0;
+  background-color: #f8f8f8;
+  text-align: center;
+  overflow: hidden;
+}
+
+.brands-section h2 {
+  font-size: 2rem;
+  text-align: center;
+    font-size: 34px;
+    font-weight: 400;
+    text-shadow: 1px 2px 3px;
+}
+
+.brands-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.brands-track {
+  margin-top: 30px;
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  animation: scrollInfinite 100s linear infinite;
+}
+
+.brand-card {
+  flex: 0 0 auto;
+  width: 150px;
+  margin: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .brand-card img {

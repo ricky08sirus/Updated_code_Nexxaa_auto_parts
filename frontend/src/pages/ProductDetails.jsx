@@ -521,7 +521,7 @@ const ProductDetails = () => {
                   </>
                 )
                 : (
-                  "Request Part Quote"
+                  "Search"
                 )}
             </button>
 

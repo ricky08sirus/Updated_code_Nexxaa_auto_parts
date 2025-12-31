@@ -2,22 +2,66 @@
 import React from "react";
 import "./Footer.css";
 import logo from "../assets/images/brands/nexxa logo.png"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faInstagram,
+  faWhatsapp,
+  faLinkedin
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
 
-        {/* 1️⃣ Logo & About */}
+        {/* 1 Logo & About */}
         <div className="footer-col">
-          <img src={logo} alt="Nexxa Auto Parts Logo" className="footer-logo" />
-          <p>
-            Nexxa Auto Parts provides quality used OEM auto parts at affordable
-            prices. Trusted by mechanics and vehicle owners nationwide.
-          </p>
-        </div>
+  <img src={logo} alt="Nexxa Auto Parts Logo" className="footer-logo" />
+  <p>
+    Nexxa Auto Parts provides quality used OEM auto parts at affordable
+    prices. Trusted by mechanics and vehicle owners nationwide.
+  </p>
 
-        {/* 2️⃣ Quick Links */}
+  {/* Social Media Icons */}
+  <div className="social-icons">
+    <a
+      href="https://www.facebook.com/profile.php?id=61583498656059"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="facebook"
+    >
+      <FontAwesomeIcon icon={faFacebook} />
+    </a>
+    <a
+      href="https://www.instagram.com/nexxaauto?igsh=bHh3dHRhdXY2ajE4"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="instagram"
+    >
+      <FontAwesomeIcon icon={faInstagram} />
+    </a>
+    <a
+      href="#"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="whatsapp"
+    >
+      <FontAwesomeIcon icon={faWhatsapp} />
+    </a>
+    <a
+      href="#"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="linkedin"
+    >
+      <FontAwesomeIcon icon={faLinkedin} />
+    </a>
+  </div>
+</div>
+
+
+        {/* 2️Quick Links */}
         <div className="footer-col">
           <h4>Quick Links</h4>
           <ul>

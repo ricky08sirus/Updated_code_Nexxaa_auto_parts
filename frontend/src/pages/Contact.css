@@ -94,8 +94,26 @@ body {
 }
 
 .contact-form button {
-  background: red;
-  color: white;
+  /* background: red; */
+  color: rgb(10, 10, 56);
+  /* border: none; */
+  padding: 12px;
+  width: 100%;
+  /* border-radius: 6px; */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s;
+  text-decoration: none;
+}
+
+.contact-form button:hover {
+  color:darkred;
+}
+
+.submit-btn{
+  background: rgb(220, 4, 4);
+  color: rgb(255, 255, 255);
   border: none;
   padding: 12px;
   width: 100%;
@@ -104,10 +122,11 @@ body {
   font-size: 16px;
   font-weight: 600;
   transition: background 0.3s;
+  text-decoration: none;
 }
 
-.contact-form button:hover {
-  background: #c90000;
+.submit-btn:hover {
+  color:darkred;
 }
 
 /* CONTACT BOX */
@@ -142,7 +161,7 @@ body {
   color: red;
   font-size: 22px;
   background: #f5f5f5;
-  padding: 12px;
+  /* padding: 12px; */
   border-radius: 10px;
   box-shadow: inset 0 0 0 1px #eee;
   flex-shrink: 0;
@@ -681,5 +700,86 @@ body {
 
   .success-animation p::before {
     font-size: 48px;
+  }
+}
+/* Limit text to 2 lines */
+.consent-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.4;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+/* When expanded, show full paragraph */
+.consent-text.expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+/* Read More button */
+.read-more-btn {
+  background: none;
+  border: none;
+  color: #a71407;
+  font-size: 13px;
+  padding: 0;
+  margin-top: 4px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.read-more-btn:hover {
+  color: #ff2a2a;
+}
+/* MAP SECTION */
+.map-section {
+  width: 100%;
+  padding: 50px 20px;
+  margin-top: 40px;
+  background: black;
+  text-align: center;
+}
+
+.map-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 1100px;
+  height: 400px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .map-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-title {
+    font-size: 22px;
+  }
+  
+  .map-container {
+    height: 250px;
   }
 }
