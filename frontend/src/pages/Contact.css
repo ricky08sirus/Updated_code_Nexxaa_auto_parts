@@ -229,7 +229,7 @@ body {
   }
 
   .contact-icon {
-    font-size: 20px;
+    font-size: 35px;
     padding: 10px;
   }
 
@@ -254,7 +254,7 @@ body {
 /* Mobile Phones (max-width: 480px) */
 @media (max-width: 480px) {
   .contact-page {
-    padding: 30px 10px;
+    padding: 69px 10px;
   }
 
   .contact-wrapper {
@@ -286,7 +286,7 @@ body {
   }
 
   .contact-icon {
-    font-size: 18px;
+    font-size: 20px;
     padding: 8px;
   }
 

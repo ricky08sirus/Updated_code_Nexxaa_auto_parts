@@ -1,0 +1,388 @@
+/* BrandDetail.css */
+
+/* Main Container */
+.brand-detail-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding-top: 80px; /* Space for fixed header/navbar */
+}
+
+/* Header Section */
+.brand-header {
+  /* text-center; */
+  padding: 48px 16px;
+}
+
+.brand-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.brand-title-highlight {
+  color: #dc2626;
+}
+
+/* Brand Logo */
+.brand-logo-container {
+  display: flex;
+  width: 68%;
+  /* justify-content: center; */
+  /* margin-bottom: 32px; */
+}
+
+.brand-logo {
+  height: 128px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Main Content Container */
+.brand-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+}
+
+/* Two Column Grid */
+.brand-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Left Column - Description */
+.brand-description-section {
+  padding: 0;
+}
+
+.brand-description-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.brand-description-text {
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1.75;
+  text-align: justify;
+}
+
+/* Right Column - Search Form */
+.brand-search-section {
+  padding: 0;
+}
+
+/* Models Section */
+.brand-models-section {
+  margin-top: 64px;
+}
+
+.brand-models-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 32px;
+}
+
+/* Models Grid */
+.brand-models-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.brand-model-link {
+  background: linear-gradient(45deg, black, #a71407);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 20px 24px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 2px solid #dc2626;
+  text-decoration: none;
+  display: block;
+}
+
+.brand-model-link:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+}
+
+.brand-model-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* Not Found Page */
+.brand-not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 16px;
+}
+
+.brand-not-found-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.brand-not-found-link {
+  color: #dc2626;
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.brand-not-found-link:hover {
+  color: #b91c1c;
+}
+
+/* Tablet Screens */
+@media (min-width: 768px) {
+  .brand-title {
+    font-size: 3rem;
+  }
+
+  .brand-logo {
+    height: 160px;
+  }
+
+  .brand-description-title {
+    font-size: 1.875rem;
+  }
+
+  .brand-description-text {
+    font-size: 1.125rem;
+  }
+
+  .brand-models-title {
+    font-size: 2.25rem;
+  }
+
+  .brand-models-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .brand-model-title {
+    font-size: 1.25rem;
+  }
+
+  .brand-not-found-title {
+    font-size: 1.875rem;
+  }
+}
+
+/* Desktop Screens */
+@media (min-width: 1024px) {
+  .brand-detail-container {
+    padding-top: 100px; /* More space for larger screens */
+  }
+
+  .brand-title {
+    font-size: 2.75rem;
+  }
+
+  .brand-logo {
+    height: 192px;
+  }
+
+  .brand-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .brand-models-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Extra Large Screens */
+@media (min-width: 1280px) {
+  .brand-content {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+/* Mobile Screens - Small Devices (up to 480px) */
+@media (max-width: 480px) {
+  .brand-detail-container {
+    padding-top: 60px; /* Reduced padding for small screens */
+  }
+
+  .brand-header {
+    padding: 24px 12px; /* Reduced padding */
+  }
+
+  .brand-title {
+    font-size: 20px; /* Smaller title for mobile */
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+
+  .brand-logo-container {
+    width: 100%; 
+    margin: auto;
+    justify-content: center;
+  }
+
+  .brand-logo {
+    height: 80px; /* Smaller logo */
+    max-width: 90%;
+  }
+
+  .brand-content {
+    padding: 0 12px 32px; /* Reduced padding */
+  }
+
+  .brand-grid {
+    gap: 24px; /* Reduced gap */
+  }
+
+  .brand-description-title {
+    font-size: 18px; /* Smaller title */
+    margin-bottom: 12px;
+  }
+
+  .brand-description-text {
+    font-size: 14px; /* Smaller text */
+    line-height: 1.6;
+  }
+
+  .brand-models-section {
+    margin-top: 40px; /* Reduced margin */
+  }
+
+  .brand-models-title {
+    font-size: 20px; /* Smaller title */
+    margin-bottom: 20px;
+  }
+
+  .brand-models-grid {
+    gap: 16px; /* Reduced gap */
+  }
+
+  .brand-model-link {
+    padding: 12px 20px; /* Reduced padding */
+  }
+
+  .brand-model-title {
+    font-size: 14px; /* Smaller text */
+  }
+}
+
+/* Mobile Screens - Medium Devices (481px to 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .brand-detail-container {
+    padding-top: 70px;
+  }
+
+  .brand-header {
+    padding: 32px 16px;
+  }
+
+  .brand-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .brand-logo-container {
+    width: 80%;
+    margin: 0 auto 24px;
+  }
+
+  .brand-logo {
+    height: 100px;
+  }
+
+  .brand-content {
+    padding: 0 16px 40px;
+  }
+
+  .brand-grid {
+    gap: 28px;
+  }
+
+  .brand-description-title {
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  .brand-description-text {
+    font-size: 15px;
+  }
+
+  .brand-models-section {
+    margin-top: 48px;
+  }
+
+  .brand-models-title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .brand-models-grid {
+    gap: 18px;
+    grid-template-columns: 1fr; /* Single column */
+  }
+
+  .brand-model-link {
+    padding: 14px 24px;
+  }
+
+  .brand-model-title {
+    font-size: 16px;
+  }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-width: 767px) and (orientation: landscape) {
+  .brand-detail-container {
+    padding-top: 50px;
+  }
+
+  .brand-header {
+    padding: 20px 16px;
+  }
+
+  .brand-logo {
+    height: 70px;
+  }
+
+  .brand-grid {
+    gap: 20px;
+  }
+}
+
+/* Ensure proper spacing on all mobile devices */
+@media (max-width: 767px) {
+  .brand-search-section {
+    margin-top: 8px;
+  }
+
+  /* Make sure buttons are easily tappable */
+  .brand-model-link {
+    min-height: 48px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Improve text readability on small screens */
+  .brand-description-text {
+    text-align: left; /* Left align on mobile for better readability */
+  }
+}

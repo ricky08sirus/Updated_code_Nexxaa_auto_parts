@@ -7,18 +7,20 @@ body {
 .terms-container {
   /* max-width: 900px; */
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   font-family: Arial, sans-serif;
   line-height: 1.7;
-  padding: 26px 93px;
+  padding: 95px 93px;
 }
 
 .main-heading {
     font-size: 40px;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     color: red;
     font-weight: 500;
     text-shadow: 1px 2px 5px black;
+      padding: 48px 16px;
+
 }
 
 .sub-heading {
@@ -52,7 +54,7 @@ body {
 
 @media (max-width: 480px) {
   .terms-container {
-    padding: 15px;
+    padding: 77px 16px;
   }
 
   .main-heading {

@@ -27,48 +27,51 @@ body {
 .banner-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background:#00000036;
   z-index: 1;
 }
 
 .banner-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     rgb(0 0 0 / 0%) 40%,
     rgb(0 0 0) 100%
-  );
+  ); */
   z-index: 2;
 }
 
 .banner-inner {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 180px 80px;
-  gap: 60px;
+position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 91px 63px;
+    gap: 60px;
 }
 
 /* ===================== */
 /* Left Content */
 /* ===================== */
 .banner-left {
-  max-width: 600px;
-      margin: auto;
+    max-width: 678px;
+    margin: auto;
     text-align: center;
-     overflow: hidden;
+    overflow: hidden;
+    /* padding-bottom: 60px; */
+
 }
 
 .banner-left h1 {
-  font-size: 3.2rem;
+  font-size:43px;
   font-weight: 800;
   line-height: 1.2;
     opacity: 0;
   transform: translateY(-40px);
   animation: dropIn 1s ease forwards;
+  padding: 2px 52px;
 }
 
 .highlight {
@@ -76,10 +79,12 @@ body {
 }
 
 .banner-left p {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  opacity: 0.9;
-   animation-delay: 0.4s;
+    margin-top: 20px;
+    font-size: 17px;
+    opacity: .9;
+    animation-delay: .4s;
+    text-align: justify;
+    padding: 0px 76px;
 }
 .banner-left h1,
 .banner-left p {
@@ -184,6 +189,7 @@ body {
   .banner-left h1 {
     font-size: 2rem;
     line-height: 1.3;
+    padding: 0px 3px;
   }
 
   .banner-left p {
@@ -192,7 +198,7 @@ body {
 
   .banner-right {
     max-width: 100%;
-    margin-top: 20px;
+    /* margin-top: 20px; */
   }
 
   .banner-form .row {
@@ -298,7 +304,7 @@ body {
 /* How it works */
 /* ===================== */
 .how-it-works {
-  padding: 25px 20px;
+  padding: 16px 20px;
   background: #fff;
 }
 
@@ -466,7 +472,7 @@ body {
 
   .why-box span {
     font-size: 13px;
-    color: black;
+    color: white;
   }
 }
 
@@ -849,8 +855,8 @@ body {
 
 .explore-parts h2 {
   font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
+  /* font-weight: 700;
+  margin-bottom: 2rem; */
   color: #222;
 }
 
@@ -1005,5 +1011,684 @@ body {
   }
 }
 /* ========================================= */
-/* why .why-nexxa */
+/* why .why-nexxa inside the banner section */
 /* ======================================== */
+.banner {
+  position: relative;
+  min-height: 98vh;
+}
+
+.banner-why {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 15px 20px;
+  border-radius: 6px;
+  z-index: 3;
+      width: 92%;
+    align-items: center;
+}
+
+.why-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid red;
+  padding: 10px 15px;
+  color: #fff;
+  font-size: 14px;
+}
+.why-box:hover{
+  background-color: #420101;
+  color: white;
+}
+.why-box img {
+  width: 24px;
+}
+.search-heading {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+.why-heading {
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: left; /* or center if needed */
+}
+.banner-why {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Heading */
+.why-heading {
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Boxes remain horizontal */
+.why-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid red;
+  color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Paragraph below boxes */
+.why-desc {
+  width: 100%;
+  color: #ccc;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .banner-why {
+    justify-content: center;
+  }
+
+  .why-box {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .why-heading,
+  .why-desc {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .why-box {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+.banner-why {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Horizontal row */
+.why-top-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  /* flex-wrap: wrap; */
+  width: 100%;
+}
+
+/* Heading stays inline */
+.why-heading {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Boxes unchanged */
+.why-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid red;
+  color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Paragraph below */
+.why-desc {
+  color: #ccc;
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 100%;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .why-top-row {
+    justify-content: center;
+  }
+
+  .why-heading {
+    width: 100%;
+    text-align: center;
+  }
+
+  .why-desc {
+    text-align: center;
+  }
+  .why-description{
+        padding: 0 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .why-box {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+/* ============================================================= */
+/* ================= DESKTOP (UNCHANGED) ================= */
+
+.banner-why {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 15px 20px;
+  border-radius: 6px;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Top horizontal row */
+.why-top-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+/* Heading */
+.why-heading {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Boxes */
+.why-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border: 1px solid red;
+  color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.why-box:hover {
+  background-color: #420101;
+}
+
+.why-box img {
+  width: 24px;
+}
+
+/* Paragraph */
+.why-desc {
+  color: #ccc;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+  /* Move section below search */
+  .banner-why {
+    position: static;
+    transform: none;
+    /* margin-top: 16px; */
+    margin: auto;
+    margin: auto;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  /* Reorder items visually */
+  .why-heading {
+    order: 1;
+    width: 100%;
+    text-align: left;
+  }
+
+  .why-desc {
+    order: 2;
+    width: 100%;
+    text-align: left;
+  }
+
+  .why-top-row {
+    order: 3;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+}
+
+/* Small mobiles */
+@media (max-width: 480px) {
+  .why-box {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+/* ======================================== */
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  /* Container adjustments */
+  .hero-section,
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+  }
+  
+  /* Form Section - Appears First */
+  .search-form-container,
+  .form-wrapper {
+    order: 1;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  /* Year, Make, Model dropdowns */
+  .dropdown-row,
+  .vehicle-selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .dropdown-row select,
+  select[name="year"],
+  select[name="make"],
+  select[name="model"] {
+    width: 100% !important;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  /* Parts dropdown */
+  select[name="parts"],
+  .parts-select {
+    width: 100% !important;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+  }
+  
+  /* Search button */
+  .search-button,
+  button[type="submit"],
+  .btn-search {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  /* Enter VIN link */
+  .vin-link,
+  .enter-vin {
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  /* Heading and Text Content - Appears Second */
+  .hero-content,
+  .text-content,
+  .left-content {
+    order: 2;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 0 10px;
+  }
+  
+  .hero-content h1,
+  .main-heading {
+    font-size: 28px;
+    line-height: 1.3;
+    margin-bottom: 15px;
+  }
+  
+  .hero-content h1 span,
+  .highlight-text {
+    display: block;
+    font-size: 32px;
+  }
+  
+  .hero-content p,
+  .description-text {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-top: 15px;
+  }
+  
+  /* Why Nexxa Section - Appears Third */
+  .features-section,
+  .why-nexxa-section {
+    order: 3;
+    width: 100%;
+  }
+  
+  .features-section h2,
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Feature boxes */
+  .features-grid,
+  .feature-boxes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .feature-box,
+  .feature-item {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .feature-box img,
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .feature-box h3,
+  .feature-title {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  /* Feature descriptions */
+  .feature-descriptions,
+  .features-text {
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  /* Background adjustments */
+  .hero-section {
+    background-size: cover;
+    background-position: center;
+  }
+  .banner-gradient {
+  position: absolute;
+  inset: 0;
+  /* background: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0%) 40%,
+    rgb(0 0 0) 100%
+  ); */
+  z-index: 2;
+}
+}
+
+/* Extra small screens */
+@media screen and (max-width: 480px) {
+  .hero-content h1,
+  .main-heading {
+    font-size: 24px;
+  }
+  
+  .hero-content h1 span,
+  .highlight-text {
+    font-size: 28px;
+  }
+  
+  .search-button,
+  button[type="submit"] {
+    font-size: 16px;
+    padding: 14px;
+  }
+  
+  .features-section h2 {
+    font-size: 20px;
+  }
+  nav .absolute nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+}
+}
+
+
+
+/* ======================= */
+
+
+
+
+/* Add this to your Home.css file */
+
+/* Make banner-inner a flex container that can reorder children */
+.banner-inner {
+  display: flex;
+  flex-direction: column;
+  /* existing styles... */
+}
+
+/* Mobile View - Reorder layout */
+@media (max-width: 768px) {
+  .banner-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Form comes FIRST on mobile */
+  .banner-right {
+    order: 1;
+    margin-bottom: 30px;
+  }
+
+  /* Heading and Paragraph come SECOND on mobile */
+  .banner-left {
+    order: 2;
+    text-align: center;
+    /* margin-bottom: 30px; */
+  }
+
+  .banner-left h1 {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+
+  .banner-left .why-description {
+    font-size: 14px;
+    text-align: justify;
+    padding: 0 10px;
+  }
+
+  /* Why Nexxa comes THIRD on mobile */
+  .banner-why {
+    order: 3;
+  }
+
+  /* Stack Why Nexxa boxes vertically on mobile */
+  .why-top-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .why-box {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 2px solid #dc2626;
+    border-radius: 8px;
+  }
+
+  .why-box img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .why-box span {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .why-heading {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  .why-desc {
+    text-align: justify;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 10px;
+  }
+}
+
+/* Desktop View - Normal order */
+@media (min-width: 769px) {
+  .banner-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  /* Left content comes FIRST on desktop */
+  .banner-left {
+    order: 1;
+    flex: 1;
+  }
+
+  /* Form comes SECOND on desktop */
+  .banner-right {
+    order: 2;
+    flex: 0 0 auto;
+  }
+
+  /* Why Nexxa comes THIRD (below both) on desktop */
+  .banner-why {
+    order: 3;
+    width: 100%;
+  }
+}
+
+/* Ensure banner section wraps content properly */
+.banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make sure Why Nexxa section spans full width */
+.banner-why {
+  width: 100%;
+  /* margin-top: 40px; */
+}
+
+/*/* ========================================
+   MOBILE VIEW ONLY - Reorder Elements
+   Desktop styles remain unchanged
+   ======================================== */
+
+@media (max-width: 768px) {
+  /* Make the main container a flex column */
+  .why-nexxa.banner-why {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Use display: contents to "unwrap" why-top-row 
+     This makes its children behave as direct children of banner-why */
+  .why-top-row {
+    display: contents;
+  }
+
+  /* Order 1: Heading comes first */
+  .why-heading {
+    order: 1;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 24px;
+  }
+
+  /* Order 2: Paragraph comes second */
+  .why-desc {
+    order: 2;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 0 15px;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  /* Order 3: All boxes come last */
+  .why-box {
+    order: 3;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    border-radius: 8px;
+  }
+
+  .why-box img {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .why-box span {
+    font-size: 14px;
+    text-align: left;
+  }
+}

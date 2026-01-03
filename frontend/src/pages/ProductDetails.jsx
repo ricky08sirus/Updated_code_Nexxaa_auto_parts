@@ -521,7 +521,7 @@ const ProductDetails = () => {
                   </>
                 )
                 : (
-                  "Search"
+                  "Search Parts"
                 )}
             </button>
 

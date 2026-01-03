@@ -218,3 +218,128 @@
     font-size: 14px;
   }
 }
+/* Add this to your Footer.css file */
+
+/* Payment Methods Section */
+.payment-methods {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.payment-label {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.payment-icon {
+  font-size: 40px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.8;
+}
+
+.payment-icon:hover {
+  transform: translateY(-3px);
+  opacity: 1;
+}
+
+/* Individual Card Colors */
+.payment-icon.visa {
+  color: #1a1f71;
+}
+
+.payment-icon.mastercard {
+  color: #eb001b;
+}
+
+.payment-icon.amex {
+  color: #006fcf;
+}
+
+.payment-icon.discover {
+  color: #ff6000;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .payment-methods {
+    margin-top: 15px;
+    padding-top: 15px;
+    text-align: center;
+  }
+
+  .payment-label {
+    font-size: 13px;
+  }
+
+  .payment-icons {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .payment-icon {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-icon {
+    font-size: 32px;
+  }
+
+  .payment-icons {
+    gap: 8px;
+  }
+}
+
+.payment-icons-images {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.payment-card-img {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.85;
+  filter: grayscale(20%);
+}
+
+.payment-card-img:hover {
+  transform: translateY(-3px);
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+@media (max-width: 768px) {
+  .payment-icons-images {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .payment-card-img {
+    height: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-card-img {
+    height: 24px;
+  }
+
+  .payment-icons-images {
+    gap: 8px;
+  }
+}
