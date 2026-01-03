@@ -15,7 +15,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 102px;
   box-sizing: border-box;
   position: relative;
 }
@@ -583,6 +583,7 @@ body {
 @media (max-width: 480px) {
   .product-page {
     padding: 12px;
+    padding-top: 6rem;
   }
 
   .product-form-section {

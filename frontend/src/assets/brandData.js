@@ -1,0 +1,1237 @@
+// src/assets/brandData.js
+import accura from "../assets/images/brands/accura.webp";
+import bmw from "../assets/images/brands/bmw.webp";
+import buik from "../assets/images/brands/buik.webp";
+import cadillac from "../assets/images/brands/cadillac.webp";
+import chevrolet from "../assets/images/brands/chevrolet.webp";
+import chrysler from "../assets/images/brands/chrysler.webp";
+import daewoo from "../assets/images/brands/daewoo.webp";
+import daihatsu from "../assets/images/brands/daihatsu.webp";
+import dodge from "../assets/images/brands/dodge.webp";
+import eagle from "../assets/images/brands/eagle.webp";
+import ford from "../assets/images/brands/ford.webp";
+import gmc from "../assets/images/brands/gmc.webp";
+import honda from "../assets/images/brands/honda.webp";
+import hyundai from "../assets/images/brands/hyundai.webp";
+import infiniti from "../assets/images/brands/infiniti.webp";
+import isuzu from "../assets/images/brands/isuzu.webp";
+import jaguar from "../assets/images/brands/jaguar.webp";
+import jeep from "../assets/images/brands/jeep.webp";
+import kia from "../assets/images/brands/kia.webp";
+import landrover from "../assets/images/brands/LandRover.webp";
+import lexus from "../assets/images/brands/lexus.webp";
+import lincoln from "../assets/images/brands/lincoln.webp";
+import mazda from "../assets/images/brands/mazda.webp";
+import benz from "../assets/images/brands/benz.webp";
+import mercury from "../assets/images/brands/mercury.webp";
+import minicooper from "../assets/images/brands/minicooper.webp";
+import mitsubishi from "../assets/images/brands/mitsubishi.webp";
+import nissan from "../assets/images/brands/nissan.webp";
+import oldsmobile from "../assets/images/brands/oldmobile.webp";
+import plymouth from "../assets/images/brands/plymouth.webp";
+import pontiac from "../assets/images/brands/pontiac.webp";
+import porsche from "../assets/images/brands/porsche.webp";
+import saab from "../assets/images/brands/saab.webp";
+import saturn from "../assets/images/brands/saturn.webp";
+import scion from "../assets/images/brands/scion.webp";
+import subaru from "../assets/images/brands/subaru.webp";
+import suzuki from "../assets/images/brands/suzuki.webp";
+import toyota from "../assets/images/brands/toyota.webp";
+import volkswagen from "../assets/images/brands/volkswagen (1).webp";
+import volvo from "../assets/images/brands/volvo.webp";
+
+const brandData = {
+  1: {
+    id: 1,
+    title: "Acura",
+    image: accura,
+    description: "We have taken the time to inventory all wrecked and salvaged Acura vehicles to make sure you have instant access to any used Acura parts you are searching for online. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. Nexxaauto.com our one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Acura is a 'luxury' line of Honda Motor Company. It was the first luxury car brand in the Japanese automotive industry. They had started with two models at first, the Legend and the Integra. With the success of the 'Legend' in the late 1980's, this inspired other Japanese automakers to follow suit. In 1990 the launch of the NSX was a mid engine sports car that offered a reliable but very practical alternative to common 'European' luxury cars.",
+    models: [
+      { name: "CL", path: "/models/acura-cl" },
+      { name: "CSX", path: "/models/acura-csx" },
+      { name: "EL", path: "/models/acura-el" },
+      { name: "Integra", path: "/models/acura-integra" },
+      { name: "Legend", path: "/models/acura-legend" },
+      { name: "MDX", path: "/models/acura-mdx" },
+      { name: "RDX", path: "/models/acura-rdx" },
+      { name: "RSX", path: "/models/acura-rsx" },
+      { name: "TSX", path: "/models/acura-tsx" },
+      { name: "TL", path: "/models/acura-tl" },
+      { name: "Vigor", path: "/models/acura-vigor" },
+      { name: "ZDX", path: "/models/acura-zdx" }
+    ]
+  },
+2:
+  {
+    id: 2,
+    title: "BMW",
+    image: bmw,
+    description: "We have taken the time to inventory all wrecked and salvaged BMW vehicles to make sure you have instant access to any used BMW parts you are searching for online. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Originally established as RAPP MOTORENWERKE AIRCRAFT, now BMW (Bavarian Motor Works) started manufacturing automobiles in 1928. High performance, luxury, and well handling is just the tip of the ice berg when it comes to what a BMW is. It also has coined the catch name: 'The Ultimate Driving Machine' BMW also produces motorcycles, and have started the early development of the 'plug in' vehicle. The i3 all electric design began in September 2013.",
+    models: [
+      { name: "128i", path: "/models/bmw-128i" },
+      { name: "135i", path: "/models/bmw-135i" },
+      { name: "3.0", path: "/models/bmw-3-0" },
+      { name: "318i", path: "/models/bmw-318i" },
+      { name: "320i", path: "/models/bmw-320i" },
+      { name: "323i", path: "/models/bmw-323i" },
+      { name: "325e", path: "/models/bmw-325e" },
+      { name: "325i", path: "/models/bmw-325i" },
+      { name: "328i", path: "/models/bmw-328i" },
+      { name: "328i GT", path: "/models/bmw-328i-gt" },
+      { name: "330i", path: "/models/bmw-330i" },
+      { name: "335i GT", path: "/models/bmw-335i-gt" },
+      { name: "428i", path: "/models/bmw-428i" },
+      { name: "435i", path: "/models/bmw-435i" },
+      { name: "524TD", path: "/models/bmw-524td" },
+      { name: "525i", path: "/models/bmw-525i" },
+      { name: "528e", path: "/models/bmw-528e" },
+      { name: "528i", path: "/models/bmw-528i" },
+      { name: "530i", path: "/models/bmw-530i" },
+      { name: "533i", path: "/models/bmw-533i" },
+      { name: "535i", path: "/models/bmw-535i" },
+      { name: "535i GT", path: "/models/bmw-535i-gt" },
+      { name: "540i", path: "/models/bmw-540i" },
+      { name: "545i", path: "/models/bmw-545i" },
+      { name: "550i", path: "/models/bmw-550i" },
+      { name: "550i GT", path: "/models/bmw-550i-gt" },
+      { name: "633C Si", path: "/models/bmw-633c-si" },
+      { name: "635csi", path: "/models/bmw-635csi" },
+      { name: "640i", path: "/models/bmw-640i" },
+      { name: "645i", path: "/models/bmw-645i" },
+      { name: "733i", path: "/models/bmw-733i" },
+      { name: "735i", path: "/models/bmw-735i" },
+      { name: "740i", path: "/models/bmw-740i" },
+      { name: "745i", path: "/models/bmw-745i" },
+      { name: "750i", path: "/models/bmw-750i" },
+      { name: "760i", path: "/models/bmw-760i" },
+      { name: "840i", path: "/models/bmw-840i" },
+      { name: "850i", path: "/models/bmw-850i" },
+      { name: "ACTIVEHYBRID 3", path: "/models/bmw-activehybrid-3" },
+      { name: "ACTIVEHYBRID 5", path: "/models/bmw-activehybrid-5" },
+      { name: "ACTIVEHYBRID 7", path: "/models/bmw-activehybrid-7" },
+      { name: "Alpina", path: "/models/bmw-alpina" },
+      { name: "ALPINA B6", path: "/models/bmw-alpina-b6" },
+      { name: "L6", path: "/models/bmw-l6" },
+      { name: "M1", path: "/models/bmw-m1" },
+      { name: "M235i", path: "/models/bmw-m235i" },
+      { name: "M3", path: "/models/bmw-m3" },
+      { name: "M5", path: "/models/bmw-m5" },
+      { name: "M6", path: "/models/bmw-m6" },
+      { name: "X1", path: "/models/bmw-x1" },
+      { name: "X3", path: "/models/bmw-x3" },
+      { name: "X4", path: "/models/bmw-x4" },
+      { name: "X5", path: "/models/bmw-x5" },
+      { name: "X5M", path: "/models/bmw-x5m" },
+      { name: "X6", path: "/models/bmw-x6" },
+      { name: "X6M", path: "/models/bmw-x6m" },
+      { name: "Z3", path: "/models/bmw-z3" },
+      { name: "Z4", path: "/models/bmw-z4" },
+      { name: "Z8", path: "/models/bmw-z8" }
+    ]
+  },
+3:
+  {
+    id: 3,
+    title: "Buick",
+    image: buik,
+    description: "We have taken the time to inventory all wrecked and salvaged Buick vehicles to make sure you have instant access to any used Buick parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Buick formally was a known as Buick Motor Division, which was an luxury car maker of General Motors. Mostly marketed in North America, it still fell under the flagship luxury brand of Cadillac. Buick's are also known for exceptional quality, and reliability. Don't worry to much if you end up needing to purchase parts for a Buick. Most GM models interchange, because its cheaper to make cars that all use the same parts, just different 'skins' We have taken inventory of all of our junkyards that have any Buick related vehicles in their inventory, and have made sure we  were able to check on each and every used Buick part we could locate for your customers. Popularity has also given the salvage yard industry plenty of inventory to go around. Buick was a few of brands of GM to survive the 'down size' of 2008",
+    models: [
+      { name: "Allure", path: "/models/buick-allure" },
+      { name: "Century", path: "/models/buick-century" },
+      { name: "Electra", path: "/models/buick-electra" },
+      { name: "Enclave", path: "/models/buick-enclave" },
+      { name: "Lacrosse", path: "/models/buick-lacrosse" },
+      { name: "Lesabre", path: "/models/buick-lesabre" },
+      { name: "Lucerne", path: "/models/buick-lucerne" },
+      { name: "Park Avenue", path: "/models/buick-park-avenue" },
+      { name: "Rainier", path: "/models/buick-rainier" },
+      { name: "Reatta", path: "/models/buick-reatta" },
+      { name: "Regal", path: "/models/buick-regal" },
+      { name: "Riviera", path: "/models/buick-riviera" },
+      { name: "Roadmaster", path: "/models/buick-roadmaster" },
+      { name: "Skyhawk", path: "/models/buick-skyhawk" },
+      { name: "Skylark", path: "/models/buick-skylark" },
+      { name: "Somerset", path: "/models/buick-somerset" },
+      { name: "Terraza", path: "/models/buick-terraza" },
+      { name: "Rendezvous", path: "/models/buick-rendezvous" },
+      { name: "ENCORE", path: "/models/buick-encore" }
+    ]
+  },
+4:
+  {
+    id: 4,
+    title: "Cadillac",
+    image: cadillac.webp,
+    description: "We have taken the time to inventory all wrecked and salvaged Cadillac vehicles to make sure you have instant access to any used Cadillac parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Cadillac was formally known as Cadillac Motor Car Division, is a brand under General Motor Company. It is one of the oldest auto brands in the world. 1902 was when the first Cadillac rolled off the assembly line. It was named after Antoine de la Mothe Cadillac, who founded Detroit, MI. Cadillac was also, the first American car to ever win the Royal Automobile Club of England's Dewar Trophy by successfully demonstrating the interchangeability of its component parts during a reliability test in 1908.Cadillac vehicles are expensive in general, and sometimes it can be hard locating parts for any Cadillac vehicles, but every single Cadillac vehicle we have in our inventory has been inspected and checked. Any bad or nonfunctional parts have been removed from the system.",
+    models: [
+      { name: "XTS", path: "/models/cadillac-xts" },
+      { name: "Allante", path: "/models/cadillac-allante" },
+      { name: "Brougham", path: "/models/cadillac-brougham" },
+      { name: "Catera", path: "/models/cadillac-catera" },
+      { name: "Cimarron", path: "/models/cadillac-cimarron" },
+      { name: "CTS", path: "/models/cadillac-cts" },
+      { name: "Deville", path: "/models/cadillac-deville" },
+      { name: "DTS", path: "/models/cadillac-dts" },
+      { name: "Eldorado", path: "/models/cadillac-eldorado" },
+      { name: "Escalade", path: "/models/cadillac-escalade" },
+      { name: "Escalade ESV", path: "/models/cadillac-escalade-esv" },
+      { name: "Escalade EXT", path: "/models/cadillac-escalade-ext" },
+      { name: "Fleetwood", path: "/models/cadillac-fleetwood" },
+      { name: "Seville", path: "/models/cadillac-seville" },
+      { name: "SRX", path: "/models/cadillac-srx" },
+      { name: "STS", path: "/models/cadillac-sts" },
+      { name: "XLR", path: "/models/cadillac-xlr" },
+      { name: "ATS", path: "/models/cadillac-ats" },
+      { name: "ELR", path: "/models/cadillac-elr" }
+    ]
+  },
+5:
+  {
+    id: 5,
+    title: "Chevy",
+    image: chevrolet,
+    description: "We have taken the time to inventory all wrecked and salvaged Chevy vehicles to make sure you have instant access to any used Chevy parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Chevrolet or 'Chevy' is another division of General Motors. Founded by Louis Chevrolet and William C Durant who started the company November 3, 1911 as the Chevrolet Motor Car Company. One of the most common vehicle makes in the United States, never tremble or fear when needing to locate a part for this manufacturer. Every salvage yard in the United States has at least 30% of their inventory made by GM, who interchanges parts with Chevrolet. This company has been through many up's and down's through out the years, but has stayed a major foundation of American workmanship. Beautiful Chevrolet vehicles are still being produced today and we will do our part to insure any used Chevy parts you need, we have in stock.",
+    models: [
+      { name: "Spark", path: "/models/chevy-spark" },
+      { name: "Caprice SS", path: "/models/chevy-caprice-ss" },
+      { name: "TRAX", path: "/models/chevy-trax" },
+      { name: "Volt", path: "/models/chevy-volt" },
+      { name: "2500 Pickup", path: "/models/chevy-2500-pickup" },
+      { name: "30 Pickup", path: "/models/chevy-30-pickup" },
+      { name: "3100 Pickup", path: "/models/chevy-3100-pickup" },
+      { name: "3500 Pickup", path: "/models/chevy-3500-pickup" },
+      { name: "3600 Pickup", path: "/models/chevy-3600-pickup" },
+      { name: "3800 Pickup", path: "/models/chevy-3800-pickup" },
+      { name: "Astro", path: "/models/chevy-astro" },
+      { name: "Avalanche 1500", path: "/models/chevy-avalanche-1500" },
+      { name: "Avalanche 2500", path: "/models/chevy-avalanche-2500" },
+      { name: "Aveo", path: "/models/chevy-aveo" },
+      { name: "Beretta", path: "/models/chevy-beretta" },
+      { name: "Camaro", path: "/models/chevy-camaro" },
+      { name: "Caprice", path: "/models/chevy-caprice" },
+      { name: "Cavalier", path: "/models/chevy-cavalier" },
+      { name: "Celebrity", path: "/models/chevy-celebrity" },
+      { name: "Chevelle", path: "/models/chevy-chevelle" },
+      { name: "Chevette", path: "/models/chevy-chevette" },
+      { name: "10", path: "/models/chevy-10" },
+      { name: "1500", path: "/models/chevy-1500" },
+      { name: "20", path: "/models/chevy-20" },
+      { name: "Citation", path: "/models/chevy-citation" },
+      { name: "Cobalt", path: "/models/chevy-cobalt" },
+      { name: "Colorado", path: "/models/chevy-colorado" },
+      { name: "Corsica", path: "/models/chevy-corsica" },
+      { name: "Corvette", path: "/models/chevy-corvette" },
+      { name: "Cruze", path: "/models/chevy-cruze" },
+      { name: "Equinox", path: "/models/chevy-equinox" },
+      { name: "EV1", path: "/models/chevy-ev1" },
+      { name: "Express 1500 Van", path: "/models/chevy-express-1500-van" },
+      { name: "Express 2500 Van", path: "/models/chevy-express-2500-van" },
+      { name: "Express 3500 Van", path: "/models/chevy-express-3500-van" },
+      { name: "Forward Control", path: "/models/chevy-forward-control" },
+      { name: "HHR", path: "/models/chevy-hhr" },
+      { name: "II", path: "/models/chevy-ii" },
+      { name: "Impala", path: "/models/chevy-impala" },
+      { name: "Lumina", path: "/models/chevy-lumina" },
+      { name: "Lumina Van", path: "/models/chevy-lumina-van" },
+      { name: "Luv", path: "/models/chevy-luv" },
+      { name: "Malibu", path: "/models/chevy-malibu" },
+      { name: "Metro", path: "/models/chevy-metro" },
+      { name: "Monte Carlo", path: "/models/chevy-monte-carlo" },
+      { name: "Monza", path: "/models/chevy-monza" },
+      { name: "Nova", path: "/models/chevy-nova" },
+      { name: "Omega", path: "/models/chevy-omega" },
+      { name: "Optra", path: "/models/chevy-optra" },
+      { name: "Passenger", path: "/models/chevy-passenger" },
+      { name: "Prizm", path: "/models/chevy-prizm" },
+      { name: "Silverado 1500", path: "/models/chevy-silverado-1500" },
+      { name: "Silverado 2500", path: "/models/chevy-silverado-2500" },
+      { name: "Silverado 3500", path: "/models/chevy-silverado-3500" },
+      { name: "Spectrum", path: "/models/chevy-spectrum" },
+      { name: "Sprint", path: "/models/chevy-sprint" },
+      { name: "SSR", path: "/models/chevy-ssr" },
+      { name: "Suburban 10", path: "/models/chevy-suburban-10" },
+      { name: "Suburban 1000", path: "/models/chevy-suburban-1000" },
+      { name: "Suburban 1500", path: "/models/chevy-suburban-1500" },
+      { name: "Suburban 20", path: "/models/chevy-suburban-20" },
+      { name: "Suburban 2500", path: "/models/chevy-suburban-2500" },
+      { name: "Suburban 30", path: "/models/chevy-suburban-30" },
+      { name: "Tahoe", path: "/models/chevy-tahoe" },
+      { name: "Tracker", path: "/models/chevy-tracker" },
+      { name: "Trailblazer", path: "/models/chevy-trailblazer" },
+      { name: "Trailblazer EXT", path: "/models/chevy-trailblazer-ext" },
+      { name: "Traverse", path: "/models/chevy-traverse" },
+      { name: "Uplander", path: "/models/chevy-uplander" },
+      { name: "Venture", path: "/models/chevy-venture" }
+    ]
+  },
+6:
+  {
+    id: 6,
+    title: "Chrysler",
+    image: chrysler,
+    description: "We have taken the time to inventory all wrecked and salvaged Chrysler vehicles to make sure you have instant access to any used Chrysler parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Chrysler was founded June 6, 1925 by Walter Chrysler, when the company Maxwell Motor Company was diluted and reorganized. 1924 was the year Chrysler launched a 6-cylinder automobile, which was more affordable than the competition's 3 and 4 cylinder powered 'horseless carriages'",
+    models: [
+      { name: "300", path: "/models/chrysler-300" },
+      { name: "300M", path: "/models/chrysler-300m" },
+      { name: "Arrow Truck", path: "/models/chrysler-arrow-truck" },
+      { name: "Concorde", path: "/models/chrysler-concorde" },
+      { name: "Conquest", path: "/models/chrysler-conquest" },
+      { name: "Crossfire", path: "/models/chrysler-crossfire" },
+      { name: "Dart", path: "/models/chrysler-dart" },
+      { name: "Lebaron", path: "/models/chrysler-lebaron" },
+      { name: "LHS", path: "/models/chrysler-lhs" },
+      { name: "New Yorker (RWD)", path: "/models/chrysler-new-yorker-rwd" },
+      { name: "Newport", path: "/models/chrysler-newport" },
+      { name: "Pacifica", path: "/models/chrysler-pacifica" },
+      { name: "PT Cruiser", path: "/models/chrysler-pt-cruiser" },
+      { name: "Raider", path: "/models/chrysler-raider" },
+      { name: "Sebring", path: "/models/chrysler-sebring" },
+      { name: "Town and Country", path: "/models/chrysler-town-and-country" }
+    ]
+  },
+7:
+  {
+    id: 7,
+    title: "Daewoo",
+    image: daewoo,
+    description: "We have taken the time to inventory all wrecked and salvaged Daewoo vehicles to make sure you have instant access to any used Daewoo parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+    models: [
+      { name: "Lanos", path: "/models/daewoo-lanos" },
+      { name: "Legana", path: "/models/daewoo-legana" },
+      { name: "Nubira", path: "/models/daewoo-nubira" }
+    ]
+  },
+8:
+  {
+    id: 8,
+    title: "Daihatsu",
+    image: daihatsu,
+    description: "We have taken the time to inventory all wrecked and salvaged Daihatsu vehicles to make sure you have instant access to any used Daihatsu parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+    models: [
+      { name: "Charade", path: "/models/daihatsu-charade" },
+      { name: "Rocky", path: "/models/daihatsu-rocky" }
+    ]
+  },
+9:
+  {
+    id: 9,
+    title: "Dodge",
+    image: dodge,
+    description: "We have taken the time to inventory all wrecked and salvaged Dodge vehicles to make sure you have instant access to any used Dodge parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Dodge is an American Auto Manufacturer, and was founded by the 'Dodge Brothers' Horace and John in the early 1900's. At first, Dodge was a supplier of auto parts for all the Detroit, MI based auto makers. The started making automobiles in 1914.",
+    models: [
+      { name: "100", path: "/models/dodge-100" },
+      { name: "150", path: "/models/dodge-150" },
+      { name: "1500", path: "/models/dodge-1500" },
+      { name: "200", path: "/models/dodge-200" },
+      { name: "250", path: "/models/dodge-250" },
+      { name: "2500", path: "/models/dodge-2500" },
+      { name: "300 Pickup", path: "/models/dodge-300-pickup" },
+      { name: "350", path: "/models/dodge-350" },
+      { name: "3500", path: "/models/dodge-3500" },
+      { name: "400", path: "/models/dodge-400" },
+      { name: "450", path: "/models/dodge-450" },
+      { name: "600", path: "/models/dodge-600" },
+      { name: "Aries", path: "/models/dodge-aries" },
+      { name: "Avenger", path: "/models/dodge-avenger" },
+      { name: "Caliber", path: "/models/dodge-caliber" },
+      { name: "Caravan", path: "/models/dodge-caravan" },
+      { name: "Challenger", path: "/models/dodge-challenger" },
+      { name: "Charger", path: "/models/dodge-charger" },
+      { name: "Colt", path: "/models/dodge-colt" },
+      { name: "D50", path: "/models/dodge-d50" },
+      { name: "Dakota", path: "/models/dodge-dakota" },
+      { name: "Daytona", path: "/models/dodge-daytona" },
+      { name: "Diplomat", path: "/models/dodge-diplomat" },
+      { name: "Durango", path: "/models/dodge-durango" },
+      { name: "Dynasty", path: "/models/dodge-dynasty" },
+      { name: "Forward Control", path: "/models/dodge-forward-control" },
+      { name: "Imperial", path: "/models/dodge-imperial" },
+      { name: "Intrepid", path: "/models/dodge-intrepid" },
+      { name: "Journey", path: "/models/dodge-journey" },
+      { name: "Lancer", path: "/models/dodge-lancer" },
+      { name: "Laser", path: "/models/dodge-laser" },
+      { name: "Magnum", path: "/models/dodge-magnum" },
+      { name: "Mirada", path: "/models/dodge-mirada" },
+      { name: "Monaco", path: "/models/dodge-monaco" },
+      { name: "Nitro", path: "/models/dodge-nitro" },
+      { name: "Omni", path: "/models/dodge-omni" },
+      { name: "Passenger", path: "/models/dodge-passenger" },
+      { name: "Ram", path: "/models/dodge-ram" },
+      { name: "Rampage", path: "/models/dodge-rampage" },
+      { name: "Shadow", path: "/models/dodge-shadow" },
+      { name: "Spirit", path: "/models/dodge-spirit" },
+      { name: "Sprinter", path: "/models/dodge-sprinter" },
+      { name: "Stealth", path: "/models/dodge-stealth" },
+      { name: "Stratus", path: "/models/dodge-stratus" },
+      { name: "Valiant", path: "/models/dodge-valiant" },
+      { name: "Voyage", path: "/models/dodge-voyage" }
+    ]
+  },
+10:
+  {
+    id: 10,
+    title: "Eagle",
+    image: eagle,
+    description: "We have taken the time to inventory all wrecked and salvaged Eagle vehicles to make sure you have instant access to any used Eagle parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+    models: [
+      { name: "100 Van", path: "/models/eagle-100-van" },
+      { name: "150 Van", path: "/models/eagle-150-van" },
+      { name: "1500 Van", path: "/models/eagle-1500-van" },
+      { name: "200", path: "/models/eagle-200" },
+      { name: "200 Van", path: "/models/eagle-200-van" },
+      { name: "2000 GTX", path: "/models/eagle-2000-gtx" },
+      { name: "250 Van", path: "/models/eagle-250-van" },
+      { name: "2500 Van", path: "/models/eagle-2500-van" },
+      { name: "300 Van", path: "/models/eagle-300-van" },
+      { name: "350 Van", path: "/models/eagle-350-van" },
+      { name: "3500 Van", path: "/models/eagle-3500-van" },
+      { name: "Compass", path: "/models/eagle-compass" },
+      { name: "Premier", path: "/models/eagle-premier" },
+      { name: "Promaster 1500 Van", path: "/models/eagle-promaster-1500-van" },
+      { name: "Promaster 2500 Van", path: "/models/eagle-promaster-2500-van" },
+      { name: "Promaster 3500 Van", path: "/models/eagle-promaster-3500-van" },
+      { name: "Promaster City", path: "/models/eagle-promaster-city" },
+      { name: "Sprinter 3500", path: "/models/eagle-sprinter-3500" },
+      { name: "Vipe", path: "/models/eagle-vipe" },
+      { name: "Summit", path: "/models/eagle-summit" },
+      { name: "Talon", path: "/models/eagle-talon" }
+    ]
+  },
+11:
+  {
+    id: 11,
+    title: "Ford",
+    image: ford,
+    description: "We have taken the time to inventory all wrecked and salvaged Ford vehicles to make sure you have instant access to any used Ford parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Ford was founded by Henry Ford, and was incorporated June 1903. The company sells automobiles and they sell luxury automobiles under the 'LINCOLN' brand name. It is the 2nd largest auto maker in the United States.",
+    models: [
+      { name: "Aerostar", path: "/models/ford-aerostar" },
+      { name: "Aspire", path: "/models/ford-aspire" },
+      { name: "Bronco", path: "/models/ford-bronco" },
+      { name: "CMAX", path: "/models/ford-cmax" },
+      { name: "Contour", path: "/models/ford-contour" },
+      { name: "Crown Victoria", path: "/models/ford-crown-victoria" },
+      { name: "E100 Van", path: "/models/ford-e100-van" },
+      { name: "E150 Van", path: "/models/ford-e150-van" },
+      { name: "E200 Van", path: "/models/ford-e200-van" },
+      { name: "E250 Van", path: "/models/ford-e250-van" },
+      { name: "E300 Van", path: "/models/ford-e300-van" },
+      { name: "E350 Van", path: "/models/ford-e350-van" },
+      { name: "Edge", path: "/models/ford-edge" },
+      { name: "Escape", path: "/models/ford-escape" },
+      { name: "Escort", path: "/models/ford-escort" },
+      { name: "Excursion", path: "/models/ford-excursion" },
+      { name: "Exp", path: "/models/ford-exp" },
+      { name: "Expedition", path: "/models/ford-expedition" },
+      { name: "Explorer", path: "/models/ford-explorer" },
+      { name: "F100", path: "/models/ford-f100" },
+      { name: "F150", path: "/models/ford-f150" },
+      { name: "F150 Raptor", path: "/models/ford-f150-raptor" },
+      { name: "F250", path: "/models/ford-f250" },
+      { name: "F250SD", path: "/models/ford-f250sd" },
+      { name: "F350", path: "/models/ford-f350" },
+      { name: "F350SD", path: "/models/ford-f350sd" },
+      { name: "F450", path: "/models/ford-f450" },
+      { name: "F450SD", path: "/models/ford-f450sd" },
+      { name: "F550SD", path: "/models/ford-f550sd" },
+      { name: "Fairlane", path: "/models/ford-fairlane" },
+      { name: "Fairmont", path: "/models/ford-fairmont" },
+      { name: "Falcon", path: "/models/ford-falcon" },
+      { name: "Festiva", path: "/models/ford-festiva" },
+      { name: "Fiesta", path: "/models/ford-fiesta" },
+      { name: "Five Hundred", path: "/models/ford-five-hundred" },
+      { name: "Flex", path: "/models/ford-flex" },
+      { name: "Focus", path: "/models/ford-focus" },
+      { name: "GT", path: "/models/ford-gt" },
+      { name: "Forward Control", path: "/models/ford-forward-control" },
+      { name: "Freestar", path: "/models/ford-freestar" },
+      { name: "Freestyle", path: "/models/ford-freestyle" },
+      { name: "Fusion", path: "/models/ford-fusion" },
+      { name: "Granada", path: "/models/ford-granada" },
+      { name: "LTD", path: "/models/ford-ltd" },
+      { name: "Maverick", path: "/models/ford-maverick" },
+      { name: "Mustang", path: "/models/ford-mustang" },
+      { name: "Probe", path: "/models/ford-probe" },
+      { name: "Ranger", path: "/models/ford-ranger" },
+      { name: "Taurus", path: "/models/ford-taurus" },
+      { name: "Tempo", path: "/models/ford-tempo" },
+      { name: "Thunderbird", path: "/models/ford-thunderbird" },
+      { name: "Torino", path: "/models/ford-torino" },
+      { name: "TRANSIT 150", path: "/models/ford-transit-150" },
+      { name: "TRANSIT 250", path: "/models/ford-transit-250" },
+      { name: "TRANSIT 350", path: "/models/ford-transit-350" },
+      { name: "Transit Connect", path: "/models/ford-transit-connect" },
+      { name: "Windstar", path: "/models/ford-windstar" }
+    ]
+  },
+12:
+  {
+    id: 12,
+    title: "GMC",
+    image: gmc,
+    description: "We have taken the time to inventory all wrecked and salvaged GMC vehicles to make sure you have instant access to any used GMC parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+    models: [
+      { name: "Jimmy S15", path: "/models/gmc-jimmy-s15" },
+      { name: "Safari", path: "/models/gmc-safari" },
+      { name: "Sierra 1500", path: "/models/gmc-sierra-1500" },
+      { name: "Sierra 2500", path: "/models/gmc-sierra-2500" },
+      { name: "Sierra 3500", path: "/models/gmc-sierra-3500" },
+      { name: "Sierra Denali 1500", path: "/models/gmc-sierra-denali-1500" },
+      { name: "Sierra Denali 2500", path: "/models/gmc-sierra-denali-2500" },
+      { name: "Sierra Denali 3500", path: "/models/gmc-sierra-denali-3500" },
+      { name: "Sonoma", path: "/models/gmc-sonoma" },
+      { name: "Syclone", path: "/models/gmc-syclone" },
+      { name: "Terrain", path: "/models/gmc-terrain" },
+      { name: "Typhoon", path: "/models/gmc-typhoon" },
+      { name: "Yukon XL 1500", path: "/models/gmc-yukon-xl-1500" },
+      { name: "Yukon XL 2500", path: "/models/gmc-yukon-xl-2500" },
+      { name: "1000", path: "/models/gmc-1000" },
+      { name: "1000 Van", path: "/models/gmc-1000-van" },
+      { name: "1500 Van", path: "/models/gmc-1500-van" },
+      { name: "20 Van", path: "/models/gmc-20-van" },
+      { name: "2000", path: "/models/gmc-2000" },
+      { name: "2500 Van", path: "/models/gmc-2500-van" },
+      { name: "30 Van", path: "/models/gmc-30-van" },
+      { name: "3500 Pickup", path: "/models/gmc-3500-pickup" },
+      { name: "3500 Van", path: "/models/gmc-3500-van" },
+      { name: "6000", path: "/models/gmc-6000" },
+      { name: "Acadia", path: "/models/gmc-acadia" },
+      { name: "Canyon", path: "/models/gmc-canyon" },
+      { name: "Denali", path: "/models/gmc-denali" },
+      { name: "Envoy", path: "/models/gmc-envoy" },
+      { name: "Envoy XL", path: "/models/gmc-envoy-xl" },
+      { name: "Envoy XUV", path: "/models/gmc-envoy-xuv" },
+      { name: "1000 Pickup", path: "/models/gmc-1000-pickup" },
+      { name: "1500 Pickup", path: "/models/gmc-1500-pickup" }
+    ]
+  },
+13:
+  {
+    id: 13,
+    title: "Honda",
+    image: honda,
+    description: "We have taken the time to inventory all wrecked and salvaged Honda vehicles to make sure you have instant access to any used GMC parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. American Honda Motor Company, the North American subsidiary of Japan's Honda Motor Company, has a significant presence in the United States, established in 1959. It is responsible for distributing and marketing Honda and Acura vehicles, along with powersports, power equipment, and marine products. The company has made substantial investments in the U.S., with a strong focus on American manufacturing, including 12 manufacturing plants in six states, and employs tens of thousands of associates",
+    models: [
+      { name: "Accord", path: "/models/honda-accord" },
+      { name: "Civic", path: "/models/honda-civic" },
+      { name: "CRV", path: "/models/honda-crv" },
+      { name: "Crosstour", path: "/models/honda-crosstour" },
+      { name: "CRX", path: "/models/honda-crx" },
+      { name: "Del Sol", path: "/models/honda-del-sol" },
+      { name: "Element", path: "/models/honda-element" },
+      { name: "FIT", path: "/models/honda-fit" },
+      { name: "Insight", path: "/models/honda-insight" },
+      { name: "Odyssey", path: "/models/honda-odyssey" },
+      { name: "Passport", path: "/models/honda-passport" },
+      { name: "Pilot", path: "/models/honda-pilot" },
+      { name: "Prelude", path: "/models/honda-prelude" },
+      { name: "Ridgeline", path: "/models/honda-ridgeline" },
+      { name: "S2000", path: "/models/honda-s2000" }
+    ]
+  },
+14:
+  {
+    id: 14,
+    title: "Hyundai",
+    image: hyundai,
+    description: "We have taken the time to inventory all wrecked and salvaged Hyundai vehicles to make sure you have instant access to any used Hyundai parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Hyundai has operated in the United States since 1986, starting with the affordable Excel model and initially facing quality issues that led to a decline in sales. In response, Hyundai significantly invested in improving quality, design, and technology, leading to a more competitive lineup. The company has since grown to include a full range of vehicles, extensive manufacturing and R&D facilities in the U.S. (such as plants in Alabama and Georgia, and a design centre in California), and has made substantial investments in future technologies like autonomous driving,",
+    models: [
+      { name: "Accent", path: "/models/hyundai-accent" },
+      { name: "Azera", path: "/models/hyundai-azera" },
+      { name: "Elantra", path: "/models/hyundai-elantra" },
+      { name: "Entourage", path: "/models/hyundai-entourage" },
+      { name: "EQUUS", path: "/models/hyundai-equus" },
+      { name: "Excel", path: "/models/hyundai-excel" },
+      { name: "Genesis", path: "/models/hyundai-genesis" },
+      { name: "Pony", path: "/models/hyundai-pony" },
+      { name: "Santa Fe", path: "/models/hyundai-santa-fe" },
+      { name: "Scoupe", path: "/models/hyundai-scoupe" },
+      { name: "Sonata", path: "/models/hyundai-sonata" },
+      { name: "Stellar", path: "/models/hyundai-stellar" },
+      { name: "Tiburon", path: "/models/hyundai-tiburon" },
+      { name: "Tucson", path: "/models/hyundai-tucson" },
+      { name: "VELOSTER", path: "/models/hyundai-veloster" },
+      { name: "Veracruz", path: "/models/hyundai-veracruz" },
+      { name: "XG", path: "/models/hyundai-xg" }
+    ]
+  },
+15:
+  {
+    id: 15,
+    title: "Infiniti",
+    image: infiniti,
+    description: "We have taken the time to inventory all wrecked and salvaged Infiniti vehicles to make sure you have instant access to any used Infiniti parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Infiniti is the luxury vehicle division of the Japanese automaker Nissan, which launched in the United States in 1989 to compete in the premium car market. The brand was created around the same time as Acura and Lexus as a response to Japanese car companies wanting to sell more expensive vehicles in the U.S. despite import restrictions. Today, Infiniti USA sells a range of luxury SUVs, crossovers, sedans, and coupes, such as the QX60, QX80, and Q50",
+    models: [
+      { name: "EX35", path: "/models/infiniti-ex35" },
+      { name: "EX37", path: "/models/infiniti-ex37" },
+      { name: "FX", path: "/models/infiniti-fx" },
+      { name: "G20", path: "/models/infiniti-g20" },
+      { name: "G25", path: "/models/infiniti-g25" },
+      { name: "G35", path: "/models/infiniti-g35" },
+      { name: "G37", path: "/models/infiniti-g37" },
+      { name: "I30", path: "/models/infiniti-i30" },
+      { name: "I35", path: "/models/infiniti-i35" },
+      { name: "J30", path: "/models/infiniti-j30" },
+      { name: "JX35", path: "/models/infiniti-jx35" },
+      { name: "M30", path: "/models/infiniti-m30" },
+      { name: "M35", path: "/models/infiniti-m35" },
+      { name: "M37", path: "/models/infiniti-m37" },
+      { name: "M45", path: "/models/infiniti-m45" },
+      { name: "M56", path: "/models/infiniti-m56" },
+      { name: "Q40", path: "/models/infiniti-q40" },
+      { name: "Q45", path: "/models/infiniti-q45" },
+      { name: "Q50", path: "/models/infiniti-q50" },
+      { name: "Q60", path: "/models/infiniti-q60" },
+      { name: "Q70", path: "/models/infiniti-q70" },
+      { name: "QX4", path: "/models/infiniti-qx4" },
+      { name: "QX50", path: "/models/infiniti-qx50" },
+      { name: "QX56", path: "/models/infiniti-qx56" },
+      { name: "QX60", path: "/models/infiniti-qx60" },
+      { name: "QX70", path: "/models/infiniti-qx70" },
+      { name: "QX80", path: "/models/infiniti-qx80" }
+    ]
+  },
+16:
+{
+id: 16,
+title: "Isuzu",
+image: isuzu,
+description: "We have taken the time to inventory all wrecked and salvaged Isuzu vehicles to make sure you have instant access to any used Isuzu parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Isuzu's presence in the United States is now primarily focused on its commercial truck division, which has been the best-selling low-cab-forward truck in the country since 1986. The company previously sold consumer vehicles but officially exited the U.S. passenger market in 2009, though some of its last consumer vehicles were rebadged General Motors models",
+models: [
+{ name: "Amigo", path: "/models/isuzu-amigo" },
+{ name: "Ascender", path: "/models/isuzu-ascender" },
+{ name: "Axiom", path: "/models/isuzu-axiom" },
+{ name: "Hombre", path: "/models/isuzu-hombre" },
+{ name: "I280", path: "/models/isuzu-i280" },
+{ name: "I290", path: "/models/isuzu-i290" },
+{ name: "I350", path: "/models/isuzu-i350" },
+{ name: "I370", path: "/models/isuzu-i370" },
+{ name: "Imark", path: "/models/isuzu-imark" },
+{ name: "Impulse", path: "/models/isuzu-impulse" },
+{ name: "Oasis", path: "/models/isuzu-oasis" },
+{ name: "Optima", path: "/models/isuzu-optima" },
+{ name: "Pickup", path: "/models/isuzu-pickup" },
+{ name: "Rodeo", path: "/models/isuzu-rodeo" },
+{ name: "Stylus", path: "/models/isuzu-stylus" },
+{ name: "Trooper", path: "/models/isuzu-trooper" }
+]
+},
+17:
+{
+id: 17,
+title: "Jaguar",
+image: jaguar,
+description: "We have taken the time to inventory all wrecked and salvaged Jaguar vehicles to make sure you have instant access to any used Jaguar parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Jaguar is undergoing a major transformation, moving away from its current lineup to focus entirely on new, all-electric vehicles starting in 2026. This comes after a period of declining sales in the U.S., which fell significantly from a peak in 2017 due to factors like an aging model line and struggles to compete with rivals. Owned by India's Tata Motors, the brand is re-launching with a new logo, a fresh brand identity, and a strategy to regain relevance in the luxury market",
+models: [
+{ name: "F TYPE", path: "/models/jaguar-f-type" },
+{ name: "S Type", path: "/models/jaguar-s-type" },
+{ name: "X Type", path: "/models/jaguar-x-type" },
+{ name: "XF", path: "/models/jaguar-xf" },
+{ name: "XJ", path: "/models/jaguar-xj" },
+{ name: "XJ12", path: "/models/jaguar-xj12" },
+{ name: "XJ6", path: "/models/jaguar-xj6" },
+{ name: "XJ8", path: "/models/jaguar-xj8" },
+{ name: "XJS", path: "/models/jaguar-xjs" },
+{ name: "XK", path: "/models/jaguar-xk" },
+{ name: "XK8", path: "/models/jaguar-xk8" },
+{ name: "XKE", path: "/models/jaguar-xke" }
+]
+},
+18:
+{
+id: 18,
+title: "Jeep",
+image: jeep,
+description: "We have taken the time to inventory all wrecked and salvaged Jeep vehicles to make sure you have instant access to any used Jeep parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Jeep's motor options in the United States include the 3.6L Pentastar V6, 2.0L turbocharged inline-4, and the PHEV 4xe, which combines a 2.0L turbo with electric motors. The brand is now owned by the multinational company Stellantis, but it has a deep history in the U.S. and continues to manufacture many of its vehicles and components in the United States",
+models: [
+{ name: "Cherokee", path: "/models/jeep-cherokee" },
+{ name: "CJ Series", path: "/models/jeep-cj-series" },
+{ name: "Comanche", path: "/models/jeep-comanche" },
+{ name: "Commander", path: "/models/jeep-commander" },
+{ name: "DJ", path: "/models/jeep-dj" },
+{ name: "FC", path: "/models/jeep-fc" },
+{ name: "Grand Cherokee", path: "/models/jeep-grand-cherokee" },
+{ name: "Grand Wagoneer", path: "/models/jeep-grand-wagoneer" },
+{ name: "Liberty", path: "/models/jeep-liberty" },
+{ name: "Patriot", path: "/models/jeep-patriot" },
+{ name: "Station Wagon", path: "/models/jeep-station-wagon" },
+{ name: "Truck", path: "/models/jeep-truck" },
+{ name: "Wrangler", path: "/models/jeep-wrangler" }
+]
+},
+19:
+{
+id: 19,
+title: "Kia",
+image: kia,
+description: "We have taken the time to inventory all wrecked and salvaged Kia vehicles to make sure you have instant access to any used Kia parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Kia America is the U.S. sales, marketing, and distribution arm of the South Korean automaker, headquartered in Irvine, California. The company has been in the U.S. since 1992, now offers a full lineup of vehicles through a large dealer network, and has a major manufacturing plant in West Point, Georgia, which produces popular models like the Sorento and Telluride. Kia is known for its technology-rich vehicles, industry-leading warranty, and significant brand turnaround, which included a rebrand and the introduction of successful models like the Telluride,",
+models: [
+{ name: "Amanti", path: "/models/kia-amanti" },
+{ name: "Borrego", path: "/models/kia-borrego" },
+{ name: "CADENZA", path: "/models/kia-cadenza" },
+{ name: "Forte", path: "/models/kia-forte" },
+{ name: "K900", path: "/models/kia-k900" },
+{ name: "Magentis", path: "/models/kia-magentis" },
+{ name: "Optima", path: "/models/kia-optima" },
+{ name: "Rio", path: "/models/kia-rio" },
+{ name: "Rondo", path: "/models/kia-rondo" },
+{ name: "Sedona", path: "/models/kia-sedona" },
+{ name: "Sephia", path: "/models/kia-sephia" },
+{ name: "Sorento", path: "/models/kia-sorento" },
+{ name: "Soul", path: "/models/kia-soul" },
+{ name: "Spectra", path: "/models/kia-spectra" },
+{ name: "Sportage", path: "/models/kia-sportage" }
+]
+},
+20:
+{
+id: 20,
+title: "Land Rover",
+image: landrover,
+description: "We have taken the time to inventory all wrecked and salvaged Landrover vehicles to make sure you have instant access to any used Landrover parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Land Rover is a British SUV manufacturer, owned by India's Tata Motors, that sells a range of vehicles in the United States, from luxury SUVs like the Range Rover to rugged vehicles like the Defender. Officially sold in the U.S. since 1987, the brand focuses on a combination of style and capability, competing with other luxury brands like BMW and Mercedes-Benz. Recent sales data shows strong performance for models like the Defender and Range Rover but underperformance for the Discovery and Discovery Sport",
+models: [
+{ name: "DISCOVERY SPORT", path: "/models/landrover-discovery-sport" },
+{ name: "EVOQUE", path: "/models/landrover-evoque" },
+{ name: "Freelander", path: "/models/landrover-freelander" },
+{ name: "LR2", path: "/models/landrover-lr2" },
+{ name: "LR3", path: "/models/landrover-lr3" },
+{ name: "LR4", path: "/models/landrover-lr4" },
+{ name: "Range Rover", path: "/models/landrover-range-rover" },
+{ name: "Range Rover Sport", path: "/models/landrover-range-rover-sport" },
+{ name: "STERLING", path: "/models/landrover-sterling" }
+]
+},
+21:
+{
+id: 21,
+title: "Lexus",
+image: lexus,
+description: "We have taken the time to inventory all wrecked and salvaged Lexus vehicles to make sure you have instant access to any used Lexus parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Lexus is Toyota's luxury vehicle division, first launched in the US in 1989, and is now a major player in the American luxury car market, known for its focus on hospitality, craftsmanship, design, and technology. While the name's etymology is debated, the brand's identity is built on creating a luxurious and high-tech customer experience, exemplified by the Japanese concept of Omotenashi (hospitality). Several Lexus models are manufactured in the United States, including the ES in Kentucky and some RX models in Canada",
+models: [
+{ name: "ES250", path: "/models/lexus-es250" },
+{ name: "ES300", path: "/models/lexus-es300" },
+{ name: "ES330", path: "/models/lexus-es330" },
+{ name: "ES350", path: "/models/lexus-es350" },
+{ name: "GS300", path: "/models/lexus-gs300" },
+{ name: "GS350", path: "/models/lexus-gs350" },
+{ name: "GS400", path: "/models/lexus-gs400" },
+{ name: "GS430", path: "/models/lexus-gs430" },
+{ name: "GS460", path: "/models/lexus-gs460" },
+{ name: "GX460", path: "/models/lexus-gx460" },
+{ name: "GX470", path: "/models/lexus-gx470" },
+{ name: "IS F", path: "/models/lexus-is-f" },
+{ name: "IS250", path: "/models/lexus-is250" },
+{ name: "IS300", path: "/models/lexus-is300" },
+{ name: "IS350", path: "/models/lexus-is350" },
+{ name: "LS400", path: "/models/lexus-ls400" },
+{ name: "LS430", path: "/models/lexus-ls430" },
+{ name: "LS460", path: "/models/lexus-ls460" },
+{ name: "LX450", path: "/models/lexus-lx450" },
+{ name: "LX470", path: "/models/lexus-lx470" },
+{ name: "LX570", path: "/models/lexus-lx570" },
+{ name: "RC 350", path: "/models/lexus-rc-350" },
+{ name: "RX300", path: "/models/lexus-rx300" },
+{ name: "RX330", path: "/models/lexus-rx330" },
+{ name: "RX350", path: "/models/lexus-rx350" },
+{ name: "RX400H", path: "/models/lexus-rx400h" },
+{ name: "RX450H", path: "/models/lexus-rx450h" },
+{ name: "SC", path: "/models/lexus-sc" },
+{ name: "SC430", path: "/models/lexus-sc430" }
+]
+},
+22:
+{
+id: 22,
+title: "Lincoln",
+image: lincoln,
+description: "We have taken the time to inventory all wrecked and salvaged Lincoln vehicles to make sure you have instant access to any used Lincoln parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Lincoln is the luxury vehicle division of the American company Ford Motor Company, known for its upscale SUVs and trucks, and has been a major American luxury brand since being founded by Henry Leland in 1917 and purchased by Ford in 1922. It has a rich history, including a special relationship with the U.S. presidency, and is currently focusing on advanced technology and electrification, while offering a lineup of SUVs like the Navigator, Aviator, and Corsair",
+models: [
+{ name: "MKS", path: "/models/lincoln-mks" },
+{ name: "MKT", path: "/models/lincoln-mkt" },
+{ name: "MKX", path: "/models/lincoln-mkx" },
+{ name: "MKZ", path: "/models/lincoln-mkz" },
+{ name: "Aviator", path: "/models/lincoln-aviator" },
+{ name: "Blackwood", path: "/models/lincoln-blackwood" },
+{ name: "Continental", path: "/models/lincoln-continental" },
+{ name: "LS", path: "/models/lincoln-ls" },
+{ name: "LT", path: "/models/lincoln-lt" },
+{ name: "Mark Series", path: "/models/lincoln-mark-series" },
+{ name: "Navigator", path: "/models/lincoln-navigator" },
+{ name: "Town Car", path: "/models/lincoln-town-car" },
+{ name: "Zephyr", path: "/models/lincoln-zephyr" }
+]
+},
+23:
+{
+id: 23,
+title: "Mazda",
+image: mazda,
+description: "We have taken the time to inventory all wrecked and salvaged Mazda vehicles to make sure you have instant access to any used Mazda parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Mazda has been a presence in the United States since formally entering the market in 1970, though its North American operations were consolidated in 1997. The company's U.S. headquarters are in Irvine, California, and its regional sales and marketing efforts have achieved significant success, with 2021 marking its best sales year since 1994. Despite its historical challenges with fuel-efficient rotary engines, Mazda continues to operate in the U.S. with a manufacturing plant in Alabama",
+models: [
+{ name: "323", path: "/models/mazda-323" },
+{ name: "5", path: "/models/mazda-5" },
+{ name: "6", path: "/models/mazda-6" },
+{ name: "626", path: "/models/mazda-626" },
+{ name: "808", path: "/models/mazda-808" },
+{ name: "929", path: "/models/mazda-929" },
+{ name: "B1600", path: "/models/mazda-b1600" },
+{ name: "B1800", path: "/models/mazda-b1800" },
+{ name: "B2000", path: "/models/mazda-b2000" },
+{ name: "B2200", path: "/models/mazda-b2200" },
+{ name: "B2300", path: "/models/mazda-b2300" },
+{ name: "B2500", path: "/models/mazda-b2500" },
+{ name: "B2600", path: "/models/mazda-b2600" },
+{ name: "B3000", path: "/models/mazda-b3000" },
+{ name: "B4000", path: "/models/mazda-b4000" },
+{ name: "CX5", path: "/models/mazda-cx5" },
+{ name: "CX7", path: "/models/mazda-cx7" },
+{ name: "CX9", path: "/models/mazda-cx9" },
+{ name: "Millenia", path: "/models/mazda-millenia" },
+{ name: "MPV", path: "/models/mazda-mpv" },
+{ name: "MX3", path: "/models/mazda-mx3" },
+{ name: "MX5", path: "/models/mazda-mx5" },
+{ name: "MX6", path: "/models/mazda-mx6" },
+{ name: "Navajo", path: "/models/mazda-navajo" },
+{ name: "Protege", path: "/models/mazda-protege" },
+{ name: "RX7", path: "/models/mazda-rx7" },
+{ name: "RX8", path: "/models/mazda-rx8" },
+{ name: "Tribute", path: "/models/mazda-tribute" },
+{ name: "3", path: "/models/mazda-3" }
+]
+},
+24:
+{
+id: 24,
+title: "Mercedes",
+image: benz,
+description: "We have taken the time to inventory all wrecked and salvaged Mercedes vehicles to make sure you have instant access to any used Mercedes parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Mercedes-Benz in the United States is operated by Mercedes-Benz USA (MBUSA), headquartered in Atlanta, Georgia, which handles sales, marketing, and customer service. The U.S. is the second-largest market for the company, which has a significant manufacturing presence in Alabama through its plant, Mercedes-Benz U.S. International (MBUSI), that produces SUVs like the GLE, GLS, and EQ models. Additionally, the company has a Research & Development center in California, focusing on innovation and adapting technology for the North American market",
+models: [
+{ name: "190", path: "/models/mercedes-190" },
+{ name: "220", path: "/models/mercedes-220" },
+{ name: "230/4", path: "/models/mercedes-230-4" },
+{ name: "240D", path: "/models/mercedes-240d" },
+{ name: "250", path: "/models/mercedes-250" },
+{ name: "260E", path: "/models/mercedes-260e" },
+{ name: "280", path: "/models/mercedes-280" },
+{ name: "300D", path: "/models/mercedes-300d" },
+{ name: "300E", path: "/models/mercedes-300e" },
+{ name: "380", path: "/models/mercedes-380" },
+{ name: "400", path: "/models/mercedes-400" },
+{ name: "420", path: "/models/mercedes-420" },
+{ name: "560", path: "/models/mercedes-560" },
+{ name: "600", path: "/models/mercedes-600" },
+{ name: "B Class", path: "/models/mercedes-b-class" },
+{ name: "C Class", path: "/models/mercedes-c-class" },
+{ name: "CL Class", path: "/models/mercedes-cl-class" },
+{ name: "CLA Class", path: "/models/mercedes-cla-class" },
+{ name: "CLK", path: "/models/mercedes-clk" },
+{ name: "CLS Class", path: "/models/mercedes-cls-class" },
+{ name: "E Class", path: "/models/mercedes-e-class" },
+{ name: "G Class", path: "/models/mercedes-g-class" },
+{ name: "GL Class", path: "/models/mercedes-gl-class" },
+{ name: "GLA Class", path: "/models/mercedes-gla-class" },
+{ name: "GLK Class", path: "/models/mercedes-glk-class" },
+{ name: "ML Class", path: "/models/mercedes-ml-class" },
+{ name: "R Class", path: "/models/mercedes-r-class" },
+{ name: "S Class", path: "/models/mercedes-s-class" },
+{ name: "SLK", path: "/models/mercedes-slk" },
+{ name: "SLR", path: "/models/mercedes-slr" },
+{ name: "SLS", path: "/models/mercedes-sls" },
+{ name: "Smart", path: "/models/mercedes-smart" },
+{ name: "Sprinter 2500", path: "/models/mercedes-sprinter-2500" },
+{ name: "Sprinter 3500", path: "/models/mercedes-sprinter-3500" }
+]
+},
+25:
+{
+id: 25,
+title: "Mercury",
+image: mercury,
+description: "We have taken the time to inventory all wrecked and salvaged Mercury vehicles to make sure you have instant access to any used Mercury parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Mercury is a well-known brand in the United States, primarily recognized for its marine engines through its division, Mercury Marine, a major player in outboard and sterndrive motors for both recreational and high-performance use. It also historically produced a separate brand of automobiles under the Ford Motor Company, which was a medium-priced car brand that existed from 1939 to 2011",
+models: [
+{ name: "Bobcat", path: "/models/mercury-bobcat" },
+{ name: "Capri", path: "/models/mercury-capri" },
+{ name: "Cougar", path: "/models/mercury-cougar" },
+{ name: "Grand Marquis", path: "/models/mercury-grand-marquis" },
+{ name: "Marauder", path: "/models/mercury-marauder" },
+{ name: "Mariner", path: "/models/mercury-mariner" },
+{ name: "Marquis", path: "/models/mercury-marquis" },
+{ name: "Merkur", path: "/models/mercury-merkur" },
+{ name: "Milan", path: "/models/mercury-milan" },
+{ name: "Monarch", path: "/models/mercury-monarch" },
+{ name: "Montego", path: "/models/mercury-montego" },
+{ name: "Monterey", path: "/models/mercury-monterey" },
+{ name: "Mountaineer", path: "/models/mercury-mountaineer" },
+{ name: "Mystique", path: "/models/mercury-mystique" },
+{ name: "Sable", path: "/models/mercury-sable" },
+{ name: "Topaz", path: "/models/mercury-topaz" },
+{ name: "Tracer", path: "/models/mercury-tracer" },
+{ name: "Villager", path: "/models/mercury-villager" }
+]
+},
+26:
+{
+id: 26,
+title: "Mini Cooper",
+image: minicooper,
+description: "We have taken the time to inventory all wrecked and salvaged Mini cooper vehicles to make sure you have instant access to any used Mini cooper parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. MINI Cooper is a British brand, owned by the BMW Group, that is popular in the United States for its combination of iconic style and 'go-kart' like handling. MINI USA operates as a business unit of BMW of North America, with a network of dealers across the country. The brand has expanded its model range beyond the classic three-door to include the four-door and convertible models, as well as the larger Countryman, to appeal to more customers, and continues to innovate with electrified options",
+models: [
+{ name: "Clubman", path: "/models/mini-cooper-clubman" },
+{ name: "Countryman", path: "/models/mini-cooper-countryman" },
+{ name: "Mini", path: "/models/mini-cooper-mini" }
+]
+},
+27:
+{
+id: 27,
+title: "Mitsubishi",
+image: mitsubishi,
+description: "We have taken the time to inventory all wrecked and salvaged Mitsubishi vehicles to make sure you have instant access to any used Mitsubishi parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Mitsubishi has operated in the United States since the 1980s, initially selling cars through a partnership with Chrysler before establishing its own brand in 1982. Mitsubishi Motors North America, Inc. is the U.S. subsidiary, which manages sales and research and development through a network of approximately 350 dealers. While the company has faced challenges, it has maintained its presence by focusing on a lineup of SUVs and crossovers",
+models: [
+{ name: "3000GT", path: "/models/mitsubishi-3000gt" },
+{ name: "Cordia", path: "/models/mitsubishi-cordia" },
+{ name: "Diamante", path: "/models/mitsubishi-diamante" },
+{ name: "Eclipse", path: "/models/mitsubishi-eclipse" },
+{ name: "Endeavor", path: "/models/mitsubishi-endeavor" },
+{ name: "Expo", path: "/models/mitsubishi-expo" },
+{ name: "Galant", path: "/models/mitsubishi-galant" },
+{ name: "Lancer", path: "/models/mitsubishi-lancer" },
+{ name: "Mirage", path: "/models/mitsubishi-mirage" },
+{ name: "Montero", path: "/models/mitsubishi-montero" },
+{ name: "Montero Sport", path: "/models/mitsubishi-montero-sport" },
+{ name: "Outlander", path: "/models/mitsubishi-outlander" },
+{ name: "Pickup", path: "/models/mitsubishi-pickup" },
+{ name: "Raider", path: "/models/mitsubishi-raider" },
+{ name: "Sigma", path: "/models/mitsubishi-sigma" },
+{ name: "Starion", path: "/models/mitsubishi-starion" },
+{ name: "Van", path: "/models/mitsubishi-van" }
+]
+},
+28:
+{
+id: 28,
+title: "Nissan",
+image: nissan,
+description: "We have taken the time to inventory all wrecked and salvaged Nissan vehicles to make sure you have instant access to any used Nissan parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Nissan in the United States is managed by Nissan North America, Inc., a subsidiary of Japan's Nissan Motor Corporation, with its headquarters in Smyrna, Tennessee. The company sells both Nissan and Infiniti brand vehicles through a large dealer network and has significant manufacturing operations in the U.S., with popular models like the Rogue, Altima, Sentra, and Frontier being produced domestically. The company first entered the U.S. market in the 1950s, initially as the Datsun brand, and has since grown to become a major automotive player in North America",
+models: [
+{ name: "200SX", path: "/models/nissan-200sx" },
+{ name: "240SX", path: "/models/nissan-240sx" },
+{ name: "280Z", path: "/models/nissan-280z" },
+{ name: "280ZX", path: "/models/nissan-280zx" },
+{ name: "300ZX", path: "/models/nissan-300zx" },
+{ name: "350Z", path: "/models/nissan-350z" },
+{ name: "370Z", path: "/models/nissan-370z" },
+{ name: "Altima", path: "/models/nissan-altima" },
+{ name: "Armada", path: "/models/nissan-armada" },
+{ name: "B210", path: "/models/nissan-b210" },
+{ name: "Cube", path: "/models/nissan-cube" },
+{ name: "Frontier", path: "/models/nissan-frontier" },
+{ name: "GTR", path: "/models/nissan-gtr" },
+{ name: "Juke", path: "/models/nissan-juke" },
+{ name: "LEAF", path: "/models/nissan-leaf" },
+{ name: "Maxima", path: "/models/nissan-maxima" },
+{ name: "Murano", path: "/models/nissan-murano" },
+{ name: "NV 1500", path: "/models/nissan-nv-1500" },
+{ name: "NV 2500", path: "/models/nissan-nv-2500" },
+{ name: "NV 3500", path: "/models/nissan-nv-3500" },
+{ name: "NV 200", path: "/models/nissan-nv-200" },
+{ name: "NX", path: "/models/nissan-nx" },
+{ name: "Pathfinder", path: "/models/nissan-pathfinder" },
+{ name: "Pickup", path: "/models/nissan-pickup" },
+{ name: "Pulsar", path: "/models/nissan-pulsar" },
+{ name: "Quest", path: "/models/nissan-quest" },
+{ name: "Rogue", path: "/models/nissan-rogue" },
+{ name: "Sentra", path: "/models/nissan-sentra" },
+{ name: "Stanza", path: "/models/nissan-stanza" },
+{ name: "Stanza Van", path: "/models/nissan-stanza-van" },
+{ name: "Titan", path: "/models/nissan-titan" },
+{ name: "Versa", path: "/models/nissan-versa" },
+{ name: "X Trail", path: "/models/nissan-x-trail" },
+{ name: "Xterra", path: "/models/nissan-xterra" }
+]
+},
+29:
+{
+id: 29,
+title: "Oldsmobile",
+image: oldsmobile,
+description: "We have taken the time to inventory all wrecked and salvaged Oldsmobile vehicles to make sure you have instant access to any used Oldsmobile parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Oldsmobile was a historic American automobile brand under General Motors, known for innovation like the first mass-produced curved-dash car and the Hydramatic automatic transmission. Founded by Ransom E. Olds in 1897, it became a leading brand, especially in the 1950s with its powerful V8 'Rocket' engines, and also produced iconic models like the Cutlass and Toronado before ceasing production in 2004 due to declining sales",
+models: [
+{ name: "Achieva", path: "/models/oldsmobile-achieva" },
+{ name: "Alero", path: "/models/oldsmobile-alero" },
+{ name: "Aurora", path: "/models/oldsmobile-aurora" },
+{ name: "Bravada", path: "/models/oldsmobile-bravada" },
+{ name: "Calais", path: "/models/oldsmobile-calais" },
+{ name: "Ciera", path: "/models/oldsmobile-ciera" },
+{ name: "Custom Cruiser", path: "/models/oldsmobile-custom-cruiser" },
+{ name: "Cutlass", path: "/models/oldsmobile-cutlass" },
+{ name: "Eighty Eight", path: "/models/oldsmobile-eighty-eight" },
+{ name: "Firenza", path: "/models/oldsmobile-firenza" },
+{ name: "Intrigue", path: "/models/oldsmobile-intrigue" },
+{ name: "Ninety Eight", path: "/models/oldsmobile-ninety-eight" },
+{ name: "Silhouette", path: "/models/oldsmobile-silhouette" },
+{ name: "Toronado", path: "/models/oldsmobile-toronado" }
+]
+},
+30:
+{
+id: 30,
+title: "Plymouth",
+image: plymouth,
+description: "We have taken the time to inventory all wrecked and salvaged Plymouth vehicles to make sure you have instant access to any used Plymouth parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Plymouth was an American automobile brand produced by the Chrysler Corporation from 1928 to 2001. It was created to compete in the low-priced market against brands like Ford and Chevrolet. Over the decades, Plymouth developed a reputation for offering a range of vehicles, from budget-friendly sedans to popular performance models like the Barracuda and Road Runner. The brand was officially discontinued in 2001 due to dwindling sales and a corporate merger",
+models: [
+{ name: "Caravelle", path: "/models/plymouth-caravelle" },
+{ name: "Champ", path: "/models/plymouth-champ" },
+{ name: "Gran Fury", path: "/models/plymouth-gran-fury" },
+{ name: "Passenger", path: "/models/plymouth-passenger" },
+{ name: "Sapporo", path: "/models/plymouth-sapporo" },
+{ name: "Scamp", path: "/models/plymouth-scamp" },
+{ name: "Tail Duster", path: "/models/plymouth-tail-duster" },
+{ name: "Vista", path: "/models/plymouth-vista" },
+{ name: "Volar", path: "/models/plymouth-volar" },
+{ name: "Acclaim", path: "/models/plymouth-acclaim" },
+{ name: "Barracuda", path: "/models/plymouth-barracuda" },
+{ name: "Breeze", path: "/models/plymouth-breeze" },
+{ name: "Prowler", path: "/models/plymouth-prowler" },
+{ name: "Reliant", path: "/models/plymouth-reliant" },
+{ name: "Sundance", path: "/models/plymouth-sundance" }
+]
+},
+31:
+{
+id: 31,
+title: "Pontiac",
+image: pontiac,
+description: "We have taken the time to inventory all wrecked and salvaged Pontiac vehicles to make sure you have instant access to any used Pontiac parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Pontiac was an American automobile brand owned by General Motors (GM) that was in operation from 1926 to 2010. Initially introduced as a companion make to Oakland, it became a division known for affordable performance vehicles like the GTO and Firebird. Due to GM's restructuring after its 2009 Chapter 11 bankruptcy, the Pontiac brand was discontinued, with the last vehicle produced in 2010",
+models: [
+{ name: "Aztek", path: "/models/pontiac-aztek" },
+{ name: "Bonneville", path: "/models/pontiac-bonneville" },
+{ name: "Catalina", path: "/models/pontiac-catalina" },
+{ name: "Fiero", path: "/models/pontiac-fiero" },
+{ name: "Firebird", path: "/models/pontiac-firebird" },
+{ name: "G3", path: "/models/pontiac-g3" },
+{ name: "G5", path: "/models/pontiac-g5" },
+{ name: "G6", path: "/models/pontiac-g6" },
+{ name: "G8", path: "/models/pontiac-g8" },
+{ name: "Grand Am", path: "/models/pontiac-grand-am" },
+{ name: "Grand Prix", path: "/models/pontiac-grand-prix" },
+{ name: "GTO", path: "/models/pontiac-gto" },
+{ name: "Le Mans", path: "/models/pontiac-le-mans" },
+{ name: "Montana", path: "/models/pontiac-montana" },
+{ name: "Parisienne", path: "/models/pontiac-parisienne" },
+{ name: "Solstice", path: "/models/pontiac-solstice" },
+{ name: "Sunbird", path: "/models/pontiac-sunbird" },
+{ name: "Sunfire", path: "/models/pontiac-sunfire" },
+{ name: "Tempest", path: "/models/pontiac-tempest" },
+{ name: "Trans Sport", path: "/models/pontiac-trans-sport" },
+{ name: "Vibe", path: "/models/pontiac-vibe" }
+]
+},
+32:
+{
+id: 32,
+title: "Porsche",
+image: porsche,
+description: "We have taken the time to inventory all wrecked and salvaged Porsche vehicles to make sure you have instant access to any used Porsche parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Porsche's motor operations in the United States are primarily through Porsche Cars North America (PCNA), which was established in 1984 and now sells a wide range of gasoline, hybrid, and fully electric vehicles, including the 911, Taycan, Panamera, Macan, and Cayenne. While Porsche engines are manufactured in Germany, the US market is a key region for sales, with strong performance reflected in recent sales growth",
+models: [
+{ name: "911", path: "/models/porsche-911" },
+{ name: "912", path: "/models/porsche-912" },
+{ name: "914", path: "/models/porsche-914" },
+{ name: "924", path: "/models/porsche-924" },
+{ name: "928", path: "/models/porsche-928" },
+{ name: "944", path: "/models/porsche-944" },
+{ name: "968", path: "/models/porsche-968" },
+{ name: "Boxster", path: "/models/porsche-boxster" },
+{ name: "Carrera", path: "/models/porsche-carrera" },
+{ name: "Cayenne", path: "/models/porsche-cayenne" },
+{ name: "Cayman", path: "/models/porsche-cayman" },
+{ name: "Panamera", path: "/models/porsche-panamera" }
+]
+},
+33:
+{
+id: 33,
+title: "Saab",
+image: saab,
+description: "We have taken the time to inventory all wrecked and salvaged Saab vehicles to make sure you have instant access to any used Saab parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+models: [
+{ name: "9-5", path: "/models/saab-9-5" },
+{ name: "97X", path: "/models/saab-97x" },
+{ name: "900", path: "/models/saab-900" },
+{ name: "9000", path: "/models/saab-9000" },
+{ name: "92X", path: "/models/saab-92x" },
+{ name: "9-3", path: "/models/saab-9-3" },
+{ name: "95", path: "/models/saab-95" },
+{ name: "96", path: "/models/saab-96" },
+{ name: "99", path: "/models/saab-99" },
+{ name: "93", path: "/models/saab-93" }
+]
+},
+34:
+{
+id: 34,
+title: "Saturn",
+image: saturn,
+description: "We have taken the time to inventory all wrecked and salvaged Saturn vehicles to make sure you have instant access to any used Saturn parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+models: [
+{ name: "Aura", path: "/models/saturn-aura" },
+{ name: "Ion", path: "/models/saturn-ion" },
+{ name: "Outlook", path: "/models/saturn-outlook" },
+{ name: "L", path: "/models/saturn-l" },
+{ name: "S", path: "/models/saturn-s" },
+{ name: "Sky", path: "/models/saturn-sky" },
+{ name: "Vue", path: "/models/saturn-vue" }
+]
+},
+35:
+{
+id: 35,
+title: "Scion",
+image: scion,
+description: "We have taken the time to inventory all wrecked and salvaged Scion vehicles to make sure you have instant access to any used Scion parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+models: [
+{ name: "FRS", path: "/models/scion-frs" },
+{ name: "IQ", path: "/models/scion-iq" },
+{ name: "TC", path: "/models/scion-tc" },
+{ name: "XA", path: "/models/scion-xa" },
+{ name: "XB", path: "/models/scion-xb" },
+{ name: "XD", path: "/models/scion-xd" }
+]
+},
+36:
+{
+id: 36,
+title: "Subaru",
+image: subaru,
+description: "We have taken the time to inventory all wrecked and salvaged Subaru vehicles to make sure you have instant access to any used Subaru parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Subaru operates a major U.S. manufacturing facility in Lafayette, Indiana, which is its only plant outside of Japan. Subaru of America (SOA), headquartered in Camden, New Jersey, is the U.S. distributor and markets vehicles through a network of over 600 dealerships. The brand is known for its Boxer engine, all-wheel drive, and emphasis on safety and reliability",
+models: [
+{ name: "Baja", path: "/models/subaru-baja" },
+{ name: "BRZ", path: "/models/subaru-brz" },
+{ name: "Forester", path: "/models/subaru-forester" },
+{ name: "Impreza", path: "/models/subaru-impreza" },
+{ name: "Legacy", path: "/models/subaru-legacy" },
+{ name: "SVX", path: "/models/subaru-svx" },
+{ name: "Tribeca", path: "/models/subaru-tribeca" },
+{ name: "WRX", path: "/models/subaru-wrx" },
+{ name: "XT", path: "/models/subaru-xt" },
+{ name: "XV CROSSTREK", path: "/models/subaru-xv-crosstrek" }
+]
+},
+37:
+{
+id: 37,
+title: "Suzuki",
+image: suzuki,
+description: "We have taken the time to inventory all wrecked and salvaged Suzuki vehicles to make sure you have instant access to any used Suzuki parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+models: [
+{ name: "Aerio", path: "/models/suzuki-aerio" },
+{ name: "Equator", path: "/models/suzuki-equator" },
+{ name: "Esteem", path: "/models/suzuki-esteem" },
+{ name: "Forenza", path: "/models/suzuki-forenza" },
+{ name: "Forsa", path: "/models/suzuki-forsa" },
+{ name: "Samurai", path: "/models/suzuki-samurai" },
+{ name: "Sidekick", path: "/models/suzuki-sidekick" },
+{ name: "SJ410", path: "/models/suzuki-sj410" },
+{ name: "Swift", path: "/models/suzuki-swift" },
+{ name: "SX4", path: "/models/suzuki-sx4" },
+{ name: "Verona", path: "/models/suzuki-verona" },
+{ name: "Vitara", path: "/models/suzuki-vitara" },
+{ name: "X90", path: "/models/suzuki-x90" }
+]
+},
+38:
+{
+id: 38,
+title: "Toyota",
+image: toyota,
+description: "We have taken the time to inventory all wrecked and salvaged Toyota vehicles to make sure you have instant access to any used Toyota parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+models: [
+{ name: "4Runner", path: "/models/toyota-4runner" },
+{ name: "Avalon", path: "/models/toyota-avalon" },
+{ name: "Camry", path: "/models/toyota-camry" },
+{ name: "Celica", path: "/models/toyota-celica" },
+{ name: "Corolla", path: "/models/toyota-corolla" },
+{ name: "Corona", path: "/models/toyota-corona" },
+{ name: "Cressida", path: "/models/toyota-cressida" },
+{ name: "Echo", path: "/models/toyota-echo" },
+{ name: "FJ Cruiser", path: "/models/toyota-fj-cruiser" },
+{ name: "FX", path: "/models/toyota-fx" },
+{ name: "Highlander", path: "/models/toyota-highlander" },
+{ name: "Land Cruiser", path: "/models/toyota-land-cruiser" },
+{ name: "Matrix", path: "/models/toyota-matrix" },
+{ name: "MR2", path: "/models/toyota-mr2" },
+{ name: "Paseo", path: "/models/toyota-paseo" },
+{ name: "Pickup", path: "/models/toyota-pickup" },
+{ name: "Previa", path: "/models/toyota-previa" },
+{ name: "Prius", path: "/models/toyota-prius" },
+{ name: "Rav4", path: "/models/toyota-rav4" },
+{ name: "Sequoia", path: "/models/toyota-sequoia" },
+{ name: "Sienna", path: "/models/toyota-sienna" },
+{ name: "Solara", path: "/models/toyota-solara" },
+{ name: "Supra", path: "/models/toyota-supra" },
+{ name: "T100", path: "/models/toyota-t100" },
+{ name: "Tacoma", path: "/models/toyota-tacoma" },
+{ name: "Tercel", path: "/models/toyota-tercel" },
+{ name: "Tundra", path: "/models/toyota-tundra" },
+{ name: "Van Wagon", path: "/models/toyota-van-wagon" },
+{ name: "Venza", path: "/models/toyota-venza" },
+{ name: "Yaris", path: "/models/toyota-yaris" }
+]
+},
+39:
+{
+id: 39,
+title: "Volkswagen",
+image: volkswagen,
+description: "We have taken the time to inventory all wrecked and salvaged Volkswagen vehicles to make sure you have instant access to any used Volkswagen parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+models: [
+{ name: "Beetle", path: "/models/volkswagen-beetle" },
+{ name: "Cabriolet", path: "/models/volkswagen-cabriolet" },
+{ name: "Corrado", path: "/models/volkswagen-corrado" },
+{ name: "Dasher", path: "/models/volkswagen-dasher" },
+{ name: "Eos", path: "/models/volkswagen-eos" },
+{ name: "Eurovan", path: "/models/volkswagen-eurovan" },
+{ name: "Fox", path: "/models/volkswagen-fox" },
+{ name: "Golf", path: "/models/volkswagen-golf" },
+{ name: "Jetta", path: "/models/volkswagen-jetta" },
+{ name: "Karmann Ghia", path: "/models/volkswagen-karmann-ghia" },
+{ name: "Passat", path: "/models/volkswagen-passat" },
+{ name: "Phaeton", path: "/models/volkswagen-phaeton" },
+{ name: "Quantum", path: "/models/volkswagen-quantum" },
+{ name: "Rabbit", path: "/models/volkswagen-rabbit" },
+{ name: "Routan", path: "/models/volkswagen-routan" },
+{ name: "Scirocco", path: "/models/volkswagen-scirocco" },
+{ name: "Thing", path: "/models/volkswagen-thing" },
+{ name: "Tiguan", path: "/models/volkswagen-tiguan" },
+{ name: "Touareg", path: "/models/volkswagen-touareg" },
+{ name: "Transporter", path: "/models/volkswagen-transporter" },
+{ name: "Vanagon", path: "/models/volkswagen-vanagon" }
+]
+},
+40:
+{
+id: 40,
+title: "Volvo",
+image: volvo,
+description: "We have taken the time to inventory all wrecked and salvaged Volvo vehicles to make sure you have instant access to any used Volvo parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
+models: [
+{ name: "240", path: "/models/volvo-240" },
+{ name: "260", path: "/models/volvo-260" },
+{ name: "444", path: "/models/volvo-444" },
+{ name: "544", path: "/models/volvo-544" },
+{ name: "740", path: "/models/volvo-740" },
+{ name: "760", path: "/models/volvo-760" },
+{ name: "780", path: "/models/volvo-780" },
+{ name: "850", path: "/models/volvo-850" },
+{ name: "940", path: "/models/volvo-940" },
+{ name: "960", path: "/models/volvo-960" },
+{ name: "S60", path: "/models/volvo-s60" },
+{ name: "S70", path: "/models/volvo-s70" },
+{ name: "S80", path: "/models/volvo-s80" },
+{ name: "S90", path: "/models/volvo-s90" },
+{ name: "V60", path: "/models/volvo-v60" },
+{ name: "XC90", path: "/models/volvo-xc90" }
+]
+}
+};
+
+export default brandData;

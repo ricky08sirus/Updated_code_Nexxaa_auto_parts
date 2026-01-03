@@ -328,107 +328,133 @@ const Home = () => {
       )}
 
       {/* Banner Section with Search Form */}
-      <section
-        className="banner"
-        style={{ backgroundImage: `url(${bannerImage})` }}
-      >
-        <div className="banner-overlay"></div>
-        <div className="banner-gradient"></div>
+<section
+  className="banner"
+  style={{ backgroundImage: `url(${bannerImage})` }}
+>
+  <div className="banner-overlay"></div>
+  <div className="banner-gradient"></div>
 
-        <div className="banner-inner">
-         <div className="banner-left">
-          <h1>Millions of <span className="highlight">OEM Parts.</span> <br />Matched to Your Vehicle.</h1>
-          <p>One smart search. Your perfect fit starts here.</p>
-          </div>
-          <div className="banner-right">
-            <div className="banner-form">
-              <div className="row">
-                {/* Year Selector */}
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  aria-label="Select Year"
-                >
-                  <option value="">Year</option>
-                  {years.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </select>
+  <div className="banner-inner">
+    <div className="banner-left">
+      <h1>
+        At <span className="highlight">Nexxa Auto</span> <br />
+        Millions of <br />
+        <span className="highlight">OEM Used Parts.</span> <br />
+        Matched to Your Vehicle.
+      </h1>
 
-                {/* Manufacturer Selector */}
-                <select
-                  value={selectedManufacturer}
-                  onChange={handleManufacturerChange}
-                  disabled={loadingManufacturers}
-                  aria-label="Select Manufacturer"
-                >
-                  <option value="">
-                    {loadingManufacturers ? "Loading..." : "Make"}
-                  </option>
-                  {manufacturers.map((mfg) => (
-                    <option key={mfg.id} value={mfg.id}>
-                      {mfg.name}
-                    </option>
-                  ))}
-                </select>
+      <p className="why-description">
+        Nexxa Auto Parts offers reliable OEM used car parts with nationwide
+        shipping, expert support, and accurate VIN matching.
+      </p>
+    </div>
 
-                {/* Model Selector */}
-                <select
-                  value={selectedModel}
-                  onChange={(e) => setSelectedModel(e.target.value)}
-                  disabled={!selectedManufacturer || loadingModels}
-                  aria-label="Select Model"
-                >
-                  <option value="">
-                    {loadingModels
-                      ? "Loading..."
-                      : !selectedManufacturer
-                        ? "Model"
-                        : "Model"}
-                  </option>
-                  {models.map((model) => (
-                    <option key={model.id} value={model.id}>
-                      {model.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+    <div className="banner-right">
+      {/* ✅ TEXT OUTSIDE / ABOVE SEARCH BOX */}
+      <p className="search-heading">
+        One smart search. Your perfect fit starts here.
+      </p>
 
-              {/* Part Category Selector */}
-              <select
-                className="full"
-                value={selectedPart}
-                onChange={(e) => setSelectedPart(e.target.value)}
-                disabled={loadingParts}
-                aria-label="Select Part Category"
-              >
-                <option value="">
-                  {loadingParts ? "Loading..." : "Parts "}
-                </option>
-                {partCategories.map((part) => (
-                  <option key={part.id} value={part.id}>
-                    {part.name}
-                  </option>
-                ))}
-              </select>
+      {/* 🔲 BLACK SEARCH BOX */}
+      <div className="banner-form">
+        <div className="row">
+          <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+            <option value="">Year</option>
+            {years.map((year) => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
 
-              <button type="button" onClick={handleSearch}>
-                Search Now
-              </button>
-            </div>
-            <p className="vin-link">
-              Don't know your vehicle? <a href="#vin">Enter VIN</a>
-            </p>
-          </div>
+          <select
+            value={selectedManufacturer}
+            onChange={handleManufacturerChange}
+            disabled={loadingManufacturers}
+          >
+            <option value="">Make</option>
+            {manufacturers.map((mfg) => (
+              <option key={mfg.id} value={mfg.id}>{mfg.name}</option>
+            ))}
+          </select>
+
+          <select
+            value={selectedModel}
+            onChange={(e) => setSelectedModel(e.target.value)}
+            disabled={!selectedManufacturer || loadingModels}
+          >
+            <option value="">Model</option>
+            {models.map((model) => (
+              <option key={model.id} value={model.id}>{model.name}</option>
+            ))}
+          </select>
         </div>
-      </section>
+
+        <select
+          className="full"
+          value={selectedPart}
+          onChange={(e) => setSelectedPart(e.target.value)}
+        >
+          <option value="">Parts</option>
+          {partCategories.map((part) => (
+            <option key={part.id} value={part.id}>{part.name}</option>
+          ))}
+        </select>
+
+        <button onClick={handleSearch}>Search Now</button>
+      </div>
+
+      <p className="vin-link">
+        Don't know your vehicle? <a href="#vin">Enter VIN</a>
+      </p>
+    </div>
+  </div>
+
+  {/* WHY NEXXA INSIDE BANNER */}
+<div className="why-nexxa banner-why">
+  {/* 🔹 HORIZONTAL ROW */}
+  <div className="why-top-row">
+    <h2 className="why-heading">Why Nexxa Auto Parts</h2>
+
+    <div className="why-box">
+      <img src={headset} alt="Free expert support" />
+      <span>Free expert support</span>
+    </div>
+
+    <div className="why-box">
+      <img src={lowMileage} alt="Low mileage parts" />
+      <span>Low mileage parts</span>
+    </div>
+
+    <div className="why-box">
+      <img src={delivery} alt="Nationwide shipping" />
+      <span>Nationwide shipping</span>
+    </div>
+
+    <div className="why-box">
+      <img src={radiator} alt="VIN-matched parts" />
+      <span>VIN-matched parts</span>
+    </div>
+  </div>
+
+  {/* 🔹 PARAGRAPH BELOW */}
+  <p className="why-desc">
+    Free Expert Support: Get guidance from experienced auto parts specialists to
+    find the right fit fast. Low Mileage Parts: Quality-tested OEM used parts with
+    low mileage for long-lasting performance. Nationwide Shipping: Fast and
+    reliable nationwide shipping straight to your doorstep. VIN-Matched Parts:
+    Exact OEM parts matched to your vehicle using precise VIN verification.
+  </p>
+</div>
+
+
+
+</section>
+
 
       {/* Why Nexxa Auto Parts Section */}
-      <section className="why-nexxa">
+      {/* <section className="why-nexxa">
   <div className="why-nexxa-container">
-    <h3 className="why-title">Why Nexxa Auto Parts</h3>
+    <h2 className="why-title">Why Nexxa Auto Parts</h2>
     <div className="why-boxes">
       <div className="why-box">
         <img src={headset} alt="Free expert support" />
@@ -448,7 +474,7 @@ const Home = () => {
       </div>
     </div>
   </div>
-</section>
+</section> */}
 
 
 
@@ -457,6 +483,7 @@ const Home = () => {
         <h2>
           Explore Our <span className="highlight">Premium</span> Used Auto Parts
         </h2>
+        <p className="section-description">Explore OEM used auto parts—engines, transmissions, modules, rims, and body components for major brands.</p>
         <div className="scroll-wrapper">
           <button className="scroll-btn left" onClick={() => scroll("left")}>
             <ChevronLeft />
@@ -585,7 +612,7 @@ const Home = () => {
               <span className="user-icon">👤</span>
               <h4>{item.name}</h4>
             </div>
-            <span className="review-time">2 weeks ago</span>
+            <span className="review-time">4 weeks ago</span>
             <div className="review-stars">★★★★★</div>
             <p className="review-text">{item.review}</p>
           </div>
@@ -597,7 +624,7 @@ const Home = () => {
 
       {/* Brands Section */}
       <section className="brands-section">
-        <h2>Brands We Carry</h2>
+        <h2>Search by Brands</h2>
         <p>We stock parts for all major automotive brands</p>
         <div className="brands-marquee">
           <div className="brands-track">
