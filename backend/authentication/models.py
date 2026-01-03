@@ -1064,7 +1064,7 @@ class PartImageGallery(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     # Auto-generated slug for URLs
-    slug = models.SlugField(max_length=300, unique=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     
     class Meta:
         db_table = 'part_image_galleries'

@@ -156,7 +156,7 @@ if USE_R2_STORAGE:
         'CacheControl': 'max-age=86400',  # 1 day cache
     }
     AWS_DEFAULT_ACL = 'public-read'  # Make files publicly readable
-    AWS_S3_FILE_OVERWRITE = False  # Don't overwrite files with same name
+    AWS_S3_FILE_OVERWRITE = True  # Don't overwrite files with same name
     AWS_QUERYSTRING_AUTH = False  # Don't add auth query params to URLs
     AWS_S3_SIGNATURE_VERSION = 's3v4'  # Use signature version 4
     
@@ -324,4 +324,3 @@ LOGGING = {
 #     SECURE_HSTS_PRELOAD = True
 #     SECURE_BROWSER_XSS_FILTER = True
 #     SECURE_CONTENT_TYPE_NOSNIFF = True
-#     X_FRAME_OPTIONS = 'DENY'

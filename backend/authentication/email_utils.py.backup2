@@ -1,0 +1,889 @@
+# authentication/email_utils.py
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def send_contact_notification(submission):
+    """
+    Send email notification to company when contact form is submitted
+
+    Args:
+        submission: ContactSubmission instance
+    """
+    try:
+        # Email subject
+        subject = f"New Contact Form Submission - {submission.subject or 'No Subject'}"
+
+        # Create HTML email body
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background-color: #dc2626; color: white; padding: 20px; text-align: center; }}
+                .content {{ background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; }}
+                .field {{ margin-bottom: 15px; }}
+                .label {{ font-weight: bold; color: #555; }}
+                .value {{ margin-top: 5px; padding: 10px; background-color: white; border-left: 3px solid #dc2626; }}
+                .message-box {{ background-color: white; padding: 15px; border: 1px solid #ddd; min-height: 100px; }}
+                .footer {{ text-align: center; padding: 20px; color: #777; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>New Contact Form Submission</h1>
+                    <p>Nexxa Auto Parts</p>
+                </div>
+
+                <div class="content">
+                    <div class="field">
+                        <div class="label">📧 Email:</div>
+                        <div class="value">{submission.email}</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label">👤 Name:</div>
+                        <div class="value">{submission.name or "Not provided"}</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label">📋 Subject:</div>
+                        <div class="value">{submission.subject or "No subject"}</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label">📱 Phone:</div>
+                        <div class="value">{submission.phone or "Not provided"}</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label">💬 Message:</div>
+                        <div class="message-box">{submission.message}</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label">🕐 Submitted:</div>
+                        <div class="value">{submission.created_at.strftime("%B %d, %Y at %I:%M %p")}</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label">🌐 IP Address:</div>
+                        <div class="value">{submission.ip_address or "Unknown"}</div>
+                    </div>
+
+                    <div class="field">
+                        <div class="label">🆔 Submission ID:</div>
+                        <div class="value">{submission.id}</div>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <p>This is an automated notification from your Nexxa Auto Parts contact form.</p>
+                    <p>Please respond to: {submission.email}</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        # Plain text version (fallback)
+        text_content = f"""
+New Contact Form Submission - Nexxa Auto Parts
+
+Email: {submission.email}
+Name: {submission.name or "Not provided"}
+Subject: {submission.subject or "No subject"}
+Phone: {submission.phone or "Not provided"}
+
+Message:
+{submission.message}
+
+Submitted: {submission.created_at.strftime("%B %d, %Y at %I:%M %p")}
+IP Address: {submission.ip_address or "Unknown"}
+Submission ID: {submission.id}
+
+---
+Please respond to: {submission.email}
+        """
+
+        # Create email with both HTML and text versions
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=settings.CONTACT_EMAIL_RECIPIENTS,
+            reply_to=[submission.email],  # Set reply-to as submitter's email
+        )
+
+        # Attach HTML version
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        email.send(fail_silently=False)
+
+        logger.info(f"Contact form notification sent for submission {submission.id}")
+        return True
+
+    except Exception as e:
+        logger.error(f"Failed to send contact notification: {str(e)}", exc_info=True)
+        return False
+
+
+def send_auto_reply_to_customer(submission):
+    """
+    Send automatic reply to customer confirming receipt of their message
+
+    Args:
+        submission: ContactSubmission instance
+    """
+    try:
+        subject = "We received your message - Nexxa Auto Parts"
+
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background-color: #dc2626; color: white; padding: 30px; text-align: center; }}
+                .content {{ background-color: #f9f9f9; padding: 30px; border: 1px solid #ddd; }}
+                .highlight {{ background-color: #fff; padding: 15px; border-left: 4px solid #dc2626; margin: 20px 0; }}
+                .footer {{ text-align: center; padding: 20px; color: #777; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>Thank You for Contacting Us!</h1>
+                    <p>Nexxa Auto Parts</p>
+                </div>
+
+                <div class="content">
+                    <p>Hi {submission.name or "there"},</p>
+
+                    <p>Thank you for reaching out to <strong>Nexxa Auto Parts</strong>!</p>
+
+                    <p>We have received your message and our team will review it shortly. We typically respond within 24-48 hours during business days.</p>
+
+                    <div class="highlight">
+                        <strong>Your Message Summary:</strong><br>
+                        <strong>Subject:</strong> {submission.subject or "General Inquiry"}<br>
+                        <strong>Reference ID:</strong> {str(submission.id)[:8]}
+                    </div>
+
+                    <p>If you have any urgent concerns, please feel free to call us or send another message.</p>
+
+                    <p>Best regards,<br>
+                    <strong>Nexxa Auto Parts Team</strong></p>
+                </div>
+
+                <div class="footer">
+                    <p>This is an automated confirmation email.</p>
+                    <p>© 2024 Nexxa Auto Parts. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        text_content = f"""
+Thank You for Contacting Us!
+
+Hi {submission.name or "there"},
+
+Thank you for reaching out to Nexxa Auto Parts!
+
+We have received your message and our team will review it shortly. We typically respond within 24-48 hours during business days.
+
+Your Message Summary:
+Subject: {submission.subject or "General Inquiry"}
+Reference ID: {str(submission.id)[:8]}
+
+If you have any urgent concerns, please feel free to call us or send another message.
+
+Best regards,
+Nexxa Auto Parts Team
+
+---
+This is an automated confirmation email.
+© 2024 Nexxa Auto Parts. All rights reserved.
+        """
+
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[submission.email],
+        )
+
+        email.attach_alternative(html_content, "text/html")
+        email.send(fail_silently=False)
+
+        logger.info(f"Auto-reply sent to {submission.email}")
+        return True
+
+    except Exception as e:
+        logger.error(f"Failed to send auto-reply: {str(e)}", exc_info=True)
+        return False
+
+
+
+
+
+
+
+# Add these functions to your existing authentication/email_utils.py file
+
+def send_parts_inquiry_notification(inquiry):
+    """
+    Send email notification to company when parts inquiry is submitted
+    
+    Args:
+        inquiry: PartsInquiry instance
+    """
+    try:
+        # Email subject
+        subject = f"New Parts Request - {inquiry.year} {inquiry.manufacturer.name} {inquiry.model.name}"
+        
+        # Create HTML email body with premium design
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ 
+                    font-family: 'Helvetica Neue', Arial, sans-serif; 
+                    line-height: 1.6; 
+                    color: #2c3e50;
+                    background-color: #f4f6f9;
+                    margin: 0;
+                    padding: 0;
+                }}
+                .email-wrapper {{
+                    max-width: 650px;
+                    margin: 30px auto;
+                    background: #ffffff;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }}
+                .header {{ 
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 40px 30px;
+                    text-align: center;
+                    position: relative;
+                }}
+                .header::after {{
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 4px;
+                    background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+                }}
+                .header h1 {{
+                    margin: 0 0 10px 0;
+                    font-size: 28px;
+                    font-weight: 600;
+                    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }}
+                .header .subtitle {{
+                    margin: 0;
+                    font-size: 16px;
+                    opacity: 0.95;
+                }}
+                .content {{ 
+                    padding: 35px 30px;
+                }}
+                .vehicle-banner {{
+                    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                    padding: 25px;
+                    border-radius: 10px;
+                    margin-bottom: 30px;
+                    border-left: 5px solid #667eea;
+                }}
+                .vehicle-banner h2 {{
+                    margin: 0 0 15px 0;
+                    color: #667eea;
+                    font-size: 24px;
+                }}
+                .vehicle-details {{
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 15px;
+                    margin-top: 15px;
+                }}
+                .vehicle-detail-item {{
+                    background: white;
+                    padding: 12px;
+                    border-radius: 6px;
+                    border-left: 3px solid #667eea;
+                }}
+                .vehicle-detail-label {{
+                    font-size: 12px;
+                    color: #7f8c8d;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-bottom: 5px;
+                }}
+                .vehicle-detail-value {{
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #2c3e50;
+                }}
+                .section {{
+                    margin-bottom: 25px;
+                }}
+                .section-title {{
+                    font-size: 14px;
+                    color: #7f8c8d;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    margin-bottom: 12px;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                }}
+                .section-title::before {{
+                    content: '';
+                    width: 4px;
+                    height: 16px;
+                    background: #667eea;
+                    margin-right: 10px;
+                    border-radius: 2px;
+                }}
+                .info-card {{
+                    background: #f8f9fa;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    margin-bottom: 12px;
+                    border: 1px solid #e9ecef;
+                    transition: all 0.3s ease;
+                }}
+                .info-card:hover {{
+                    border-color: #667eea;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.1);
+                }}
+                .info-label {{
+                    font-size: 13px;
+                    color: #6c757d;
+                    margin-bottom: 5px;
+                }}
+                .info-value {{
+                    font-size: 15px;
+                    color: #2c3e50;
+                    font-weight: 500;
+                }}
+                .icon {{
+                    display: inline-block;
+                    margin-right: 8px;
+                    font-size: 18px;
+                }}
+                .priority-badge {{
+                    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                    color: white;
+                    padding: 8px 16px;
+                    border-radius: 20px;
+                    display: inline-block;
+                    font-size: 12px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-top: 20px;
+                }}
+                .action-button {{
+                    display: inline-block;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 14px 30px;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    margin-top: 20px;
+                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                    transition: all 0.3s ease;
+                }}
+                .action-button:hover {{
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+                }}
+                .footer {{ 
+                    background: #f8f9fa;
+                    text-align: center;
+                    padding: 25px;
+                    border-top: 1px solid #e9ecef;
+                }}
+                .footer p {{
+                    margin: 5px 0;
+                    color: #6c757d;
+                    font-size: 13px;
+                }}
+                .footer .reference {{
+                    color: #667eea;
+                    font-weight: 600;
+                    font-family: monospace;
+                }}
+                .divider {{
+                    height: 1px;
+                    background: linear-gradient(90deg, transparent, #e9ecef, transparent);
+                    margin: 25px 0;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="email-wrapper">
+                <div class="header">
+                    <h1>🚗 New Parts Request</h1>
+                    <p class="subtitle">Nexxa Auto Parts</p>
+                </div>
+
+                <div class="content">
+                    <div class="vehicle-banner">
+                        <h2>Vehicle Information</h2>
+                        <div class="vehicle-details">
+                            <div class="vehicle-detail-item">
+                                <div class="vehicle-detail-label">Year</div>
+                                <div class="vehicle-detail-value">{inquiry.year}</div>
+                            </div>
+                            <div class="vehicle-detail-item">
+                                <div class="vehicle-detail-label">Manufacturer</div>
+                                <div class="vehicle-detail-value">{inquiry.manufacturer.name}</div>
+                            </div>
+                            <div class="vehicle-detail-item">
+                                <div class="vehicle-detail-label">Model</div>
+                                <div class="vehicle-detail-value">{inquiry.model.name}</div>
+                            </div>
+                            <div class="vehicle-detail-item">
+                                <div class="vehicle-detail-label">Part Needed</div>
+                                <div class="vehicle-detail-value">{inquiry.part_category.name}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Customer Information</div>
+                        
+                        <div class="info-card">
+                            <div class="info-label"><span class="icon">👤</span>Name</div>
+                            <div class="info-value">{inquiry.name}</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label"><span class="icon">📧</span>Email</div>
+                            <div class="info-value">{inquiry.email}</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label"><span class="icon">📱</span>Phone</div>
+                            <div class="info-value">{inquiry.phone}</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label"><span class="icon">📍</span>ZIP Code</div>
+                            <div class="info-value">{inquiry.zipcode}</div>
+                        </div>
+                    </div>
+
+                    {f'''
+                    <div class="section">
+                        <div class="section-title">Additional Notes</div>
+                        <div class="info-card">
+                            <div class="info-value">{inquiry.additional_notes}</div>
+                        </div>
+                    </div>
+                    ''' if inquiry.additional_notes else ''}
+
+                    <div class="divider"></div>
+
+                    <div class="section">
+                        <div class="section-title">Request Details</div>
+                        
+                        <div class="info-card">
+                            <div class="info-label"><span class="icon">🕐</span>Submitted</div>
+                            <div class="info-value">{inquiry.created_at.strftime("%B %d, %Y at %I:%M %p")}</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label"><span class="icon">🌐</span>IP Address</div>
+                            <div class="info-value">{inquiry.ip_address or "Unknown"}</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label"><span class="icon">🆔</span>Request ID</div>
+                            <div class="info-value" style="font-family: monospace;">{inquiry.id}</div>
+                        </div>
+                    </div>
+
+                    <span class="priority-badge">⚡ New Request - Action Required</span>
+                </div>
+
+                <div class="footer">
+                    <p><strong>Reply to:</strong> <a href="mailto:{inquiry.email}" style="color: #667eea; text-decoration: none;">{inquiry.email}</a></p>
+                    <p style="margin-top: 15px;">This is an automated notification from Nexxa Auto Parts</p>
+                    <p class="reference">REF: {str(inquiry.id)[:8].upper()}</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # Plain text version (fallback)
+        text_content = f"""
+New Parts Request - Nexxa Auto Parts
+
+VEHICLE INFORMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Year: {inquiry.year}
+Manufacturer: {inquiry.manufacturer.name}
+Model: {inquiry.model.name}
+Part Needed: {inquiry.part_category.name}
+
+CUSTOMER INFORMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name: {inquiry.name}
+Email: {inquiry.email}
+Phone: {inquiry.phone}
+ZIP Code: {inquiry.zipcode}
+
+{"ADDITIONAL NOTES\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" + inquiry.additional_notes + "\n\n" if inquiry.additional_notes else ""}REQUEST DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Submitted: {inquiry.created_at.strftime("%B %d, %Y at %I:%M %p")}
+IP Address: {inquiry.ip_address or "Unknown"}
+Request ID: {inquiry.id}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Please respond to: {inquiry.email}
+Reference: {str(inquiry.id)[:8].upper()}
+"""
+        # Create email with both HTML and text versions
+        from django.core.mail import EmailMultiAlternatives
+        from django.conf import settings
+        
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=settings.CONTACT_EMAIL_RECIPIENTS,
+            reply_to=[inquiry.email],
+        )
+        
+        # Attach HTML version
+        email.attach_alternative(html_content, "text/html")
+        
+        # Send email
+        email.send(fail_silently=False)
+        
+        logger.info(f"Parts inquiry notification sent for {inquiry.id}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Failed to send parts inquiry notification: {str(e)}", exc_info=True)
+        return False
+
+
+def send_parts_inquiry_auto_reply(inquiry):
+    """
+    Send automatic reply to customer confirming receipt of their parts request
+    
+    Args:
+        inquiry: PartsInquiry instance
+    """
+    try:
+        subject = "We're Finding Your Parts - Nexxa Auto Parts"
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ 
+                    font-family: 'Helvetica Neue', Arial, sans-serif; 
+                    line-height: 1.6; 
+                    color: #2c3e50;
+                    background-color: #f4f6f9;
+                    margin: 0;
+                    padding: 0;
+                }}
+                .email-wrapper {{
+                    max-width: 650px;
+                    margin: 30px auto;
+                    background: #ffffff;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }}
+                .header {{ 
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 50px 30px;
+                    text-align: center;
+                }}
+                .header h1 {{
+                    margin: 0 0 15px 0;
+                    font-size: 32px;
+                    font-weight: 600;
+                }}
+                .header .subtitle {{
+                    margin: 0;
+                    font-size: 16px;
+                    opacity: 0.95;
+                }}
+                .content {{ 
+                    padding: 40px 35px;
+                }}
+                .content p {{
+                    margin-bottom: 20px;
+                    font-size: 16px;
+                    line-height: 1.8;
+                }}
+                .highlight-box {{
+                    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                    padding: 25px;
+                    border-radius: 10px;
+                    margin: 30px 0;
+                    border-left: 5px solid #667eea;
+                }}
+                .highlight-box h3 {{
+                    margin: 0 0 15px 0;
+                    color: #667eea;
+                    font-size: 20px;
+                }}
+                .vehicle-summary {{
+                    background: white;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin-top: 15px;
+                }}
+                .vehicle-summary-item {{
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 8px 0;
+                    border-bottom: 1px solid #e9ecef;
+                }}
+                .vehicle-summary-item:last-child {{
+                    border-bottom: none;
+                }}
+                .vehicle-summary-label {{
+                    color: #6c757d;
+                    font-size: 14px;
+                }}
+                .vehicle-summary-value {{
+                    font-weight: 600;
+                    color: #2c3e50;
+                }}
+                .reference-box {{
+                    background: #fff3cd;
+                    border: 2px dashed #ffc107;
+                    padding: 20px;
+                    border-radius: 10px;
+                    text-align: center;
+                    margin: 25px 0;
+                }}
+                .reference-box strong {{
+                    font-size: 18px;
+                    color: #856404;
+                    font-family: monospace;
+                }}
+                .features {{
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 15px;
+                    margin: 30px 0;
+                }}
+                .feature-item {{
+                    background: #f8f9fa;
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                    border: 1px solid #e9ecef;
+                }}
+                .feature-icon {{
+                    font-size: 32px;
+                    margin-bottom: 10px;
+                }}
+                .feature-text {{
+                    font-size: 14px;
+                    color: #6c757d;
+                    font-weight: 500;
+                }}
+                .footer {{ 
+                    background: #f8f9fa;
+                    text-align: center;
+                    padding: 30px;
+                    border-top: 1px solid #e9ecef;
+                }}
+                .footer p {{
+                    margin: 5px 0;
+                    color: #6c757d;
+                    font-size: 13px;
+                }}
+                .cta-button {{
+                    display: inline-block;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 15px 35px;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    margin-top: 20px;
+                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="email-wrapper">
+                <div class="header">
+                    <h1>✅ Request Received!</h1>
+                    <p class="subtitle">We're on it - Finding the best parts for your vehicle</p>
+                </div>
+
+                <div class="content">
+                    <p>Hi <strong>{inquiry.name}</strong>,</p>
+
+                    <p>Thank you for choosing <strong>Nexxa Auto Parts</strong>! We've received your parts request and our team is already working on finding the perfect match for your vehicle.</p>
+
+                    <div class="highlight-box">
+                        <h3>📋 Your Request Summary</h3>
+                        <div class="vehicle-summary">
+                            <div class="vehicle-summary-item">
+                                <span class="vehicle-summary-label">Vehicle</span>
+                                <span class="vehicle-summary-value">{inquiry.year} {inquiry.manufacturer.name} {inquiry.model.name}</span>
+                            </div>
+                            <div class="vehicle-summary-item">
+                                <span class="vehicle-summary-label">Part Requested</span>
+                                <span class="vehicle-summary-value">{inquiry.part_category.name}</span>
+                            </div>
+                            <div class="vehicle-summary-item">
+                                <span class="vehicle-summary-label">Submitted</span>
+                                <span class="vehicle-summary-value">{inquiry.created_at.strftime("%B %d, %Y")}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reference-box">
+                        <p style="margin: 0 0 10px 0; color: #856404;">Your Reference Number</p>
+                        <strong>{str(inquiry.id)[:8].upper()}</strong>
+                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #856404;">Please save this for future reference</p>
+                    </div>
+
+                    <div class="features">
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-text">Fast Response<br>Within 24 Hours</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💰</div>
+                            <div class="feature-text">Competitive Prices<br>Best Deals</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✅</div>
+                            <div class="feature-text">Quality Parts<br>Guaranteed</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚚</div>
+                            <div class="feature-text">Fast Shipping<br>Nationwide</div>
+                        </div>
+                    </div>
+
+                    <p><strong>What happens next?</strong></p>
+                    <p>Our parts specialists will check availability and pricing for your {inquiry.year} {inquiry.manufacturer.name} {inquiry.model.name}. We'll send you a detailed quote with:</p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Part availability and condition</li>
+                        <li>Competitive pricing</li>
+                        <li>Shipping options and costs</li>
+                        <li>Estimated delivery time</li>
+                    </ul>
+
+                    <p>Need to add something or have questions? Just reply to this email!</p>
+
+                    <p style="margin-top: 30px;">Best regards,<br>
+                    <strong>The Nexxa Auto Parts Team</strong></p>
+                </div>
+
+                <div class="footer">
+                    <p style="font-size: 14px; margin-bottom: 15px;"><strong>📞 Need Help? Contact Us</strong></p>
+                    <p>This is an automated confirmation email.</p>
+                    <p style="margin-top: 15px;">© 2024 Nexxa Auto Parts. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        text_content = f"""
+✅ Request Received - Nexxa Auto Parts
+
+Hi {inquiry.name},
+
+Thank you for choosing Nexxa Auto Parts! We've received your parts request and our team is already working on finding the perfect match for your vehicle.
+
+YOUR REQUEST SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Vehicle: {inquiry.year} {inquiry.manufacturer.name} {inquiry.model.name}
+Part Requested: {inquiry.part_category.name}
+Submitted: {inquiry.created_at.strftime("%B %d, %Y")}
+
+YOUR REFERENCE NUMBER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{str(inquiry.id)[:8].upper()}
+(Please save this for future reference)
+
+WHAT HAPPENS NEXT?
+Our parts specialists will check availability and pricing for your {inquiry.year} {inquiry.manufacturer.name} {inquiry.model.name}. We'll send you a detailed quote with:
+
+• Part availability and condition
+• Competitive pricing
+• Shipping options and costs
+• Estimated delivery time
+
+We typically respond within 24-48 hours during business days.
+
+Need to add something or have questions? Just reply to this email!
+
+Best regards,
+The Nexxa Auto Parts Team
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+This is an automated confirmation email.
+© 2024 Nexxa Auto Parts. All rights reserved.
+        """
+        
+        from django.core.mail import EmailMultiAlternatives
+        from django.conf import settings
+        
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[inquiry.email],
+        )
+        
+        email.attach_alternative(html_content, "text/html")
+        email.send(fail_silently=False)
+        
+        logger.info(f"Auto-reply sent to {inquiry.email}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Failed to send auto-reply: {str(e)}", exc_info=True)
+        return False
+
+
+
+
+
+
+
+

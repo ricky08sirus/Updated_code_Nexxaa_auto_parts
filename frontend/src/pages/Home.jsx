@@ -306,7 +306,7 @@ const Home = () => {
   // Generate years array (1990 to current year + 1)
   const currentYear = new Date().getFullYear();
   const years = Array.from(
-    { length: currentYear - 1989 },
+    { length: currentYear - 1969 },
     (_, i) => currentYear + 1 - i,
   );
 
