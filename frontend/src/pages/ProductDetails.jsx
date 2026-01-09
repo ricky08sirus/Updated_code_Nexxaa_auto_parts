@@ -189,8 +189,8 @@ const ProductDetails = () => {
                 {manufacturerName} {modelName}.
               </p>
               <p>
-                Our team will review your request and contact you within 24-48
-                hours with availability and pricing information.
+                Our team will review your request and contact you within 2-45
+                minutes with availability and pricing information.
               </p>
 
               <button

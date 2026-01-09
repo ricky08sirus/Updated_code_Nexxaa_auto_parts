@@ -488,3 +488,216 @@ class PartImageGalleryViewSet(viewsets.ReadOnlyModelViewSet):
         galleries = self.queryset.filter(part_category_id=part_category)
         serializer = self.get_serializer(galleries, many=True)
         return Response(serializer.data)
+
+
+# ==============================================================================
+# user registrtion
+# ==============================================================================
+# authentication/views.py
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.models import User
+from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
+
+def get_tokens_for_user(user):
+    """Generate JWT tokens for user"""
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_view(request):
+    """
+    Register a new user
+    POST /api/auth/register/
+    Body: {
+        "email": "user@example.com",
+        "password": "password123",
+        "first_name": "John",
+        "last_name": "Doe",
+        "phone_number": "1234567890" (optional)
+    }
+    """
+    serializer = RegisterSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        user = serializer.save()
+        tokens = get_tokens_for_user(user)
+        
+        user_data = UserSerializer(user).data
+        
+        return Response({
+            'message': 'User registered successfully',
+            'user': user_data,
+            'token': tokens['access'],
+            'refresh_token': tokens['refresh']
+        }, status=status.HTTP_201_CREATED)
+    
+    return Response({
+        'error': 'Registration failed',
+        'details': serializer.errors
+    }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def login_view(request):
+    """
+    Login user
+    POST /api/auth/login/
+    Body: {
+        "email": "user@example.com",
+        "password": "password123"
+    }
+    """
+    serializer = LoginSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        user = serializer.validated_data['user']
+        tokens = get_tokens_for_user(user)
+        
+        user_data = UserSerializer(user).data
+        
+        return Response({
+            'message': 'Login successful',
+            'user': user_data,
+            'token': tokens['access'],
+            'refresh_token': tokens['refresh']
+        }, status=status.HTTP_200_OK)
+    
+    return Response({
+        'error': 'Login failed',
+        'details': serializer.errors
+    }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_profile_view(request):
+    """
+    Get current user profile
+    GET /api/auth/profile/
+    Headers: Authorization: Bearer <token>
+    """
+    user_data = UserSerializer(request.user).data
+    return Response({
+        'user': user_data
+    }, status=status.HTTP_200_OK)
+
+@api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
+def update_profile_view(request):
+    """
+    Update user profile
+    PUT/PATCH /api/auth/profile/update/
+    Headers: Authorization: Bearer <token>
+    Body: {
+        "first_name": "John",
+        "last_name": "Doe",
+        "phone_number": "1234567890"
+    }
+    """
+    user = request.user
+    
+    # Update user fields
+    if 'first_name' in request.data:
+        user.first_name = request.data['first_name']
+    if 'last_name' in request.data:
+        user.last_name = request.data['last_name']
+    
+    user.save()
+    
+    # Update profile fields
+    if 'phone_number' in request.data:
+        user.profile.phone_number = request.data['phone_number']
+        user.profile.save()
+    
+    user_data = UserSerializer(user).data
+    
+    return Response({
+        'message': 'Profile updated successfully',
+        'user': user_data
+    }, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout_view(request):
+    """
+    Logout user (blacklist refresh token)
+    POST /api/auth/logout/
+    Headers: Authorization: Bearer <token>
+    Body: {
+        "refresh_token": "your_refresh_token"
+    }
+    """
+    try:
+        refresh_token = request.data.get('refresh_token')
+        if refresh_token:
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        
+        return Response({
+            'message': 'Logout successful'
+        }, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            'error': 'Logout failed',
+            'details': str(e)
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+# =========================================================================================
+# shipping form views
+# ==============================================================================================
+
+
+# authentication/views.py
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import ShippingAddress
+from .serializers import ShippingAddressSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+
+@api_view(['POST'])
+@permission_classes([AllowAny]) 
+def create_shipping_address(request):
+    """
+    Create a new shipping address
+    """
+    try:
+        serializer = ShippingAddressSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            shipping_address = serializer.save()
+            
+            return Response({
+                'success': True,
+                'message': 'Shipping address created successfully',
+                'data': {
+                    'id': shipping_address.id,
+                    'first_name': shipping_address.first_name,
+                    'last_name': shipping_address.last_name,
+                    'email': shipping_address.email,
+                    'phone': shipping_address.phone,
+                    'city': shipping_address.city,
+                    'state': shipping_address.state,
+                }
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response({
+                'success': False,
+                'message': 'Validation failed',
+                'errors': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
+    except Exception as e:
+        return Response({
+            'success': False,
+            'message': f'Error creating shipping address: {str(e)}',
+            'errors': {}
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

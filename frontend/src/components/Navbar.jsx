@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import logoImage from "../assets/images/brands/nexxa logo.png";
+import logoImage from "../assets/images/brands/Nexxa Logo (2).png";
 import "./Navbar.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -68,7 +68,7 @@ export default function Navbar() {
     <div className="bg-gray-50">
       <nav className="bg-black text-white relative z-50">
         <div className="max-w-full mx-auto px-4">
-          <div className="flex items-center h-16 gap-2">
+          <div className="flex items-center h-16 mx-auto w-[95%] gap-[29px]">
 
             {/* LOGO */}
             <Link to="/" className="flex items-center shrink-0">

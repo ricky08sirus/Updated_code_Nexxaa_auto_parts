@@ -5,7 +5,7 @@ import visaIcon from "../assets/images/visa.png";
 import amexIcon from "../assets/images/amex.png";
 import discoverIcon from "../assets/images/discover.png";
 import mastercardIcon from "../assets/images/images.png";
-import logo from "../assets/images/brands/nexxa logo.png"; 
+import logo from "../assets/images/brands/Nexxa Logo (2).png"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,

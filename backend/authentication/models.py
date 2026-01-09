@@ -6,6 +6,8 @@ from django.utils.text import slugify
 from django.core.validators import MinValueValidator
 import uuid
 from decimal import Decimal
+from django.core.validators import EmailValidator, RegexValidator
+
 
 
 # ============================================================================
@@ -1009,3 +1011,175 @@ class PartImageTag(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+# =================================================================================
+# registration models
+# =================================================================================
+# authentication/models.py
+from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
+
+    class Meta:
+        db_table = 'user_profiles'
+
+# Signal to create UserProfile automatically when User is created
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        # Only create profile if it doesn't exist
+        UserProfile.objects.get_or_create(user=instance)
+
+
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
+
+
+# =============================================================
+# shipping addres models
+# =============================================================
+
+# from django.db import models
+# from django.core.validators import RegexValidator, EmailValidator
+
+
+# class ShippingAddress(models.Model):
+#     """Model to store shipping addresses for orders"""
+    
+#     COUNTRY_CHOICES = [
+#         ('United States', 'United States'),
+#         ('Canada', 'Canada'),
+#         ('Mexico', 'Mexico'),
+#     ]
+    
+#     STATE_CHOICES = [
+#         # US States
+#         ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'),
+#         ('CA', 'California'), ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'),
+#         ('FL', 'Florida'), ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'),
+#         ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'), ('KS', 'Kansas'),
+#         ('KY', 'Kentucky'), ('LA', 'Louisiana'), ('ME', 'Maine'), ('MD', 'Maryland'),
+#         ('MA', 'Massachusetts'), ('MI', 'Michigan'), ('MN', 'Minnesota'), ('MS', 'Mississippi'),
+#         ('MO', 'Missouri'), ('MT', 'Montana'), ('NE', 'Nebraska'), ('NV', 'Nevada'),
+#         ('NH', 'New Hampshire'), ('NJ', 'New Jersey'), ('NM', 'New Mexico'), ('NY', 'New York'),
+#         ('NC', 'North Carolina'), ('ND', 'North Dakota'), ('OH', 'Ohio'), ('OK', 'Oklahoma'),
+#         ('OR', 'Oregon'), ('PA', 'Pennsylvania'), ('RI', 'Rhode Island'), ('SC', 'South Carolina'),
+#         ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'),
+#         ('VT', 'Vermont'), ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'),
+#         ('WI', 'Wisconsin'), ('WY', 'Wyoming'),
+#         # Canadian Provinces
+#         ('AB', 'Alberta'), ('BC', 'British Columbia'), ('MB', 'Manitoba'), ('NB', 'New Brunswick'),
+#         ('NL', 'Newfoundland and Labrador'), ('NS', 'Nova Scotia'), ('ON', 'Ontario'),
+#         ('PE', 'Prince Edward Island'), ('QC', 'Quebec'), ('SK', 'Saskatchewan'),
+#         # Mexican States
+#         ('AGS', 'Aguascalientes'), ('BC', 'Baja California'), ('BCS', 'Baja California Sur'),
+#         ('CAMP', 'Campeche'), ('CHIS', 'Chiapas'), ('CHIH', 'Chihuahua'), ('COAH', 'Coahuila'),
+#         ('COL', 'Colima'), ('CDMX', 'Mexico City'), ('DGO', 'Durango'), ('GTO', 'Guanajuato'),
+#         ('GRO', 'Guerrero'), ('HGO', 'Hidalgo'), ('JAL', 'Jalisco'), ('MEX', 'Mexico State'),
+#     ]
+    
+#     COUNTRY_CODE_CHOICES = [
+#         ('US +1', 'US +1'),
+#         ('CA +1', 'CA +1'),
+#         ('UK +44', 'UK +44'),
+#         ('MX +52', 'MX +52'),
+#     ]
+    
+#     # Fields
+#     country = models.CharField(
+#         max_length=100,
+#         choices=COUNTRY_CHOICES,
+#         default='United States'
+#     )
+#     first_name = models.CharField(max_length=100)
+#     last_name = models.CharField(max_length=100)
+#     street_address = models.CharField(max_length=255)
+#     street_address_2 = models.CharField(max_length=255, blank=True, null=True)
+#     city = models.CharField(max_length=100)
+#     state = models.CharField(max_length=50, choices=STATE_CHOICES)
+#     zip_code = models.CharField(
+#         max_length=20,
+#         validators=[RegexValidator(
+#             regex=r'^[A-Za-z0-9\s\-]+$',
+#             message='Enter a valid ZIP/Postal code'
+#         )]
+#     )
+#     email = models.EmailField(validators=[EmailValidator()])
+#     country_code = models.CharField(
+#         max_length=10,
+#         choices=COUNTRY_CODE_CHOICES,
+#         default='US +1'
+#     )
+#     # Updated phone validator - more flexible E.164 format
+#     phone = models.CharField(
+#         max_length=20,
+#         validators=[RegexValidator(
+#             regex=r'^\+\d{10,15}$',
+#             message='Phone number must be in E.164 format: +[country code][number] (e.g., +12025551234)'
+#         )],
+#         help_text='Phone number in E.164 format: +[country code][number]'
+#     )
+    
+#     # Metadata
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+    
+#     class Meta:
+#         db_table = 'shipping_addresses'
+#         verbose_name = 'Shipping Address'
+#         verbose_name_plural = 'Shipping Addresses'
+#         ordering = ['-created_at']
+    
+#     def __str__(self):
+#         return f"{self.first_name} {self.last_name} - {self.city}, {self.state}"
+    
+#     def get_full_name(self):
+#         return f"{self.first_name} {self.last_name}"
+    
+#     def get_full_address(self):
+#         address_parts = [
+#             self.street_address,
+#             self.street_address_2 if self.street_address_2 else None,
+#             f"{self.city}, {self.state} {self.zip_code}",
+#             self.country
+#         ]
+#         return ", ".join(filter(None, address_parts))
+
+
+
+# models.py
+from django.db import models
+
+class ShippingAddress(models.Model):
+    country = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    street_address = models.CharField(max_length=255)
+    street_address_2 = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
+    email = models.EmailField()
+    country_code = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'shipping_addresses'
+        verbose_name = 'Shipping Address'
+        verbose_name_plural = 'Shipping Addresses'
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.city}, {self.state}"

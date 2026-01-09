@@ -295,10 +295,11 @@ position: relative;
 }
 
 .how-it-works h2 {
-  margin-bottom: 30px;
-  font-size: 28px;
-  font-weight: bold;
-  text-align: left;
+    margin-bottom: 19px;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 1px 2px 1px;
 }
 
 .features-container {
@@ -328,7 +329,7 @@ position: relative;
 .feature-card .icon {
   font-size: 28px;
   box-shadow: 1px 1px 18px 1px #12d0ef;
-  border: 1px solid darkred;
+  border: 1px solid white;
   border-radius: 50%;
   width: 52px;
   height: 52px;
@@ -366,8 +367,9 @@ position: relative;
 
 .explore-parts h2 {
   font-size: 34px;
-  text-shadow: 1px 2px 4px;
+  /* text-shadow: 1px 2px 4px; */
   text-align: center;
+  font-weight: bold;
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -484,17 +486,18 @@ position: relative;
   padding: 32px 12px;
   background: white;
   overflow: hidden;
-  border: 3px solid #be0808;
+  border: 3px solid #2591b1;
   margin: auto;
   border-radius: 22px;
+  margin-top: 3rem;
 }
 
 .customer-reviews h2 {
   text-align: center;
   margin-bottom: 40px;
   font-size: 34px;
-  font-weight: 400;
-  text-shadow: 1px 2px 3px;
+  font-weight: bold;
+  /* text-shadow: 1px 2px 3px; */
 }
 
 .customer-reviews h2 span {
@@ -521,10 +524,11 @@ flex: 0 0 300px;
     justify-content: space-between;
     padding: 20px;
     box-shadow: 0 6px 20px #00000030;
-    border-top-right-radius: 2rem;
-    border: 2px solid #e16a6a;
+    /* border-top-right-radius: 2rem; */
+    border: 2px solid #2563eb;
     transition: transform .3s ease;
     background: linear-gradient(45deg, #1c2223, #5c9db1);
+    border-radius: 12px;
 }
 
 .review-card:hover {
@@ -546,7 +550,7 @@ flex: 0 0 300px;
   justify-content: center;
   font-size: 22px;
   color: red;
-  border: 2px solid red;
+  border: 2px solid #2563eb;
   border-radius: 50%;
   background: #000;
   box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.15),
@@ -554,10 +558,10 @@ flex: 0 0 300px;
 }
 
 .review-header h4 {
-  border: 2px solid darkred;
-  padding: 3px 13px;
-  font-size: 16px;
-  border-radius: 3px;
+border: 2px solid #167687;
+    padding: 3px 13px;
+    font-size: 16px;
+    border-radius: 30px;
 }
 
 .review-time {
@@ -575,7 +579,7 @@ flex: 0 0 300px;
 
 .review-text {
   font-size: 14px;
-  color: #ddd;
+  color: white;
   line-height: 1.5;
   flex-grow: 1;
 }
@@ -728,8 +732,8 @@ flex: 0 0 300px;
 .brands-section h2 {
   text-align: center;
     font-size: 34px;
-    font-weight: 400;
-    text-shadow: 1px 2px 3px;
+    font-weight: bold;
+    /* text-shadow: 1px 2px 3px; */
 }
 
 .brands-marquee {
@@ -776,9 +780,9 @@ flex: 0 0 300px;
 .brands-section h2 {
   font-size: 2rem;
   text-align: center;
-    font-size: 34px;
-    font-weight: 400;
-    text-shadow: 1px 2px 3px;
+    /* font-size: 3; */
+    font-weight: bold;
+    /* text-shadow: 1px 2px 3px; */
 }
 
 .brands-marquee {
@@ -844,6 +848,7 @@ flex: 0 0 300px;
   /* font-weight: 700;
   margin-bottom: 2rem; */
   color: #222;
+  font-weight: bold;
 }
 
 .highlight {

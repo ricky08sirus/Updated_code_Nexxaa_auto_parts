@@ -363,7 +363,7 @@ const Home = () => {
     <div className="banner-right">
       {/* ✅ TEXT OUTSIDE / ABOVE SEARCH BOX */}
       <p className="search-heading">
-        One smart search. Your perfect fit starts here.
+        One Smart Search, Your Perfect Fit Starts Here.
       </p>
 
       {/* 🔲 BLACK SEARCH BOX */}

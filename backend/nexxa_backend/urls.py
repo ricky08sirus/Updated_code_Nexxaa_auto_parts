@@ -20,12 +20,16 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from authentication.views import health_check
+from .views import sitemap_xml
+
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/health/", health_check, name="health-check"),
     path("api/", include("authentication.urls")),
+    path("sitemap.xml", sitemap_xml, name="sitemap"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

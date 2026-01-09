@@ -165,7 +165,7 @@
   align-items: center;
   gap: 0;
   width: fit-content;
-  border: 2px solid #c41e3a;
+  border: 1px solid #c41e3a;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -196,8 +196,8 @@
   height: 36px;
   text-align: center;
   border: none;
-  border-left: 2px solid #c41e3a;
-  border-right: 2px solid #c41e3a;
+  /* border-left: 2px solid #c41e3a;
+  border-right: 2px solid #c41e3a; */
   font-size: 16px;
   font-weight: 600;
   background-color: #fff;

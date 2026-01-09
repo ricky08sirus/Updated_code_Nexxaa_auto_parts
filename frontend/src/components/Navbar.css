@@ -101,12 +101,12 @@
 nav {
   width: 100%;
   /* background-color: #000; */
-  background: linear-gradient(4deg, black, #1092b9);
+  background:linear-gradient(45deg, black, #1092b9);
   color: #fff;
   font-family: "Inter", sans-serif;
   position:fixed;
   z-index: 100;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); */
 }
 
 nav a {
@@ -118,7 +118,7 @@ nav a {
 /* LOGO                            */
 /* =============================== */
 nav img {
-  height: 40px;
+  height: 55px;
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
@@ -204,7 +204,7 @@ nav button:hover {
 /* MOBILE DRAWER MENU DESIGN       */
 /* =============================== */
 nav .absolute {
-  background-color: #111;
+  background: linear-gradient(4deg,#000,#1092b9);
   color: #fff;
   transition: transform 0.3s ease;
   display: flex;
@@ -297,7 +297,7 @@ nav .absolute nav a svg {
 
   }
   nav .absolute nav a:hover {
-  background-color: #222;
+  background-color: #6b8992;
   color: #a71407;
   transform: translateX(5px);
   /* border: 1px solid darkred; */

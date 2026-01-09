@@ -453,3 +453,261 @@ class UnifiedPartSearchSerializer(serializers.Serializer):
     class Meta:
         # This is a read-only serializer for search results
         read_only = True
+
+# ========================================================================
+# user registr
+# ========================================================================
+# authentication/serializers.py
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from .models import UserProfile
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ['phone_number']
+
+class UserSerializer(serializers.ModelSerializer):
+    profile = UserProfileSerializer(required=False)
+    
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'first_name', 'last_name', 'profile']
+        read_only_fields = ['id']
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=6)
+    phone_number = serializers.CharField(required=False, allow_blank=True)
+    
+    class Meta:
+        model = User
+        fields = ['email', 'password', 'first_name', 'last_name', 'phone_number']
+    
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with this email already exists.")
+        return value.lower()
+    
+    def create(self, validated_data):
+        phone_number = validated_data.pop('phone_number', None)
+        
+        # Create user with email as username
+        user = User.objects.create_user(
+            username=validated_data['email'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', '')
+        )
+        
+        # Update profile with phone number if provided
+        if phone_number:
+            user.profile.phone_number = phone_number
+            user.profile.save()
+        
+        return user
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+    
+    def validate(self, data):
+        email = data.get('email', '').lower()
+        password = data.get('password', '')
+        
+        if not email or not password:
+            raise serializers.ValidationError("Email and password are required.")
+        
+        # Try to get user by email
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Invalid email or password.")
+        
+        # Authenticate using username (which is email)
+        user = authenticate(username=user.username, password=password)
+        
+        if not user:
+            raise serializers.ValidationError("Invalid email or password.")
+        
+        if not user.is_active:
+            raise serializers.ValidationError("User account is disabled.")
+        
+        data['user'] = user
+        return data
+    
+# =================================================================================
+# shipping address 
+# ===============================================================================
+# from rest_framework import serializers
+# from .models import ShippingAddress
+# import re
+
+
+# class ShippingAddressSerializer(serializers.ModelSerializer):
+#     """Serializer for ShippingAddress model"""
+    
+#     full_name = serializers.SerializerMethodField()
+#     full_address = serializers.SerializerMethodField()
+    
+#     class Meta:
+#         model = ShippingAddress
+#         fields = [
+#             'id',
+#             'country',
+#             'first_name',
+#             'last_name',
+#             'full_name',
+#             'street_address',
+#             'street_address_2',
+#             'city',
+#             'state',
+#             'zip_code',
+#             'email',
+#             'country_code',
+#             'phone',
+#             'full_address',
+#             'created_at',
+#             'updated_at'
+#         ]
+#         read_only_fields = ['id', 'created_at', 'updated_at', 'full_name', 'full_address']
+    
+#     def get_full_name(self, obj):
+#         return obj.get_full_name()
+    
+#     def get_full_address(self, obj):
+#         return obj.get_full_address()
+    
+#     def validate_phone(self, value):
+#         """Normalize and validate phone number"""
+#         if not value:
+#             raise serializers.ValidationError("Phone number is required")
+        
+#         # Remove all non-digit characters except '+'
+#         clean_phone = re.sub(r'[^\d+]', '', value)
+        
+#         # If it starts with +, validate E.164 format
+#         if clean_phone.startswith('+'):
+#             # Remove the + for digit counting
+#             digits_only = clean_phone[1:]
+            
+#             # Check if all remaining characters are digits
+#             if not digits_only.isdigit():
+#                 raise serializers.ValidationError("Phone number must contain only digits after '+' symbol")
+            
+#             # Check length (country code + number should be 10-15 digits)
+#             if len(digits_only) < 10 or len(digits_only) > 15:
+#                 raise serializers.ValidationError(f"Phone number must be 10-15 digits (currently {len(digits_only)})")
+            
+#             return clean_phone
+        
+#         # If no +, just validate it's all digits
+#         if not clean_phone.isdigit():
+#             raise serializers.ValidationError("Phone number must contain only digits")
+        
+#         # Check length for numbers without country code (should be 10+ digits)
+#         if len(clean_phone) < 10:
+#             raise serializers.ValidationError("Phone number must be at least 10 digits")
+        
+#         # Add + and country code if not present (assuming US)
+#         if len(clean_phone) == 10:
+#             return f"+1{clean_phone}"
+#         elif len(clean_phone) == 11 and clean_phone.startswith('1'):
+#             return f"+{clean_phone}"
+#         else:
+#             return f"+1{clean_phone}"
+    
+#     def validate_email(self, value):
+#         """Ensure email is properly formatted"""
+#         if not value or '@' not in value or '.' not in value.split('@')[1]:
+#             raise serializers.ValidationError("Enter a valid email address")
+#         return value.lower().strip()
+    
+#     def validate_first_name(self, value):
+#         """Validate first name"""
+#         if not value or not value.strip():
+#             raise serializers.ValidationError("First name is required")
+#         return value.strip()
+    
+#     def validate_last_name(self, value):
+#         """Validate last name"""
+#         if not value or not value.strip():
+#             raise serializers.ValidationError("Last name is required")
+#         return value.strip()
+    
+#     def validate_street_address(self, value):
+#         """Validate street address"""
+#         if not value or not value.strip():
+#             raise serializers.ValidationError("Street address is required")
+#         return value.strip()
+    
+#     def validate_city(self, value):
+#         """Validate city"""
+#         if not value or not value.strip():
+#             raise serializers.ValidationError("City is required")
+#         return value.strip()
+    
+#     def validate_state(self, value):
+#         """Validate state"""
+#         if not value or not value.strip():
+#             raise serializers.ValidationError("State is required")
+#         return value.strip()
+    
+#     def validate_zip_code(self, value):
+#         """Validate ZIP code"""
+#         if not value or not value.strip():
+#             raise serializers.ValidationError("ZIP code is required")
+#         return value.strip()
+
+
+# class ShippingAddressListSerializer(serializers.ModelSerializer):
+#     """Lightweight serializer for listing shipping addresses"""
+    
+#     full_name = serializers.SerializerMethodField()
+    
+#     class Meta:
+#         model = ShippingAddress
+#         fields = [
+#             'id',
+#             'full_name',
+#             'city',
+#             'state',
+#             'country',
+#             'created_at'
+#         ]
+#         read_only_fields = ['id', 'created_at']
+    
+#     def get_full_name(self, obj):
+#         return obj.get_full_name()
+
+
+
+
+
+# serializers.py
+from rest_framework import serializers
+from .models import ShippingAddress
+
+class ShippingAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShippingAddress
+        fields = [
+            'id', 'country', 'first_name', 'last_name', 
+            'street_address', 'street_address_2', 'city', 
+            'state', 'zip_code', 'email', 'country_code', 
+            'phone', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+    def validate_phone(self, value):
+        """Validate phone number format"""
+        if not value.startswith('+'):
+            raise serializers.ValidationError("Phone number must be in E.164 format (e.g., +12125551234)")
+        return value
+
+    def validate_email(self, value):
+        """Validate email format"""
+        if '@' not in value:
+            raise serializers.ValidationError("Enter a valid email address")
+        return value.lower()
