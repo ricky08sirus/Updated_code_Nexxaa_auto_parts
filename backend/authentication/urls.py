@@ -1,7 +1,7 @@
 # authentication/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import PartInventoryViewSet, PartImageGalleryViewSet
+from .views import PartInventoryViewSet, PartImageGalleryViewSet,PartPriceViewSet
 
 from . import views
 
@@ -9,6 +9,7 @@ from . import views
 router = DefaultRouter()
 router.register(r"parts", PartInventoryViewSet, basename="parts")
 router.register(r"part-galleries", PartImageGalleryViewSet, basename="part-galleries")
+router.register(r"part-prices", PartPriceViewSet, basename="part-prices")
 
 app_name = "authentication"
 
@@ -35,6 +36,7 @@ urlpatterns = [
     
     # ============= CONTACT FORM ENDPOINTS =============
     path("contact/", views.submit_contact_form, name="submit_contact"),
+    
     
     # ============= VIEWSET ROUTES (Parts Inventory & Part Galleries) =============
     # This includes:

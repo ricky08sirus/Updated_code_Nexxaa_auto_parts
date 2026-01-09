@@ -11,6 +11,7 @@ from .models import (
     VehicleModel,
     PartCategory,
     PartInventory,
+    PartPrice,
     PartImageGallery,
     PartImageUpload,
 )
@@ -24,6 +25,8 @@ from .serializers import (
     PartInventoryListSerializer,
     PartImageGallerySerializer,
     PartImageGalleryListSerializer,
+    PartPriceSerializer,
+    PartPriceListSerializer,
     PartImageUploadSerializer,
 )
 import logging
@@ -72,7 +75,7 @@ def submit_parts_inquiry(request):
             # Save inquiry with metadata
             inquiry = serializer.save(
                 ip_address=get_client_ip(request),
-                user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
+                # user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
             )
 
             logger.info(
@@ -109,11 +112,11 @@ def submit_parts_inquiry(request):
                     "inquiry_id": str(inquiry.id),
                     "details": {
                         "year": inquiry.year,
-                        "manufacturer": inquiry.manufacturer.name
+                        "manufacturer": inquiry.manufacturer
                         if inquiry.manufacturer
                         else None,
-                        "model": inquiry.model.name if inquiry.model else None,
-                        "part": inquiry.part_category.name
+                        "model": inquiry.model if inquiry.model else None,
+                        "part": inquiry.part_category
                         if inquiry.part_category
                         else None,
                     },
@@ -301,6 +304,7 @@ def health_check(request):
                 "contact": "/api/contact/",
                 "parts_inventory": "/api/parts/",
                 "part_galleries": "/api/part-galleries/",
+                "part_prices": "/api/part-prices/",
             },
         }
     )
@@ -410,7 +414,7 @@ class PartImageGalleryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = (
         PartImageGallery.objects.filter(is_published=True)
         .select_related("manufacturer", "model", "part_category")
-        .prefetch_related("images", "tags")
+        .prefetch_related("images", "tags","prices")
     )
     filter_backends = [
         DjangoFilterBackend,
@@ -488,3 +492,121 @@ class PartImageGalleryViewSet(viewsets.ReadOnlyModelViewSet):
         galleries = self.queryset.filter(part_category_id=part_category)
         serializer = self.get_serializer(galleries, many=True)
         return Response(serializer.data)
+
+
+
+
+
+class PartPriceViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint for browsing part prices
+    GET /api/part-prices/ - List all active prices
+    GET /api/part-prices/{id}/ - Get specific price
+    GET /api/part-prices/?year=2020&manufacturer=1 - Filter prices
+    GET /api/part-prices/?search=bumper - Search prices
+    GET /api/part-prices/by_vehicle/?year=2020&manufacturer=1&model=5 - Get prices by vehicle
+    GET /api/part-prices/featured/ - Get featured prices
+    GET /api/part-prices/in_stock/ - Get in-stock prices only
+    """
+    
+    queryset = (
+        PartPrice.objects.filter(is_active=True)
+        .select_related('manufacturer', 'model', 'part_category')
+        .order_by('-created_at')
+    )
+    
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    
+    filterset_fields = [
+        'year',
+        'manufacturer',
+        'model',
+        'part_category',
+        'condition',
+        'price_type',
+        'in_stock',
+        'is_featured',
+    ]
+    
+    search_fields = [
+        'part_name',
+        'part_number',
+        'notes',
+        'manufacturer__name',
+        'model__name',
+        'part_category__name',
+    ]
+    
+    ordering_fields = ['price', 'created_at', 'year', 'quantity_available']
+    ordering = ['-created_at']
+    
+    def get_serializer_class(self):
+        """Use list serializer for list view, detailed for retrieve"""
+        if self.action == 'list':
+            return PartPriceListSerializer
+        return PartPriceSerializer
+    
+    @action(detail=False, methods=['get'])
+    def by_vehicle(self, request):
+        """
+        Get prices for specific vehicle
+        Usage: /api/part-prices/by_vehicle/?year=2020&manufacturer=1&model=5
+        """
+        year = request.query_params.get('year')
+        manufacturer = request.query_params.get('manufacturer')
+        model = request.query_params.get('model')
+        
+        if not all([year, manufacturer, model]):
+            return Response(
+                {'error': 'year, manufacturer, and model parameters are required'},
+                status=400
+            )
+        
+        prices = self.queryset.filter(
+            year=year,
+            manufacturer_id=manufacturer,
+            model_id=model
+        )
+        
+        serializer = self.get_serializer(prices, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def featured(self, request):
+        """Get featured prices"""
+        featured_prices = self.queryset.filter(is_featured=True)
+        serializer = self.get_serializer(featured_prices, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def in_stock(self, request):
+        """Get only in-stock prices"""
+        in_stock_prices = self.queryset.filter(in_stock=True, quantity_available__gt=0)
+        serializer = self.get_serializer(in_stock_prices, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def by_condition(self, request):
+        """
+        Get prices filtered by condition
+        Usage: /api/part-prices/by_condition/?condition=new
+        """
+        condition = request.query_params.get('condition')
+        
+        if not condition:
+            return Response(
+                {'error': 'condition parameter is required'},
+                status=400
+            )
+        
+        prices = self.queryset.filter(condition=condition)
+        serializer = self.get_serializer(prices, many=True)
+        return Response(serializer.data)
+
+
+
+

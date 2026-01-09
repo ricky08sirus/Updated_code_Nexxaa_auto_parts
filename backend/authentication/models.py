@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from django.core.validators import MinValueValidator
 import uuid
 from decimal import Decimal
-
+from datetime import date
 
 # ============================================================================
 # VEHICLE & PARTS REFERENCE MODELS
@@ -93,101 +93,144 @@ class PartCategory(models.Model):
 # ============================================================================
 # CUSTOMER INQUIRY MODELS
 # ============================================================================
-
 class PartsInquiry(models.Model):
-    """
-    Model to store parts search/inquiry submissions from users
-    """
-
-    STATUS_CHOICES = [
-        ("new", "New"),
-        ("in_progress", "In Progress"),
-        ("quoted", "Quote Sent"),
-        ("completed", "Completed"),
-        ("cancelled", "Cancelled"),
-    ]
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
+    # ========== ADD THESE CORE FIELDS AT THE TOP ==========
+    
+    # Customer Information
+    name = models.CharField(max_length=255, help_text="Customer name")
+    email = models.EmailField(help_text="Customer email address")  # ✅ ADD THIS
+    phone = models.CharField(max_length=20, blank=True, help_text="Customer phone")
+    zipcode = models.CharField(max_length=10, blank=True, help_text="Customer zipcode")
+    
+    
     # Vehicle Information
-    year = models.IntegerField(help_text="Vehicle year")
-    manufacturer = models.ForeignKey(
-        Manufacturer,
-        on_delete=models.SET_NULL,
+    manufacturer = models.CharField(
+        max_length=100,
+        default='Unknown',
+        blank=True,
+        help_text="Car manufacturer")
+    model = models.CharField(
+        max_length=100,
+        default='unknown',
+        blank=True,
+        help_text="Car model")
+    year = models.IntegerField(
+        default=2024,
+        blank=True,
         null=True,
-        related_name="inquiries",
-        help_text="Vehicle manufacturer",
-    )
-    model = models.ForeignKey(
-        VehicleModel,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name="inquiries",
-        help_text="Vehicle model",
-    )
-    part_category = models.ForeignKey(
-        PartCategory,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name="inquiries",
-        help_text="Part category being searched",
-    )
+        help_text="Car year")
 
-    # Customer Contact Information
-    name = models.CharField(max_length=255, help_text="Customer's name")
-    email = models.EmailField(max_length=255, help_text="Customer's email address")
-    phone = models.CharField(max_length=20, help_text="Customer's phone number")
-    zipcode = models.CharField(max_length=10, help_text="Customer's ZIP code")
-
-    # Additional Information
-    additional_notes = models.TextField(
-        blank=True, help_text="Any additional information or special requests"
+    part_category = models.CharField(
+        max_length=255,
+        blank=True,
+        default='',
+        help_text="Category of parts needed"
     )
-
-    # Status tracking
+    
+    # Parts Information
+    parts_needed = models.TextField(
+        default = '',
+        blank = True,
+        help_text="Description of parts needed")
+    
+    # Status
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('quoted', 'Quoted'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default="new",
-        help_text="Current status of the inquiry",
+        default='pending'
     )
-
-    # Admin notes
-    admin_notes = models.TextField(
-        blank=True, help_text="Internal notes for admin staff"
-    )
-
+    
+    # ========== END CORE FIELDS ==========
+    
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True)
-
-    # Metadata
-    ip_address = models.GenericIPAddressField(
-        null=True, blank=True, help_text="IP address of the submitter"
+    
+    # Email Response Tracking
+    email_sent = models.BooleanField(
+        default=False,
+        help_text="Whether a reply email has been sent"
     )
-    user_agent = models.TextField(blank=True, help_text="Browser user agent")
-
+    email_sent_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the reply email was sent"
+    )
+    email_sent_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='sent_inquiry_emails',
+        help_text="Admin who sent the email"
+    )
+    email_subject = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Subject line of the sent email"
+    )
+    email_message = models.TextField(
+        blank=True,
+        help_text="Custom message sent in the email"
+    )
+    email_error = models.TextField(
+        blank=True,
+        help_text="Error message if email failed to send"
+    )
+    
+    # Parts Information Sent (store as JSON)
+    parts_info_sent = models.JSONField(
+        null=True,
+        blank=True,
+        help_text="Information about parts sent in the email"
+    )
+    
+    # Metadata
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    
     class Meta:
         db_table = "parts_inquiries"
-        verbose_name = "Parts Inquiry"
-        verbose_name_plural = "Parts Inquiries"
-        ordering = ["-created_at"]
         indexes = [
             models.Index(fields=["email"]),
             models.Index(fields=["status"]),
             models.Index(fields=["-created_at"]),
             models.Index(fields=["manufacturer", "model"]),
+            models.Index(fields=["email_sent"]),
         ]
-
+        ordering = ['-created_at']
+    
     def __str__(self):
-        return f"{self.name} - {self.year} {self.manufacturer} {self.model} ({self.created_at.strftime('%Y-%m-%d')})"
+        return f"{self.name} - {self.manufacturer} {self.model} ({self.status})"
+    
+    def mark_email_sent(self, user, subject, message, parts_info):
+        """Mark this inquiry as having received an email reply"""
+        from django.utils import timezone
+        
+        self.email_sent = True
+        self.email_sent_at = timezone.now()
+        self.email_sent_by = user
+        self.email_subject = subject
+        self.email_message = message
+        self.parts_info_sent = parts_info
+        self.status = "quoted"
+        self.save(update_fields=[
+            'email_sent', 
+            'email_sent_at', 
+            'email_sent_by',
+            'email_subject',
+            'email_message',
+            'parts_info_sent',
+            'status',
+            'updated_at'
+        ])
 
-    def mark_as_completed(self):
-        """Mark this inquiry as completed"""
-        self.status = "completed"
-        self.completed_at = timezone.now()
-        self.save(update_fields=["status", "completed_at", "updated_at"])
 
 
 class ContactSubmission(models.Model):
@@ -716,23 +759,39 @@ class PartPrice(models.Model):
     @property
     def is_valid(self):
         """Check if price is currently valid based on date range"""
-        today = timezone.now().date()
+        today = date.today()
+        
         if self.valid_until:
             return self.valid_from <= today <= self.valid_until
         return self.valid_from <= today
-    
+
     def save(self, *args, **kwargs):
-    # Auto-update in_stock based on quantity
+    
+        
+        # Auto-update in_stock based on quantity
         if self.quantity_available == 0:
             self.in_stock = False
         
-        if self.gallery_reference:
-            self.year = self.gallery_reference.year
-            self.manufacturer = self.gallery_reference.manufacturer
-            self.model = self.gallery_reference.model
-            self.part_category = self.gallery_reference.part_category
-            self.part_name = self.gallery_reference.part_name
-
+        # Auto-populate from gallery if linked
+        if self.gallery_reference_id:  # Check if gallery exists by ID
+            try:
+                gallery = self.gallery_reference
+                self.year = gallery.year
+                self.manufacturer = gallery.manufacturer
+                self.model = gallery.model
+                self.part_category = gallery.part_category
+                self.part_name = gallery.part_name
+            except Exception as e:
+                print(f"Warning: Could not auto-populate from gallery: {e}")
+        
+        # Validate required fields before saving
+        if not self.manufacturer_id:
+            raise ValueError("Manufacturer is required")
+        if not self.model_id:
+            raise ValueError("Model is required")
+        if not self.part_category_id:
+            raise ValueError("Part Category is required")
+        
         super().save(*args, **kwargs)
 
 
