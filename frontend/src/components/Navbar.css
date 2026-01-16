@@ -101,11 +101,12 @@
 nav {
   width: 100%;
   /* background-color: #000; */
-  background:linear-gradient(45deg, #000, #1aaac3);
+  background:linear-gradient(4deg, #16768799, #10617100);
   color: #fff;
   font-family: "Inter", sans-serif;
   position:fixed;
   z-index: 100;
+      padding: 3px 6px;
   /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); */
 }
 
@@ -204,7 +205,7 @@ nav button:hover {
 /* MOBILE DRAWER MENU DESIGN       */
 /* =============================== */
 nav .absolute {
-  background:linear-gradient(4deg, #001012, #0d525f);
+  background:linear-gradient(4deg, #001012, #127385);
   color: #fff;
   transition: transform 0.3s ease;
   display: flex;
@@ -268,7 +269,7 @@ nav .absolute nav a svg {
   }
 
   nav img {
-    height: 36px;
+    height: 47px;
   }
 
   /* ✅ hamburger positioning fix */
@@ -277,14 +278,11 @@ nav .absolute nav a svg {
     margin-right: 0;
   }
 }
-  nav img {
-    height: 36px;
-  }
 
 
 @media (max-width: 480px) {
   nav img {
-    height: 32px;
+    height: 36px;
   }
 
   nav .absolute {

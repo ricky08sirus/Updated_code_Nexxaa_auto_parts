@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import brandData from "../assets/brandData"; // Import brandData
 
-import logoImage from "../assets/images/brands/Nexxa Logo (2).png";
+import logoImage from "../assets/images/brands/logo white.png";
 import "./Navbar.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

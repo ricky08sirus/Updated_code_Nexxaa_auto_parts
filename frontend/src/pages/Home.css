@@ -27,18 +27,14 @@ body {
 .banner-overlay {
   position: absolute;
   inset: 0;
-  background:#00000036;
+  background:linear-gradient(to top, rgb(0 0 0), transparent);
   z-index: 1;
 }
 
 .banner-gradient {
   position: absolute;
   inset: 0;
-  /* background: linear-gradient(
-    to bottom,
-    rgb(0 0 0 / 0%) 40%,
-    rgb(0 0 0) 100%
-  ); */
+  background:linear-gradient(to top, rgb(0 0 0), transparent);
   z-index: 2;
 }
 
@@ -416,7 +412,6 @@ color: #fff;
   border-radius: 8px;
   color: #000000;
   min-width: 220px;
-  background: transparent;
 }
 
 .why-box img {
@@ -1049,8 +1044,6 @@ border: 1px solid #fff;
 .why-heading {
   width: 100%;
   color: #fff;
-  font-size: 18px;
-  font-weight: 600;
   margin-bottom: 12px;
   text-align: center;
 }
@@ -1059,15 +1052,6 @@ border: 1px solid #fff;
   flex-wrap: wrap;
   align-items: center;
   gap: 16px;
-}
-
-/* Heading */
-.why-heading {
-  width: 100%;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
 }
 
 /* Boxes remain horizontal */
@@ -1085,8 +1069,7 @@ border: 1px solid #fff;
 /* Paragraph below boxes */
 .why-desc {
   width: 100%;
-  color: #ccc;
-  font-size: 13px;
+  color: white;
   line-height: 1.6;
   margin-top: 10px;
 }
@@ -1129,13 +1112,6 @@ border: 1px solid #fff;
   width: 100%;
 }
 
-/* Heading stays inline */
-.why-heading {
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  white-space: nowrap;
-}
 
 /* Boxes unchanged */
 .why-box {
@@ -1151,7 +1127,7 @@ border: 1px solid #fff;
 
 /* Paragraph below */
 .why-desc {
-  color: #ccc;
+  color:white;
   font-size: 13px;
   line-height: 1.6;
   max-width: 100%;
@@ -1211,10 +1187,10 @@ border: 1px solid #fff;
 
 /* Heading */
 .why-heading {
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  white-space: nowrap;
+    color: white;
+    font-size: 29px;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
 /* Boxes */
@@ -1227,11 +1203,12 @@ border: 1px solid #fff;
   color: #fff;
   font-size: 14px;
   white-space: nowrap;
+  background: linear-gradient(45deg, #031e27, #1f8293);
 }
 
-.why-box:hover {
-  background-color: #420101;
-}
+.why-box:hover{
+    background:linear-gradient(45deg, #031e27, #1f8293);
+  }
 
 .why-box img {
   width: 24px;
@@ -1239,9 +1216,11 @@ border: 1px solid #fff;
 
 /* Paragraph */
 .why-desc {
-  color: #ccc;
-  font-size: 13px;
+  color: white;
+  font-size: 15px;
   line-height: 1.6;
+  padding: 4px 23px;
+  
 }
 
 
@@ -1670,8 +1649,11 @@ border: 1px solid #fff;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 0, 0, 0.5);
     border-radius: 8px;
+    background: linear-gradient(45deg, #031e27, #1f8293);
   }
-
+  .why-box:hover{
+    background:linear-gradient(45deg, #031e27, #1f8293)
+  }
   .why-box img {
     width: 40px;
     height: 40px;
@@ -1682,4 +1664,13 @@ border: 1px solid #fff;
     font-size: 14px;
     text-align: left;
   }
+}
+.banner-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:linear-gradient(to top, rgb(0 0 0), transparent);
+  z-index: 1;
 }
