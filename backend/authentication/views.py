@@ -415,7 +415,10 @@ class PartImageGalleryViewSet(viewsets.ReadOnlyModelViewSet):
         PartImageGallery.objects.filter(is_published=True)
         .select_related("manufacturer", "model", "part_category")
         .prefetch_related("images", "tags")
+    
     )
+    serializer_class = PartImageGallerySerializer
+    pagination_class = None  # Disable pagination
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,

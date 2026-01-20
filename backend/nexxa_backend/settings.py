@@ -19,6 +19,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,backend,nginx,ne
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8080',
     'http://127.0.0.1:8080',
+    #'74.208.158.237',
     'https://nexxaauto.com',
     'http://nexxaauto.com',
     'https://www.nexxaauto.com',
@@ -209,35 +210,39 @@ THUMBNAIL_SIZE = int(os.getenv('THUMBNAIL_SIZE', 300))
 # REST FRAMEWORK CONFIGURATION (Enhanced)
 # ============================================================================
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
+    # Authentication - JWT and fallback
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    
+    # Permissions - Default to authenticated, but can be overridden per view
+    "DEFAULT_PERMISSION_CLASSES": [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    
+    # Renderers
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
+    
+    # Parsers
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
-        "rest_framework.parsers.MultiPartParser",  # NEW: For file uploads
-        "rest_framework.parsers.FormParser",  # NEW: For form data
+        "rest_framework.parsers.MultiPartParser",  # For file uploads
+        "rest_framework.parsers.FormParser",  # For form data
     ],
+    
+    # Filters
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
-        "rest_framework.filters.SearchFilter",  # NEW: For search
-        "rest_framework.filters.OrderingFilter",  # NEW: For ordering
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
     ],
-    # NEW: Pagination settings
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 20,
-        'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-}
-
-# Default primary key field type
+    
+    # Pagination - REMOVED to allow per-view control
+    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    # "PAGE_SIZE": 20,
+}# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ============================================================================
