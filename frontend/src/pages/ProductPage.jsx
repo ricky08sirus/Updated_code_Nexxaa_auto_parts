@@ -846,7 +846,16 @@ If the part doesn't match your VIN or arrives damaged during shipping, we've got
         
         const data = await response.json();
         
-        const transformedProducts = data.results.map(item => {
+        // Handle both paginated response (with results) and direct array response
+        const productsArray = Array.isArray(data) ? data : (data.results || []);
+        
+        if (productsArray.length === 0) {
+          setError('No products available');
+          setLoading(false);
+          return;
+        }
+        
+        const transformedProducts = productsArray.map(item => {
           const primaryImageUrl = getFirstImageUrl(item);
           
           const backendPrice = item.prices && item.prices.length > 0
