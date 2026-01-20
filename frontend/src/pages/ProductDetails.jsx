@@ -989,7 +989,8 @@
 
 // ProductDetails.jsx - Backend Integrated Version with Welcome Offer and Terms
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+// import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import "./ProductDetails.css";
 import "./WelcomeOffer.css";
 import logoImage from "../assets/images/brands/Nexxa Logo (2).png";
@@ -999,19 +1000,18 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 console.log("API Base URL:", API_BASE_URL);
 
 const ProductDetails = () => {
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // Get data from navigation state
-  const {
-    year,
-    manufacturerId,
-    manufacturerName,
-    modelId,
-    modelName,
-    partCategoryId,
-    partCategoryName,
-  } = location.state || {};
+  // Get data from URL parameters
+  const year = searchParams.get('year');
+  const manufacturerId = searchParams.get('manufacturerId');
+  const manufacturerName = searchParams.get('manufacturerName');
+  const modelId = searchParams.get('modelId');
+  const modelName = searchParams.get('modelName');
+  const partCategoryId = searchParams.get('partCategoryId');
+  const partCategoryName = searchParams.get('partCategoryName');
+
 
   // Safety check if user opens page directly
   if (!year || !manufacturerId || !modelId || !partCategoryId) {
@@ -1123,10 +1123,10 @@ const ProductDetails = () => {
     try {
       // Prepare data for backend
       const requestData = {
-        year: year,
-        manufacturer: manufacturerId,
-        model: modelId,
-        part_category: partCategoryId,
+        year: parseInt(year),
+        manufacturer: parseInt(manufacturerId),
+        model: parseInt(modelId),
+        part_category: parseInt(partCategoryId),
         name: formData.name.trim(),
         email: formData.email.trim(),
         phone: formData.phone.trim(),

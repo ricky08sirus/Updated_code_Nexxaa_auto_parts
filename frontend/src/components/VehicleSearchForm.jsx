@@ -155,18 +155,18 @@ export default function VehicleSearchForm({ brandName = null }) {
       (p) => p.id === parseInt(formData.part)
     );
 
-    // Navigate to product details page with complete data
-    navigate("/product-details", {
-      state: {
-        year: parseInt(formData.year),
-        manufacturerId: parseInt(formData.manufacturer),
-        manufacturerName: manufacturerData?.name || "",
-        modelId: parseInt(formData.model),
-        modelName: modelData?.name || "",
-        partCategoryId: parseInt(formData.part),
-        partCategoryName: partData?.name || "",
-      },
+    // Navigate to product details page with URL parameters
+    const params = new URLSearchParams({
+      year: formData.year,
+      manufacturerId: formData.manufacturer,
+      manufacturerName: manufacturerData?.name || "",
+      modelId: formData.model,
+      modelName: modelData?.name || "",
+      partCategoryId: formData.part,
+      partCategoryName: partData?.name || "",
     });
+
+    navigate(`/product-details?${params.toString()}`);
   };
 
   return (
