@@ -70,7 +70,7 @@ ROOT_URLCONF = "nexxa_backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS":[BASE_DIR / 'authentication' / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -78,6 +78,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'nexxa_backend.context_processors.google_analytics',
             ],
         },
     },
@@ -401,3 +402,9 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+
+GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', '')
+GOOGLE_ANALYTICS_API_SECRET = os.environ.get('GOOGLE_ANALYTICS_API_SECRET', '')
+SITE_DOMAIN = os.environ.get('SITE_DOMAIN', 'https://nexxaauto.com')
+

@@ -2,6 +2,7 @@
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from .analytics import track_event
 from rest_framework import status, viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
@@ -43,15 +44,12 @@ def get_client_ip(request):
 
 # ============= PARTS INQUIRY ENDPOINTS =============
 
-
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def submit_parts_inquiry(request):
     """
     Handle parts inquiry form submission
-
     POST /api/parts-inquiry/
-
     Body (JSON):
     {
         "year": 1980,
@@ -62,46 +60,71 @@ def submit_parts_inquiry(request):
         "email": "john@example.com",
         "phone": "+1234567890",
         "zipcode": "12345",
-            
-        }
+    }
     """
     serializer = PartsInquirySerializer(data=request.data)
-
+    
     if serializer.is_valid():
         try:
             # Save inquiry with metadata
             inquiry = serializer.save(
                 ip_address=get_client_ip(request),
-                #user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
             )
-
+            
             logger.info(
                 f"Parts inquiry submitted by {inquiry.email} for {inquiry.year} {inquiry.manufacturer} {inquiry.model}"
             )
-
+            
+            # ✅ Track inquiry submission
+            track_event(
+                request,
+                'parts_inquiry_submitted',
+                {
+                    'inquiry_id': str(inquiry.id),
+                    'year': inquiry.year,
+                    'manufacturer': inquiry.manufacturer.name if inquiry.manufacturer else 'Unknown',
+                    'model': inquiry.model.name if inquiry.model else 'Unknown',
+                    'part_category': inquiry.part_category.name if inquiry.part_category else 'Unknown',
+                    'currency': 'USD',
+                    'value': 1.0,
+                }
+            )
+            
             # Send email notifications
             from .email_utils import (
                 send_parts_inquiry_notification,
                 send_parts_inquiry_auto_reply,
             )
-
+            
             email_sent = send_parts_inquiry_notification(inquiry)
             auto_reply_sent = send_parts_inquiry_auto_reply(inquiry)
-
+            
             if email_sent:
-                logger.info(
-                    f"Parts inquiry notification sent successfully for {inquiry.id}"
-                )
+                logger.info(f"Parts inquiry notification sent successfully for {inquiry.id}")
+                # ✅ Track email sent (ADDED)
+                track_event(request, 'inquiry_notification_sent', {
+                    'inquiry_id': str(inquiry.id)
+                })
             else:
-                logger.warning(
-                    f"Failed to send parts inquiry notification for {inquiry.id}"
-                )
-
+                logger.warning(f"Failed to send parts inquiry notification for {inquiry.id}")
+                # ✅ Track email failure (ADDED)
+                track_event(request, 'inquiry_notification_failed', {
+                    'inquiry_id': str(inquiry.id)
+                })
+            
             if auto_reply_sent:
                 logger.info(f"Auto-reply sent to {inquiry.email}")
+                # ✅ Track auto-reply sent (ADDED)
+                track_event(request, 'inquiry_auto_reply_sent', {
+                    'inquiry_id': str(inquiry.id)
+                })
             else:
                 logger.warning(f"Failed to send auto-reply to {inquiry.email}")
-
+                # ✅ Track auto-reply failure (ADDED)
+                track_event(request, 'inquiry_auto_reply_failed', {
+                    'inquiry_id': str(inquiry.id)
+                })
+            
             return Response(
                 {
                     "success": True,
@@ -109,20 +132,23 @@ def submit_parts_inquiry(request):
                     "inquiry_id": str(inquiry.id),
                     "details": {
                         "year": inquiry.year,
-                        "manufacturer": inquiry.manufacturer.name
-                        if inquiry.manufacturer
-                        else None,
+                        "manufacturer": inquiry.manufacturer.name if inquiry.manufacturer else None,
                         "model": inquiry.model.name if inquiry.model else None,
-                        "part": inquiry.part_category.name
-                        if inquiry.part_category
-                        else None,
+                        "part": inquiry.part_category.name if inquiry.part_category else None,
                     },
                 },
                 status=status.HTTP_201_CREATED,
             )
-
+            
         except Exception as e:
             logger.error(f"Error saving parts inquiry: {str(e)}", exc_info=True)
+            
+            # ✅ Track error
+            track_event(request, 'parts_inquiry_error', {
+                'error_message': str(e)[:100],
+                'error_type': 'server_error'
+            })
+            
             return Response(
                 {
                     "success": False,
@@ -130,14 +156,17 @@ def submit_parts_inquiry(request):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-
+    
+    # ✅ Track validation errors (ADDED)
+    track_event(request, 'parts_inquiry_validation_error', {
+        'errors': str(serializer.errors)[:200]
+    })
+    
     # Return validation errors
     return Response(
         {"success": False, "errors": serializer.errors},
         status=status.HTTP_400_BAD_REQUEST,
     )
-
-
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def get_manufacturers(request):
@@ -708,3 +737,216 @@ def create_shipping_address(request):
             'message': f'Error creating shipping address: {str(e)}',
             'errors': {}
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+
+
+# ============= ANALYTICS TEST ENDPOINT =============
+# Add this at the very end of your views.py file
+# Add these test endpoints to your views.py
+
+# ============= ANALYTICS TEST ENDPOINTS =============
+# Add these at the very end of your authentication/views.py file
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def test_analytics(request):
+    """
+    Test endpoint to verify Google Analytics is working
+    GET /api/test-analytics/
+    """
+    from .analytics import GoogleAnalytics, get_client_id, get_client_ip
+    
+    ga = GoogleAnalytics()
+    client_id = get_client_id(request)
+    
+    # Send a test event with debug_mode enabled
+    success = ga.send_event(
+        client_id=client_id,
+        event_name='backend_test_event',
+        event_params={
+            'test_parameter': 'test_value',
+            'environment': 'backend',
+            'timestamp': str(request.META.get('HTTP_HOST', 'localhost'))
+        }
+    )
+    
+    return Response({
+        'status': 'success' if success else 'failed',
+        'measurement_id': ga.measurement_id,
+        'client_id': client_id,
+        'configured': bool(ga.measurement_id and ga.api_secret),
+        'message': 'Analytics event sent with debug_mode! Check GA4 DebugView in 10-30 seconds.' if success else 'Failed to send event. Check configuration.',
+        'next_steps': [
+            '1. Go to GA4 → Configure → DebugView',
+            '2. Wait 10-30 seconds',
+            '3. Look for event named "backend_test_event"',
+            '4. If not showing, check validation endpoint'
+        ]
+    })
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def test_analytics_debug(request):
+    """
+    Test endpoint with full validation response from GA4
+    GET /api/test-analytics-debug/
+    """
+    from .analytics import GoogleAnalytics, get_client_id
+    import time
+    
+    ga = GoogleAnalytics()
+    client_id = get_client_id(request)
+    
+    # Send event to debug endpoint
+    validation = ga.send_event(
+        client_id=client_id,
+        event_name='debug_test_event',
+        event_params={
+            'test_type': 'validation',
+            'timestamp': int(time.time()),
+            'value': 100
+        },
+        debug=True  # Use debug endpoint
+    )
+    
+    return Response({
+        'status': 'validation_complete',
+        'measurement_id': ga.measurement_id,
+        'client_id': client_id,
+        'configured': bool(ga.measurement_id and ga.api_secret),
+        'validation_response': validation,
+        'instructions': {
+            'step_1': 'Check the validation_response above for any errors',
+            'step_2': 'If validation_response is empty {}, your event is valid',
+            'step_3': 'Go to GA4 → Configure → DebugView',
+            'step_4': 'Look for event named "debug_test_event"'
+        }
+    })
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def analytics_config(request):
+    """
+    Check Analytics configuration
+    GET /api/analytics-config/
+    """
+    from .analytics import GoogleAnalytics
+    
+    ga = GoogleAnalytics()
+    
+    return Response({
+        'configured': bool(ga.measurement_id and ga.api_secret),
+        'measurement_id': ga.measurement_id if ga.measurement_id else 'NOT_SET',
+        'api_secret_set': bool(ga.api_secret),
+        'endpoints': {
+            'production': ga.endpoint if ga.endpoint else 'NOT_CONFIGURED',
+            'debug': ga.debug_endpoint if ga.debug_endpoint else 'NOT_CONFIGURED'
+        },
+        'troubleshooting': {
+            'check_env': 'Ensure GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_API_SECRET are set in settings.py',
+            'verify_ga4': f'Log into GA4 and verify Measurement ID: {ga.measurement_id}' if ga.measurement_id else 'Measurement ID not configured',
+            'regenerate_secret': 'If events not showing, regenerate API secret in GA4 Admin',
+            'check_debugview': 'Events with debug_mode=1 appear in Configure → DebugView'
+        }
+    })
+
+
+
+
+# Add this to your authentication/views.py
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def verify_ga4_connection(request):
+    """
+    Send multiple test events and verify GA4 configuration
+    GET /api/verify-ga4/
+    """
+    from .analytics import GoogleAnalytics, get_client_id
+    import time
+    
+    ga = GoogleAnalytics()
+    client_id = get_client_id(request)
+    
+    results = []
+    
+    # Test 1: Send to debug endpoint
+    debug_result = ga.send_event(
+        client_id=client_id,
+        event_name='verification_test',
+        event_params={
+            'test_number': 1,
+            'test_type': 'debug_endpoint',
+            'timestamp': int(time.time())
+        },
+        debug=True
+    )
+    results.append({
+        'test': 'Debug Endpoint',
+        'success': bool(debug_result),
+        'validation': debug_result if isinstance(debug_result, dict) else None
+    })
+    
+    # Test 2: Send to production endpoint
+    prod_result = ga.send_event(
+        client_id=client_id,
+        event_name='verification_test',
+        event_params={
+            'test_number': 2,
+            'test_type': 'production_endpoint',
+            'timestamp': int(time.time())
+        },
+        debug=False
+    )
+    results.append({
+        'test': 'Production Endpoint',
+        'success': prod_result
+    })
+    
+    # Test 3: Send with different event name
+    test3_result = ga.send_event(
+        client_id=client_id,
+        event_name='page_view',  # Standard GA4 event
+        event_params={
+            'page_location': 'http://localhost:8080/test',
+            'page_title': 'Test Page'
+        }
+    )
+    results.append({
+        'test': 'Standard Event (page_view)',
+        'success': test3_result
+    })
+    
+    return Response({
+        'status': 'verification_complete',
+        'measurement_id': ga.measurement_id,
+        'client_id': client_id,
+        'tests_completed': len(results),
+        'test_results': results,
+        'instructions': {
+            'step_1': 'Open GA4 in your browser',
+            'step_2': 'Go to: Configure → DebugView',
+            'step_3': f'Look for client_id: {client_id}',
+            'step_4': 'You should see 3 events within 30 seconds',
+            'step_5': 'If nothing appears, check property selector (top-left) to ensure you are viewing G-675QHD8DWY'
+        },
+        'troubleshooting': {
+            'if_no_events': [
+                '1. Verify you are viewing the correct GA4 property (G-675QHD8DWY)',
+                '2. Check if data stream is active in Admin → Data Streams',
+                '3. Regenerate API secret in GA4 and update Django settings',
+                '4. Wait up to 1-2 minutes for events to appear'
+            ],
+            'debugview_location': 'GA4 → Configure (left sidebar) → DebugView',
+            'property_selector': 'Top-left of GA4 interface, shows current property name'
+        }
+    })
+
+
+
+

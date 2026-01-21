@@ -82,6 +82,8 @@ from .views import (
     logout_view,
     create_shipping_address  # Import from views
 )
+from .views import test_analytics, test_analytics_debug, analytics_config
+
 from . import views
 
 # Create router for ViewSets
@@ -124,7 +126,10 @@ urlpatterns = [
     
     # ============= SHIPPING ADDRESS ENDPOINT =============
     path('shipping-addresses/', views.create_shipping_address, name='create_shipping_address'),
-    
+    path('test-analytics/', views.test_analytics, name='test-analytics'),
+    path('test-analytics-debug/', views.test_analytics_debug, name='test-analytics-debug'),
+    path('analytics-config/', views.analytics_config, name='analytics-config'),
+    path('verify-ga4/', views.verify_ga4_connection, name='verify-ga4'),
     # ============= VIEWSET ROUTES (Parts Inventory & Part Galleries) =============
     path("", include(router.urls)),
 ]
