@@ -355,18 +355,6 @@ const Home = () => {
       (p) => p.id === parseInt(selectedPart),
     );
 
-    // Navigate to product details page with complete data
-    // navigate("/product-details", {
-    //   state: {
-    //     year: parseInt(selectedYear),
-    //     manufacturerId: parseInt(selectedManufacturer),
-    //     manufacturerName: manufacturerData?.name || "",
-    //     modelId: parseInt(selectedModel),
-    //     modelName: modelData?.name || "",
-    //     partCategoryId: parseInt(selectedPart),
-    //     partCategoryName: partData?.name || "",
-    //   },
-    // });
   const params = new URLSearchParams({
     year: selectedYear,
     manufacturerId: selectedManufacturer,

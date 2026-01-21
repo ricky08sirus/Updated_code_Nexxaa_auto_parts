@@ -21,6 +21,7 @@ from .models import (
     PartImageUpload,
     PartImageTag,
     PartPrice,
+    ProductImage
 )
 
 
@@ -1396,3 +1397,111 @@ class PartPriceAdmin(admin.ModelAdmin):
 
     feature_prices.short_description = "⭐ Feature selected prices"
 
+
+# ==========================================================================
+# Enquiry form image uploading
+# ==========================================================================
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
+
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    list_display = [
+        'image_thumbnail',
+        'get_vehicle_info',
+        'part_category',
+        'specification_number',
+        'uploaded_at'
+    ]
+    
+    list_filter = [
+        'manufacturer',
+        'model',
+        'year',
+        'part_category',
+        'is_active',
+        'uploaded_at'
+    ]
+    
+    search_fields = [
+        'manufacturer__name',
+        'model__name',
+        'part_category__name',
+        'year'
+    ]
+    
+    readonly_fields = [
+        'id',
+        'image_preview',
+        'uploaded_at',
+        'updated_at',
+        'uploaded_by'
+    ]
+    
+    list_editable = ['specification_number']
+    
+    fieldsets = (
+        ('Vehicle Information', {
+            'fields': ('manufacturer', 'model', 'year', 'part_category')
+        }),
+        ('Image', {
+            'fields': ('image', 'image_preview')
+        }),
+        ('Specification', {
+            'fields': ('specification_number',),
+            'description': 'Enter the number of specifications (e.g., 10)'
+        }),
+        ('Settings', {
+            'fields': ('is_active',)
+        }),
+        ('Metadata', {
+            'fields': ('id', 'uploaded_at', 'updated_at', 'uploaded_by'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def image_thumbnail(self, obj):
+        """Small thumbnail for list view"""
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" />',
+                obj.image.url
+            )
+        return "No image"
+    image_thumbnail.short_description = "Image"
+    
+    def image_preview(self, obj):
+        """Large preview for detail view"""
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-width: 400px; max-height: 400px; border-radius: 8px;" />',
+                obj.image.url
+            )
+        return "No image"
+    image_preview.short_description = "Preview"
+    
+    def get_vehicle_info(self, obj):
+        """Display vehicle information"""
+        return f"{obj.manufacturer.name} {obj.model.name} {obj.year}"
+    get_vehicle_info.short_description = "Vehicle"
+    get_vehicle_info.admin_order_field = 'manufacturer__name'
+    
+    def save_model(self, request, obj, form, change):
+        """Automatically set uploaded_by on creation"""
+        if not change:  # Only on creation
+            obj.uploaded_by = request.user
+        super().save_model(request, obj, form, change)
+
+
+# Admin actions
+@admin.action(description='Activate selected images')
+def activate_images(modeladmin, request, queryset):
+    queryset.update(is_active=True)
+
+@admin.action(description='Deactivate selected images')
+def deactivate_images(modeladmin, request, queryset):
+    queryset.update(is_active=False)
+
+# Add actions to the admin
+ProductImageAdmin.actions = [activate_images, deactivate_images]
+ProductImageAdmin.list_per_page = 25

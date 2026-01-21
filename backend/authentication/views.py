@@ -26,6 +26,9 @@ from .serializers import (
     PartImageGallerySerializer,
     PartImageGalleryListSerializer,
     PartImageUploadSerializer,
+    ProductImageSerializer,
+    ProductImageCreateSerializer,
+    ProductImageListSerializer
 )
 import logging
 
@@ -743,6 +746,7 @@ def create_shipping_address(request):
 
 
 
+
 # ============= ANALYTICS TEST ENDPOINT =============
 # Add this at the very end of your views.py file
 # Add these test endpoints to your views.py
@@ -949,4 +953,134 @@ def verify_ga4_connection(request):
 
 
 
+
+
+# ==================================================================================
+# Enquiry form image uplaoding
+# =====================================================================================
+from rest_framework import viewsets, status, filters
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Q
+from .models import ProductImage
+
+class ProductImageViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for Product Images
+    Supports filtering by manufacturer, model, year, and part category
+    """
+    queryset = ProductImage.objects.select_related(
+        'manufacturer', 'model', 'part_category'
+    ).filter(is_active=True)
+    
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    
+    filterset_fields = {
+        'manufacturer': ['exact'],
+        'model': ['exact'],
+        'year': ['exact'],
+        'part_category': ['exact'],
+    }
+    
+    ordering_fields = ['uploaded_at', 'specification_number']
+    ordering = ['-uploaded_at']
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ProductImageListSerializer
+        elif self.action in ['create', 'update', 'partial_update']:
+            return ProductImageCreateSerializer
+        return ProductImageSerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Filter by URL query parameters
+        manufacturer_id = self.request.query_params.get('manufacturerId')
+        model_id = self.request.query_params.get('modelId')
+        year = self.request.query_params.get('year')
+        category_id = self.request.query_params.get('partCategoryId')
+        
+        if manufacturer_id:
+            queryset = queryset.filter(manufacturer_id=manufacturer_id)
+        if model_id:
+            queryset = queryset.filter(model_id=model_id)
+        if year:
+            queryset = queryset.filter(year=year)
+        if category_id:
+            queryset = queryset.filter(part_category_id=category_id)
+        
+        return queryset
+    
+    @action(detail=False, methods=['get'])
+    def by_vehicle(self, request):
+        """
+        Get product image filtered by vehicle information
+        Query params: manufacturerId, modelId, year, partCategoryId
+        Returns the matching image with specification number
+        """
+        queryset = self.get_queryset()
+        
+        # Get the first matching image
+        image = queryset.first()
+        
+        if image:
+            serializer = ProductImageSerializer(
+                image,
+                context={'request': request}
+            )
+            return Response(serializer.data)
+        else:
+            return Response(
+                {'message': 'No image found for the selected criteria'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+    
+    @action(detail=True, methods=['patch'], permission_classes=[IsAuthenticated])
+    def update_specification(self, request, pk=None):
+        """Update specification number for an image"""
+        image = self.get_object()
+        specification_number = request.data.get('specification_number')
+        
+        if specification_number is None:
+            return Response(
+                {'error': 'specification_number is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            specification_number = int(specification_number)
+            if specification_number < 0:
+                raise ValueError("Must be non-negative")
+        except (ValueError, TypeError):
+            return Response(
+                {'error': 'specification_number must be a valid non-negative integer'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        image.specification_number = specification_number
+        image.save()
+        
+        serializer = ProductImageSerializer(image, context={'request': request})
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def stats(self, request):
+        """Get statistics about product images"""
+        queryset = self.get_queryset()
+        
+        stats = {
+            'total_images': queryset.count(),
+            'by_manufacturer': queryset.values('manufacturer__name').annotate(
+                count=models.Count('id')
+            ),
+            'by_category': queryset.values('part_category__name').annotate(
+                count=models.Count('id')
+            )
+        }
+        
+        return Response(stats)
 

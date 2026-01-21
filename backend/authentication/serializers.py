@@ -12,6 +12,7 @@ from .models import (
     PartImageGallery,
     PartImageUpload,
     PartImageTag,
+    ProductImage
 )
 
 
@@ -598,151 +599,6 @@ class LoginSerializer(serializers.Serializer):
 # =================================================================================
 # shipping address 
 # ===============================================================================
-# from rest_framework import serializers
-# from .models import ShippingAddress
-# import re
-
-
-# class ShippingAddressSerializer(serializers.ModelSerializer):
-#     """Serializer for ShippingAddress model"""
-    
-#     full_name = serializers.SerializerMethodField()
-#     full_address = serializers.SerializerMethodField()
-    
-#     class Meta:
-#         model = ShippingAddress
-#         fields = [
-#             'id',
-#             'country',
-#             'first_name',
-#             'last_name',
-#             'full_name',
-#             'street_address',
-#             'street_address_2',
-#             'city',
-#             'state',
-#             'zip_code',
-#             'email',
-#             'country_code',
-#             'phone',
-#             'full_address',
-#             'created_at',
-#             'updated_at'
-#         ]
-#         read_only_fields = ['id', 'created_at', 'updated_at', 'full_name', 'full_address']
-    
-#     def get_full_name(self, obj):
-#         return obj.get_full_name()
-    
-#     def get_full_address(self, obj):
-#         return obj.get_full_address()
-    
-#     def validate_phone(self, value):
-#         """Normalize and validate phone number"""
-#         if not value:
-#             raise serializers.ValidationError("Phone number is required")
-        
-#         # Remove all non-digit characters except '+'
-#         clean_phone = re.sub(r'[^\d+]', '', value)
-        
-#         # If it starts with +, validate E.164 format
-#         if clean_phone.startswith('+'):
-#             # Remove the + for digit counting
-#             digits_only = clean_phone[1:]
-            
-#             # Check if all remaining characters are digits
-#             if not digits_only.isdigit():
-#                 raise serializers.ValidationError("Phone number must contain only digits after '+' symbol")
-            
-#             # Check length (country code + number should be 10-15 digits)
-#             if len(digits_only) < 10 or len(digits_only) > 15:
-#                 raise serializers.ValidationError(f"Phone number must be 10-15 digits (currently {len(digits_only)})")
-            
-#             return clean_phone
-        
-#         # If no +, just validate it's all digits
-#         if not clean_phone.isdigit():
-#             raise serializers.ValidationError("Phone number must contain only digits")
-        
-#         # Check length for numbers without country code (should be 10+ digits)
-#         if len(clean_phone) < 10:
-#             raise serializers.ValidationError("Phone number must be at least 10 digits")
-        
-#         # Add + and country code if not present (assuming US)
-#         if len(clean_phone) == 10:
-#             return f"+1{clean_phone}"
-#         elif len(clean_phone) == 11 and clean_phone.startswith('1'):
-#             return f"+{clean_phone}"
-#         else:
-#             return f"+1{clean_phone}"
-    
-#     def validate_email(self, value):
-#         """Ensure email is properly formatted"""
-#         if not value or '@' not in value or '.' not in value.split('@')[1]:
-#             raise serializers.ValidationError("Enter a valid email address")
-#         return value.lower().strip()
-    
-#     def validate_first_name(self, value):
-#         """Validate first name"""
-#         if not value or not value.strip():
-#             raise serializers.ValidationError("First name is required")
-#         return value.strip()
-    
-#     def validate_last_name(self, value):
-#         """Validate last name"""
-#         if not value or not value.strip():
-#             raise serializers.ValidationError("Last name is required")
-#         return value.strip()
-    
-#     def validate_street_address(self, value):
-#         """Validate street address"""
-#         if not value or not value.strip():
-#             raise serializers.ValidationError("Street address is required")
-#         return value.strip()
-    
-#     def validate_city(self, value):
-#         """Validate city"""
-#         if not value or not value.strip():
-#             raise serializers.ValidationError("City is required")
-#         return value.strip()
-    
-#     def validate_state(self, value):
-#         """Validate state"""
-#         if not value or not value.strip():
-#             raise serializers.ValidationError("State is required")
-#         return value.strip()
-    
-#     def validate_zip_code(self, value):
-#         """Validate ZIP code"""
-#         if not value or not value.strip():
-#             raise serializers.ValidationError("ZIP code is required")
-#         return value.strip()
-
-
-# class ShippingAddressListSerializer(serializers.ModelSerializer):
-#     """Lightweight serializer for listing shipping addresses"""
-    
-#     full_name = serializers.SerializerMethodField()
-    
-#     class Meta:
-#         model = ShippingAddress
-#         fields = [
-#             'id',
-#             'full_name',
-#             'city',
-#             'state',
-#             'country',
-#             'created_at'
-#         ]
-#         read_only_fields = ['id', 'created_at']
-    
-#     def get_full_name(self, obj):
-#         return obj.get_full_name()
-
-
-
-
-
 # serializers.py
 from rest_framework import serializers
 from .models import ShippingAddress
@@ -769,3 +625,87 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
         if '@' not in value:
             raise serializers.ValidationError("Enter a valid email address")
         return value.lower()
+
+# ==========================================================================================
+# enquiry form image uploading
+# ===========================================================================================
+class ProductImageSerializer(serializers.ModelSerializer):
+    """Serializer for product images with full details"""
+    image_url = serializers.SerializerMethodField()
+    manufacturer_name = serializers.CharField(source='manufacturer.name', read_only=True)
+    model_name = serializers.CharField(source='model.name', read_only=True)
+    category_name = serializers.CharField(source='part_category.name', read_only=True)
+    
+    class Meta:
+        model = ProductImage
+        fields = [
+            'id', 
+            'manufacturer', 
+            'manufacturer_name', 
+            'model', 
+            'model_name',
+            'year', 
+            'part_category', 
+            'category_name', 
+            'image', 
+            'image_url',
+            'specification_number',
+            'uploaded_at'
+        ]
+    
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            if request:
+                return request.build_absolute_uri(obj.image.url)
+            return obj.image.url
+        return None
+
+
+class ProductImageCreateSerializer(serializers.ModelSerializer):
+    """Serializer for creating/updating product images"""
+    
+    class Meta:
+        model = ProductImage
+        fields = [
+            'manufacturer', 
+            'model', 
+            'year', 
+            'part_category',
+            'image', 
+            'specification_number'
+        ]
+    
+    def create(self, validated_data):
+        request = self.context.get('request')
+        if request and hasattr(request, 'user'):
+            validated_data['uploaded_by'] = request.user
+        return super().create(validated_data)
+
+
+class ProductImageListSerializer(serializers.ModelSerializer):
+    """Lightweight serializer for listing images"""
+    image_url = serializers.SerializerMethodField()
+    manufacturer_name = serializers.CharField(source='manufacturer.name', read_only=True)
+    model_name = serializers.CharField(source='model.name', read_only=True)
+    category_name = serializers.CharField(source='part_category.name', read_only=True)
+    
+    class Meta:
+        model = ProductImage
+        fields = [
+            'id', 
+            'manufacturer_name', 
+            'model_name', 
+            'year', 
+            'category_name',
+            'image_url', 
+            'specification_number'
+        ]
+    
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            if request:
+                return request.build_absolute_uri(obj.image.url)
+            return obj.image.url
+        return None

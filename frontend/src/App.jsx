@@ -30,7 +30,7 @@ function App() {
   const location = useLocation();
 
   const hideNavbarRoutes = [
-    "/product",
+    // "/product",
     "/order",
     "/signin",
     "/register"
@@ -62,21 +62,14 @@ function App() {
         <Route path="/order-a-part/thank-you" element={<Thankyou />} />
 
         {/* Product & Brand */}
-        <Route path="/product" element={<ProductPage />} />
+        {/* <Route path="/product" element={<ProductPage />} /> */}
         <Route path="/product/:slug/:id" element={<ProductPage />} />
         
-      <Route path="/used-:brandSlug-parts" element={<BrandDetail />} />
+      {/* <Route path="/used-:brandSlug-parts" element={<BrandDetail />} /> */}
       <Route path="/used/:brandSlug/parts" element={<BrandDetail />} />
 
 
-
-
-
-
-
-
-        {/* Order */}
-        <Route path="/order" element={<OrderPage />} />
+        {/* <Route path="/order" element={<OrderPage />} /> */}
         <Route path="/order/:slug/:id" element={<OrderPage />} />
 
         {/* Auth Routes */}

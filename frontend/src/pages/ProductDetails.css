@@ -633,3 +633,358 @@ body {
     font-size: 42px;
   }
 }
+/* ===============================
+   PRODUCT IMAGE DISPLAY SECTION
+================================ */
+.product-image-container {
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  animation: slideInFromTop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Loading Skeleton */
+.product-image-container.loading {
+  background: #f8f9fa;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.image-skeleton,
+.spec-skeleton {
+  background: #e9ecef;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-skeleton {
+  height: 300px;
+  flex: 1;
+}
+
+.spec-skeleton {
+  height: 100px;
+}
+
+.skeleton-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    left: 100%;
+  }
+}
+
+/* No Image Placeholder */
+.product-image-container.no-image {
+  background: #f8f9fa;
+  border: 2px dashed #d1d5db;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-image-placeholder {
+  text-align: center;
+  color: #9ca3af;
+}
+
+.no-image-placeholder svg {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 15px;
+  opacity: 0.5;
+}
+
+.no-image-placeholder p {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Product Image Wrapper */
+.product-image-wrappers {
+  position: relative;
+  /* background: white; */
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); */
+  animation: zoomIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s backwards;
+  margin: auto;
+}
+
+.product-image-main {
+width: 58%;
+    /* height: auto; */
+    display: block;
+    object-fit: cover;
+    max-height: 350px;
+    transition: transform .5s ease;
+    margin: auto;
+    border-radius: 6px;
+}
+
+.product-image-wrappers:hover .product-image-main {
+  transform: scale(1.05);
+}
+
+/* Image Overlay Badge */
+.image-overlay {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  animation: fadeInRight 0.6s ease 0.4s backwards;
+}
+
+.image-badge {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  /* text-transform: uppercase; */
+  letter-spacing: 0.5px;
+}
+
+/* Specifications Section */
+.product-specifications {
+  /* background: rgba(255, 255, 255, 0.95); */
+  border-radius: 12px;
+  padding: 20px;
+  animation: fadeInUp 0.6s ease 0.6s backwards;
+}
+
+.spec-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+}
+
+.spec-title svg {
+  width: 24px;
+  height: 24px;
+  color: #667eea;
+}
+
+.spec-number-display {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: auto;
+  display: block;
+}
+
+
+.spec-count {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 7px 30px;
+  border-radius: 5px;
+  text-align: center;
+  width: fit-content;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: auto;
+}
+
+
+.count-number {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+  /* margin-bottom: 8px; */
+}
+
+.count-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.5px;
+  opacity: 0.95;
+}
+
+.spec-info {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.spec-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.6;
+  max-width: 420px; /* optional – keeps text readable */
+}
+
+
+/* Mobile Product Image Section */
+.mobile-product-image-section {
+  margin-bottom: 24px;
+}
+
+.mobile-product-image-section .product-image-container {
+  margin-bottom: 0;
+}
+
+/* ===============================
+   ANIMATIONS
+================================ */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* ===============================
+   TABLET & MOBILE RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .product-image-container {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .product-image-main {
+    max-height: 250px;
+  }
+
+  .spec-number-display {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .spec-count {
+    width: 100%;
+    min-width: auto;
+    margin: auto;
+    
+  }
+
+  .count-number {
+    font-size: 20px;
+  }
+
+  .spec-title {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-image-container {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .product-image-wrappers {
+    margin-bottom: 16px;
+  }
+
+  .product-image-main {
+    max-height: 200px;
+  }
+
+  .image-badge {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .spec-title {
+    font-size: 15px;
+  }
+
+  .spec-title svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* .product-specifications {
+    padding: 16px;
+  } */
+
+  .spec-count {
+    padding: 16px;
+  }
+
+  .count-number {
+    font-size: 20px;
+  }
+
+  .count-label {
+    font-size: 16px;
+  }
+
+  .spec-info p {
+    font-size: 13px;
+  }
+}

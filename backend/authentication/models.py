@@ -1099,114 +1099,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 # shipping addres models
 # =============================================================
 
-# from django.db import models
-# from django.core.validators import RegexValidator, EmailValidator
-
-
-# class ShippingAddress(models.Model):
-#     """Model to store shipping addresses for orders"""
-    
-#     COUNTRY_CHOICES = [
-#         ('United States', 'United States'),
-#         ('Canada', 'Canada'),
-#         ('Mexico', 'Mexico'),
-#     ]
-    
-#     STATE_CHOICES = [
-#         # US States
-#         ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'),
-#         ('CA', 'California'), ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'),
-#         ('FL', 'Florida'), ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'),
-#         ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'), ('KS', 'Kansas'),
-#         ('KY', 'Kentucky'), ('LA', 'Louisiana'), ('ME', 'Maine'), ('MD', 'Maryland'),
-#         ('MA', 'Massachusetts'), ('MI', 'Michigan'), ('MN', 'Minnesota'), ('MS', 'Mississippi'),
-#         ('MO', 'Missouri'), ('MT', 'Montana'), ('NE', 'Nebraska'), ('NV', 'Nevada'),
-#         ('NH', 'New Hampshire'), ('NJ', 'New Jersey'), ('NM', 'New Mexico'), ('NY', 'New York'),
-#         ('NC', 'North Carolina'), ('ND', 'North Dakota'), ('OH', 'Ohio'), ('OK', 'Oklahoma'),
-#         ('OR', 'Oregon'), ('PA', 'Pennsylvania'), ('RI', 'Rhode Island'), ('SC', 'South Carolina'),
-#         ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'),
-#         ('VT', 'Vermont'), ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'),
-#         ('WI', 'Wisconsin'), ('WY', 'Wyoming'),
-#         # Canadian Provinces
-#         ('AB', 'Alberta'), ('BC', 'British Columbia'), ('MB', 'Manitoba'), ('NB', 'New Brunswick'),
-#         ('NL', 'Newfoundland and Labrador'), ('NS', 'Nova Scotia'), ('ON', 'Ontario'),
-#         ('PE', 'Prince Edward Island'), ('QC', 'Quebec'), ('SK', 'Saskatchewan'),
-#         # Mexican States
-#         ('AGS', 'Aguascalientes'), ('BC', 'Baja California'), ('BCS', 'Baja California Sur'),
-#         ('CAMP', 'Campeche'), ('CHIS', 'Chiapas'), ('CHIH', 'Chihuahua'), ('COAH', 'Coahuila'),
-#         ('COL', 'Colima'), ('CDMX', 'Mexico City'), ('DGO', 'Durango'), ('GTO', 'Guanajuato'),
-#         ('GRO', 'Guerrero'), ('HGO', 'Hidalgo'), ('JAL', 'Jalisco'), ('MEX', 'Mexico State'),
-#     ]
-    
-#     COUNTRY_CODE_CHOICES = [
-#         ('US +1', 'US +1'),
-#         ('CA +1', 'CA +1'),
-#         ('UK +44', 'UK +44'),
-#         ('MX +52', 'MX +52'),
-#     ]
-    
-#     # Fields
-#     country = models.CharField(
-#         max_length=100,
-#         choices=COUNTRY_CHOICES,
-#         default='United States'
-#     )
-#     first_name = models.CharField(max_length=100)
-#     last_name = models.CharField(max_length=100)
-#     street_address = models.CharField(max_length=255)
-#     street_address_2 = models.CharField(max_length=255, blank=True, null=True)
-#     city = models.CharField(max_length=100)
-#     state = models.CharField(max_length=50, choices=STATE_CHOICES)
-#     zip_code = models.CharField(
-#         max_length=20,
-#         validators=[RegexValidator(
-#             regex=r'^[A-Za-z0-9\s\-]+$',
-#             message='Enter a valid ZIP/Postal code'
-#         )]
-#     )
-#     email = models.EmailField(validators=[EmailValidator()])
-#     country_code = models.CharField(
-#         max_length=10,
-#         choices=COUNTRY_CODE_CHOICES,
-#         default='US +1'
-#     )
-#     # Updated phone validator - more flexible E.164 format
-#     phone = models.CharField(
-#         max_length=20,
-#         validators=[RegexValidator(
-#             regex=r'^\+\d{10,15}$',
-#             message='Phone number must be in E.164 format: +[country code][number] (e.g., +12025551234)'
-#         )],
-#         help_text='Phone number in E.164 format: +[country code][number]'
-#     )
-    
-#     # Metadata
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-    
-#     class Meta:
-#         db_table = 'shipping_addresses'
-#         verbose_name = 'Shipping Address'
-#         verbose_name_plural = 'Shipping Addresses'
-#         ordering = ['-created_at']
-    
-#     def __str__(self):
-#         return f"{self.first_name} {self.last_name} - {self.city}, {self.state}"
-    
-#     def get_full_name(self):
-#         return f"{self.first_name} {self.last_name}"
-    
-#     def get_full_address(self):
-#         address_parts = [
-#             self.street_address,
-#             self.street_address_2 if self.street_address_2 else None,
-#             f"{self.city}, {self.state} {self.zip_code}",
-#             self.country
-#         ]
-#         return ", ".join(filter(None, address_parts))
-
-
-
 # models.py
 from django.db import models
 
@@ -1232,3 +1124,79 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.city}, {self.state}"
+# ===================================================================================================
+
+# Enquiry form image uploading 
+
+class ProductImage(models.Model):
+    """
+    Model to store product images linked to vehicle specifications
+    Images are matched based on manufacturer, model, year, and part category
+    """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
+    # Vehicle Information - Linking to existing models
+    manufacturer = models.ForeignKey(
+        'Manufacturer',
+        on_delete=models.CASCADE,
+        related_name="product_images",
+        help_text="Car manufacturer"
+    )
+    model = models.ForeignKey(
+        'VehicleModel',
+        on_delete=models.CASCADE,
+        related_name="product_images",
+        help_text="Car model"
+    )
+    year = models.IntegerField(
+        help_text="Car year"
+    )
+    part_category = models.ForeignKey(
+        'PartCategory',
+        on_delete=models.CASCADE,
+        related_name="product_images",
+        help_text="Category of the part"
+    )
+    
+    # Image Information
+    image = models.ImageField(
+        upload_to='product_images/%Y/%m/%d/',
+        help_text="Product image"
+    )
+    
+    # Specification as a number (e.g., 10 specifications)
+    specification_number = models.IntegerField(
+        default=0,
+        help_text="Number of specifications (e.g., 10)"
+    )
+    
+    # Metadata
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Whether to display this image"
+    )
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    uploaded_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='uploaded_product_images'
+    )
+    
+    class Meta:
+        db_table = "product_images"
+        verbose_name = "Product Image"
+        verbose_name_plural = "Product Images"
+        ordering = ['-uploaded_at']
+        indexes = [
+            models.Index(fields=['manufacturer', 'model', 'year', 'part_category']),
+            models.Index(fields=['is_active']),
+            models.Index(fields=['-uploaded_at']),
+        ]
+        # Ensure only one image per vehicle/category combination
+        unique_together = [['manufacturer', 'model', 'year', 'part_category']]
+    
+    def __str__(self):
+        return f"{self.manufacturer.name} {self.model.name} {self.year} - {self.part_category.name}"

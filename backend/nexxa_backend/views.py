@@ -20,7 +20,7 @@ def sitemap_xml(request):
         ("/privacy-policy", "yearly", "0.5"),
         ("/warranty", "yearly", "0.5"),
         ("/terms-and-condition", "yearly", "0.5"),
-        ("/product-details", "monthly", "0.7"),
+        # ("/product-details", "monthly", "0.7"),
     ]
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -68,20 +68,11 @@ def sitemap_xml(request):
             
             # Generate both URL patterns matching React routes
             # Route 1: /used-:brandSlug-parts (e.g., /used-buick-parts)
-            brand_url_1 = f"/used-{brand_slug}-parts"
+            # brand_url_1 = f"/used-{brand_slug}-parts"
             
             # Route 2: /used/:brandSlug/parts (e.g., /used/buick/parts)
             brand_url_2 = f"/used/{brand_slug}/parts"
-            
-            xml += f"""
-    <url>
-        <loc>{base_url}{brand_url_1}</loc>
-        <lastmod>{now().date()}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-                """
-            
+
             xml += f"""
     <url>
         <loc>{base_url}{brand_url_2}</loc>
