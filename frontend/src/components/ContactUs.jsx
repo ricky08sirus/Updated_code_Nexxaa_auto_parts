@@ -99,7 +99,7 @@ export default function ContactUs() {
                 </h3>
                 <p className="text-green-700 text-sm">
                   Thank you for contacting us. We'll get back to you within
-                  24-48 hours.
+                  2-45 minutes.
                 </p>
               </div>
             </div>

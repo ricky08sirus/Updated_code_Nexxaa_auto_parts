@@ -1326,16 +1326,16 @@ If the part doesn't match your VIN or arrives damaged during shipping, we've got
             </div>
 
             <div className="nexxa-section">
-              <div className="nexxa-section-title">Zip Code:</div>
+              {/* <div className="nexxa-section-title">Zip Code:</div> */}
               <div className="nexxa-section-content">
-                <input
+                {/* <input
                   type="text"
                   placeholder="Enter your zip code"
                   value={userZipCode}
                   onChange={(e) => setUserZipCode(e.target.value)}
                   className="nexxa-quantity-input"
                   style={{width: '200px', padding: '8px'}}
-                />
+                /> */}
                 {userZipCode && (
                   <p style={{fontSize: '14px', color: '#1976d2', marginTop: '8px'}}>
                     Delivering to: {userZipCode}

@@ -116,7 +116,7 @@ import headset from "../assets/images/icons/Headset.svg";
 import lowMileage from "../assets/images/icons/Tumble Dry Low Heat.svg";
 import delivery from "../assets/images/icons/Document Delivery.svg";
 import radiator from "../assets/images/icons/Car Radiator.svg";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heading2 } from "lucide-react";
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
@@ -573,23 +573,30 @@ const Home = () => {
 
         <div className="banner-inner">
           <div className="banner-left">
-            <h1>
-              At <span className="highlight">Nexxa Auto</span> <br />
-              Millions of <br />
-              <span className="highlight">OEM Used Parts.</span> <br />
-              Matched to Your Vehicle.
-            </h1>
+  <h1>Premium OEM Used Auto Parts - Nationwide Shipping for All Vehicle Makes and Models</h1>
+  
+  {/* Keep your styled version visually, but hide it from SEO */}
+  <div className="banner-title" aria-hidden="true">
+    At <span className="highlight">Nexxa Auto</span> <br />
+    Millions of <br />
+    <span className="highlight">OEM Used Parts.</span> <br />
+    Matched to Your Vehicle.
+  </div>
 
-            <p className="why-description">
-              Nexxa Auto Parts offers reliable OEM used car parts with nationwide
-              shipping, expert support, and accurate VIN matching.
-            </p>
-          </div>
+  <p className="why-description">
+    Nexxa Auto Parts offers reliable OEM used car parts with nationwide
+    shipping, expert support, and accurate VIN matching.
+  </p>
+</div>
 
           <div className="banner-right">
-            <p className="search-heading">
+
+            <p className="search-heading"></p>
+
+            <h2 className="search-heading">
+
               One Smart Search, Your Perfect Fit Starts Here.
-            </p>
+            </h2>
 
             <div className="banner-form">
               <div className="row">

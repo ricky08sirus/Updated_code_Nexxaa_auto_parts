@@ -1674,3 +1674,19 @@ border: 1px solid #fff;
   background:linear-gradient(to top, rgb(0 0 0), transparent);
   z-index: 1;
 }
+
+/* In your Home.css */
+.banner-left h1 {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.banner-title {
+  /* Your existing H1 styles go here */
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1.2;
+}

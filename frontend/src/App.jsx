@@ -53,6 +53,7 @@ function App() {
   }, [location.pathname]);
 
   const hideNavbarRoutes = [
+    "/product",
     "/order",
     "/signin",
     "/register"
