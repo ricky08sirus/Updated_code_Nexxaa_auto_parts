@@ -1,7 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
+// ============================================================================
 
+//
+// import {
+//   trackEvent,
+//   trackButtonClick,
+//   trackLinkClick,
+//   trackSearch,
+//   initScrollTracking,
+//   resetPageTimer,
+//   trackTimeOnPage,
+//   trackFilterChange,
+//   trackCarouselInteraction,
+//   trackBrandClick,
+//   trackPartCategoryClick,
+//   trackCTAClick,
+//   trackAPIError,
+//   trackFormFieldInteraction,
+// } from "../utils/analytics";
+//
+// REPLACE your current analytics imports with this:
+import {
+  trackEvent,
+  trackButtonClick,
+  trackLinkClick,
+  trackSearch,
+  initScrollTracking,
+  resetPageTimer,
+  trackTimeOnPage,
+  trackFilterChange,
+  trackCarouselInteraction,
+  trackBrandClick,
+  trackPartCategoryClick,
+  trackCTAClick,
+  trackAPIError,
+  trackFormFieldInteraction,
+} from "../utils/analytics";
+
+// // Add these debug lines RIGHT AFTER the import
+// console.log('🔍 AFTER IMPORT CHECK:');
+// console.log('  trackFilterChange:', typeof trackFilterChange);
+// console.log('  trackEvent:', typeof trackEvent);
+// console.log('  All imported:', {
+//   trackEvent: typeof trackEvent,
+//   trackFilterChange: typeof trackFilterChange,
+//   trackFormFieldInteraction: typeof trackFormFieldInteraction
+// });
 // Import Images
 import bannerImage from "../assets/images/banner-img.webp";
 
@@ -195,12 +241,7 @@ const brandsWithData = [
 const Home = () => {
   const navigate = useNavigate();
   const scrollRef = React.useRef(null);
-
-  useEffect(() => {
-    const preloadBanner = new Image();
-    preloadBanner.src = bannerImage;
-  }, []);
-
+  
   // Form selections state
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedManufacturer, setSelectedManufacturer] = useState("");
@@ -218,6 +259,29 @@ const Home = () => {
   const [loadingModels, setLoadingModels] = useState(false);
   const [loadingParts, setLoadingParts] = useState(true);
   const [error, setError] = useState(null);
+  const [searchFormStarted, setSearchFormStarted] = useState(false);
+
+  // Initialize tracking on mount
+  useEffect(() => {
+    resetPageTimer();
+    const cleanupScroll = initScrollTracking();
+    
+    trackEvent('home_page_loaded', {
+      page_location: window.location.href,
+      referrer: document.referrer,
+    });
+    
+    return () => {
+      trackTimeOnPage('/');
+      cleanupScroll();
+    };
+  }, []);
+
+  // Preload banner image
+  useEffect(() => {
+    const preloadBanner = new Image();
+    preloadBanner.src = bannerImage;
+  }, []);
 
   // Fetch manufacturers on mount
   useEffect(() => {
@@ -242,7 +306,7 @@ const Home = () => {
         .map(mfg => {
           const nameKey = mfg.name.toLowerCase();
           const img = brandImageMap[nameKey];
-          
+
           if (img) {
             return {
               id: mfg.id,
@@ -254,10 +318,19 @@ const Home = () => {
           return null;
         })
         .filter(Boolean);
-      
+
       setBrandsWithManufacturers(matched);
     }
   }, [manufacturers]);
+
+  const handleSearchFormStart = () => {
+    if (!searchFormStarted) {
+      setSearchFormStarted(true);
+      trackEvent('search_form_started', {
+        form_location: 'home_banner',
+      });
+    }
+  };
 
   const fetchManufacturers = async () => {
     try {
@@ -269,12 +342,16 @@ const Home = () => {
 
       if (data.success && data.data) {
         setManufacturers(data.data);
+        trackEvent('manufacturers_loaded', {
+          count: data.data.length,
+        });
       } else {
         throw new Error("Failed to load manufacturers");
       }
     } catch (error) {
       console.error("Error fetching manufacturers:", error);
       setError("Failed to load manufacturers. Please refresh the page.");
+      trackAPIError('/manufacturers/', 'unknown', error.message);
     } finally {
       setLoadingManufacturers(false);
     }
@@ -291,12 +368,17 @@ const Home = () => {
 
       if (data.success && data.data) {
         setModels(data.data);
+        trackEvent('models_loaded', {
+          manufacturer_id: manufacturerId,
+          count: data.data.length,
+        });
       } else {
         throw new Error("Failed to load models");
       }
     } catch (error) {
       console.error("Error fetching models:", error);
       alert("Failed to load models. Please try again.");
+      trackAPIError(`/manufacturers/${manufacturerId}/models/`, 'unknown', error.message);
     } finally {
       setLoadingModels(false);
     }
@@ -311,42 +393,96 @@ const Home = () => {
 
       if (data.success && data.data) {
         setPartCategories(data.data);
+        trackEvent('part_categories_loaded', {
+          count: data.data.length,
+        });
       } else {
         throw new Error("Failed to load part categories");
       }
     } catch (error) {
       console.error("Error fetching part categories:", error);
       setError("Failed to load part categories. Please refresh the page.");
+      trackAPIError('/part-categories/', 'unknown', error.message);
     } finally {
       setLoadingParts(false);
     }
   };
 
+  const handleYearChange = (e) => {
+  const value = e.target.value;
+  setSelectedYear(value);
+  handleSearchFormStart();
+  
+  if (value) {
+    trackFilterChange('year', value, 'home_page_search');
+    trackFormFieldInteraction('vehicle_search', 'year', value);
+  }
+};  
   const handleManufacturerChange = (e) => {
     const value = e.target.value;
     setSelectedManufacturer(value);
-    setSelectedModel(""); 
+    setSelectedModel("");
+    handleSearchFormStart();
+    
+    if (value) {
+      const mfgData = manufacturers.find(m => m.id === parseInt(value));
+      if (mfgData) {
+        trackFilterChange('manufacturer', mfgData.name, 'home_page_search');
+        trackFormFieldInteraction('vehicle_search', 'manufacturer', mfgData.name);
+      }
+    }
+  };
+
+  const handleModelChange = (e) => {
+    const value = e.target.value;
+    setSelectedModel(value);
+    handleSearchFormStart();
+    
+    if (value) {
+      const modelData = models.find(m => m.id === parseInt(value));
+      if (modelData) {
+        trackFilterChange('model', modelData.name, 'home_page_search');
+        trackFormFieldInteraction('vehicle_search', 'model', modelData.name);
+      }
+    }
+  };
+
+  const handlePartChange = (e) => {
+    const value = e.target.value;
+    setSelectedPart(value);
+    handleSearchFormStart();
+    
+    if (value) {
+      const partData = partCategories.find(p => p.id === parseInt(value));
+      if (partData) {
+        trackFilterChange('part_category', partData.name, 'home_page_search');
+        trackFormFieldInteraction('vehicle_search', 'part_category', partData.name);
+      }
+    }
   };
 
   const handleSearch = () => {
     if (!selectedYear) {
       alert("Please select a year");
+      trackEvent('search_validation_failed', { missing_field: 'year' });
       return;
     }
     if (!selectedManufacturer) {
       alert("Please select a manufacturer");
+      trackEvent('search_validation_failed', { missing_field: 'manufacturer' });
       return;
     }
     if (!selectedModel) {
       alert("Please select a model");
+      trackEvent('search_validation_failed', { missing_field: 'model' });
       return;
     }
     if (!selectedPart) {
       alert("Please select a part category");
+      trackEvent('search_validation_failed', { missing_field: 'part_category' });
       return;
     }
 
-    // Find the selected items' details
     const manufacturerData = manufacturers.find(
       (m) => m.id === parseInt(selectedManufacturer),
     );
@@ -354,18 +490,40 @@ const Home = () => {
     const partData = partCategories.find(
       (p) => p.id === parseInt(selectedPart),
     );
+    
+    const searchQuery = `${selectedYear} ${manufacturerData?.name} ${modelData?.name} ${partData?.name}`;
+    trackSearch(searchQuery, 0);
+    
+    trackEvent('parts_search_submitted', {
+      year: selectedYear,
+      manufacturer: manufacturerData?.name,
+      model: modelData?.name,
+      part_category: partData?.name,
+      search_location: 'home_page_banner',
+    });
+    
+    trackCTAClick('Search Now', 'home_banner', 'primary_button');
 
-  const params = new URLSearchParams({
-    year: selectedYear,
-    manufacturerId: selectedManufacturer,
-    manufacturerName: manufacturerData?.name || "",
-    modelId: selectedModel,
-    modelName: modelData?.name || "",
-    partCategoryId: selectedPart,
-    partCategoryName: partData?.name || "",
-});
+    const params = new URLSearchParams({
+      year: selectedYear,
+      manufacturerId: selectedManufacturer,
+      manufacturerName: manufacturerData?.name || "",
+      modelId: selectedModel,
+      modelName: modelData?.name || "",
+      partCategoryId: selectedPart,
+      partCategoryName: partData?.name || "",
+    });
 
-navigate(`/product-details?${params.toString()}`);
+    navigate(`/product-details?${params.toString()}`);
+  };
+
+  const handleBrandClick = (brand) => {
+    trackBrandClick(brand.name, brand.slug, 'brands_marquee');
+    navigate(`/used/${brand.slug}/parts`);
+  };
+
+  const handlePartCardClick = (partName) => {
+    trackPartCategoryClick(partName, 'parts_carousel');
   };
 
   const scroll = (direction) => {
@@ -373,6 +531,8 @@ navigate(`/product-details?${params.toString()}`);
     if (current) {
       if (direction === "left") current.scrollLeft -= 300;
       else current.scrollLeft += 300;
+
+      trackCarouselInteraction('parts_carousel', 'manual_scroll', direction);
     }
   };
 
@@ -390,7 +550,6 @@ navigate(`/product-details?${params.toString()}`);
 
   return (
     <div>
-      {/* Error Message */}
       {error && (
         <div
           style={{
@@ -405,7 +564,6 @@ navigate(`/product-details?${params.toString()}`);
         </div>
       )}
 
-      {/* Banner Section with Search Form */}
       <section
         className="banner"
         style={{ backgroundImage: `url(${bannerImage})` }}
@@ -429,15 +587,13 @@ navigate(`/product-details?${params.toString()}`);
           </div>
 
           <div className="banner-right">
-            {/* TEXT OUTSIDE / ABOVE SEARCH BOX */}
             <p className="search-heading">
               One Smart Search, Your Perfect Fit Starts Here.
             </p>
 
-            {/* BLACK SEARCH BOX */}
             <div className="banner-form">
               <div className="row">
-                <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+                <select value={selectedYear} onChange={handleYearChange}>
                   <option value="">Year</option>
                   {years.map((year) => (
                     <option key={year} value={year}>{year}</option>
@@ -457,7 +613,7 @@ navigate(`/product-details?${params.toString()}`);
 
                 <select
                   value={selectedModel}
-                  onChange={(e) => setSelectedModel(e.target.value)}
+                  onChange={handleModelChange}
                   disabled={!selectedManufacturer || loadingModels}
                 >
                   <option value="">Model</option>
@@ -470,7 +626,7 @@ navigate(`/product-details?${params.toString()}`);
               <select
                 className="full"
                 value={selectedPart}
-                onChange={(e) => setSelectedPart(e.target.value)}
+                onChange={handlePartChange}
               >
                 <option value="">Parts</option>
                 {partCategories.map((part) => (
@@ -487,9 +643,7 @@ navigate(`/product-details?${params.toString()}`);
           </div>
         </div>
 
-        {/* WHY NEXXA INSIDE BANNER */}
         <div className="why-nexxa banner-why">
-          {/* HORIZONTAL ROW */}
           <div className="why-top-row">
             <h2 className="why-heading">Why Nexxa Auto Parts</h2>
 
@@ -514,7 +668,6 @@ navigate(`/product-details?${params.toString()}`);
             </div>
           </div>
 
-          {/* PARAGRAPH BELOW */}
           <p className="why-desc">
             Free Expert Support: Get guidance from experienced auto parts specialists to
             find the right fit fast. Low Mileage Parts: Quality-tested OEM used parts with
@@ -525,7 +678,6 @@ navigate(`/product-details?${params.toString()}`);
         </div>
       </section>
 
-      {/* Explore Our Premium Used Auto Parts */}
       <section className="explore-parts">
         <h2>
           Explore Our <span className="highlight">Premium</span> Used Auto Parts
@@ -539,7 +691,11 @@ navigate(`/product-details?${params.toString()}`);
           <div className="cards-container">
             <div className="cards-track">
               {[...partsImages, ...partsImages].map((part, idx) => (
-                <div className="part-card" key={idx}>
+                <div 
+                  className="part-card" 
+                  key={idx}
+                  onClick={() => handlePartCardClick(part.name)}
+                >
                   <img src={part.img} alt={part.name} />
                   <p className="part-name">{part.name}</p>
                 </div>
@@ -549,7 +705,6 @@ navigate(`/product-details?${params.toString()}`);
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section className="how-it-works">
         <h2>How It Works</h2>
         <div className="features-container">
@@ -599,7 +754,6 @@ navigate(`/product-details?${params.toString()}`);
         </div>
       </section>
 
-      {/* Customer Reviews */}
       <section className="customer-reviews">
         <h2>
           What Our <span>Customers Say</span>
@@ -628,7 +782,6 @@ navigate(`/product-details?${params.toString()}`);
                   "Had to get a rear end for 06 Toyota, Pete was extremely helpful and professional. Replied promptly back to texts and calls.",
               },
             ]
-              // Duplicate the array for infinite loop effect
               .concat([
                 {
                   name: "Garza Prosser",
@@ -666,20 +819,28 @@ navigate(`/product-details?${params.toString()}`);
         </div>
       </section>
 
-      {/* Brands Section - Non-clickable display only */}
       <section className="brands-section">
         <h2>Search by Brands</h2>
         <p>We stock parts for all major automotive brands</p>
         <div className="brands-marquee">
           <div className="brands-track">
             {displayBrands.map((brand, idx) => (
-              <div className="brand-card" key={idx}>
+              <div 
+                className="brand-card" 
+                key={idx}
+                onClick={() => handleBrandClick(brand)}
+                style={{ cursor: 'pointer' }}
+              >
                 <img src={brand.img} alt={brand.name} title={brand.name} />
               </div>
             ))}
-            {/* Duplicate for smooth infinite scroll */}
             {displayBrands.map((brand, idx) => (
-              <div className="brand-card" key={`dup-${idx}`}>
+              <div 
+                className="brand-card" 
+                key={`dup-${idx}`}
+                onClick={() => handleBrandClick(brand)}
+                style={{ cursor: 'pointer' }}
+              >
                 <img src={brand.img} alt={brand.name} title={brand.name} />
               </div>
             ))}
