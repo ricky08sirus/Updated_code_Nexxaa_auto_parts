@@ -31,6 +31,12 @@ from .serializers import (
     ProductImageListSerializer
 )
 import logging
+from .analytics import (
+    track_product_page_view,
+    track_add_to_wishlist,
+    track_scroll_depth,
+    track_time_on_page
+)
 
 logger = logging.getLogger(__name__)
 
@@ -1083,4 +1089,184 @@ class ProductImageViewSet(viewsets.ModelViewSet):
         }
         
         return Response(stats)
+
+
+
+
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def track_product_view_api(request):
+    """
+    Track product page view
+    POST /api/track-product-view/
+    
+    Body:
+    {
+        "product_id": "uuid-or-id",
+        "product_name": "2003 Toyota Camry Engine Assembly",
+        "price": 985.00,
+        "category": "Engine"
+    }
+    """
+    try:
+        product_id = request.data.get('product_id')
+        product_name = request.data.get('product_name')
+        price = request.data.get('price')
+        category = request.data.get('category')
+        
+        if not product_id or not product_name:
+            return Response({
+                'success': False,
+                'error': 'product_id and product_name are required'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Track the view
+        success = track_product_page_view(
+            request, 
+            product_id, 
+            product_name, 
+            price, 
+            category
+        )
+        
+        logger.info(f"Product view tracked: {product_name} (ID: {product_id})")
+        
+        return Response({
+            'success': success,
+            'message': 'Product view tracked'
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        logger.error(f"Error in track_product_view_api: {str(e)}", exc_info=True)
+        return Response({
+            'success': False,
+            'error': str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def track_wishlist_api(request):
+    """
+    Track add to wishlist
+    POST /api/track-wishlist/
+    
+    Body:
+    {
+        "product_id": "uuid-or-id",
+        "product_name": "2003 Toyota Camry Engine Assembly",
+        "price": 985.00
+    }
+    """
+    try:
+        product_id = request.data.get('product_id')
+        product_name = request.data.get('product_name')
+        price = request.data.get('price')
+        
+        if not product_id or not product_name:
+            return Response({
+                'success': False,
+                'error': 'product_id and product_name are required'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Track wishlist add
+        success = track_add_to_wishlist(request, product_id, product_name, price)
+        
+        logger.info(f"Wishlist add tracked: {product_name}")
+        
+        return Response({
+            'success': success,
+            'message': 'Wishlist add tracked'
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        logger.error(f"Error in track_wishlist_api: {str(e)}", exc_info=True)
+        return Response({
+            'success': False,
+            'error': str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def track_scroll_api(request):
+    """
+    Track scroll depth
+    POST /api/track-scroll/
+    
+    Body:
+    {
+        "product_id": "uuid-or-id",
+        "scroll_percentage": 50
+    }
+    """
+    try:
+        product_id = request.data.get('product_id')
+        scroll_percentage = request.data.get('scroll_percentage')
+        
+        if not product_id or scroll_percentage is None:
+            return Response({
+                'success': False,
+                'error': 'product_id and scroll_percentage are required'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Track scroll
+        success = track_scroll_depth(request, product_id, scroll_percentage)
+        
+        logger.info(f"Scroll depth tracked: {scroll_percentage}% on product {product_id}")
+        
+        return Response({
+            'success': success,
+            'message': f'Scroll {scroll_percentage}% tracked'
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        logger.error(f"Error in track_scroll_api: {str(e)}", exc_info=True)
+        return Response({
+            'success': False,
+            'error': str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def track_time_spent_api(request):
+    """
+    Track time spent on page
+    POST /api/track-time-spent/
+    
+    Body:
+    {
+        "product_id": "uuid-or-id",
+        "seconds_spent": 45
+    }
+    """
+    try:
+        product_id = request.data.get('product_id')
+        seconds_spent = request.data.get('seconds_spent')
+        
+        if not product_id or seconds_spent is None:
+            return Response({
+                'success': False,
+                'error': 'product_id and seconds_spent are required'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Track time
+        success = track_time_on_page(request, product_id, seconds_spent)
+        
+        logger.info(f"Time tracked: {seconds_spent}s on product {product_id}")
+        
+        return Response({
+            'success': success,
+            'message': f'Time {seconds_spent}s tracked'
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        logger.error(f"Error in track_time_spent_api: {str(e)}", exc_info=True)
+        return Response({
+            'success': False,
+            'error': str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

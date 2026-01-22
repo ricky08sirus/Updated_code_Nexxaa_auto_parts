@@ -645,7 +645,7 @@
 
 // export default ProductPage;
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { Heart, Share2, ChevronLeft, ChevronRight, Package, ShieldCheck } from 'lucide-react';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import './ProductPage.css';
@@ -660,6 +660,93 @@ import mastercardIcon from "../assets/images/images.png";
 const API_BASE = 'https://nexxaauto.com/api';
 const IMAGE_BASE = 'https://images.nexxaauto.com';
 const R2_DEV_URL = 'https://pub-243a0890b1b15283d9c78a97866ba995.r2.dev';
+
+
+
+
+
+// Track product page view
+const trackProductView = async (productId, productName, price, category) => {
+  try {
+    await fetch(`${API_BASE}/track-product-view/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        product_id: productId,
+        product_name: productName,
+        price: price,
+        category: category
+      })
+    });
+    console.log('✅ Product view tracked');
+  } catch (error) {
+    console.error('❌ Error tracking product view:', error);
+  }
+};
+
+// Track wishlist add
+const trackWishlistAdd = async (productId, productName, price) => {
+  try {
+    await fetch(`${API_BASE}/track-wishlist/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        product_id: productId,
+        product_name: productName,
+        price: price
+      })
+    });
+    console.log('✅ Wishlist add tracked');
+  } catch (error) {
+    console.error('❌ Error tracking wishlist:', error);
+  }
+};
+
+// Track scroll depth
+const trackScrollDepth = async (productId, percentage) => {
+  try {
+    await fetch(`${API_BASE}/track-scroll/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        product_id: productId,
+        scroll_percentage: percentage
+      })
+    });
+    console.log(`✅ Scroll ${percentage}% tracked`);
+  } catch (error) {
+    console.error('❌ Error tracking scroll:', error);
+  }
+};
+
+// Track time on page
+const trackTimeOnPage = (productId, seconds) => {
+  try {
+    const data = JSON.stringify({
+      product_id: productId,
+      seconds_spent: seconds
+    });
+    
+    // Use sendBeacon for reliable tracking on page exit
+    if (navigator.sendBeacon) {
+      const blob = new Blob([data], { type: 'application/json' });
+      navigator.sendBeacon(`${API_BASE}/track-time-spent/`, blob);
+    } else {
+      // Fallback
+      fetch(`${API_BASE}/track-time-spent/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data,
+        keepalive: true
+      });
+    }
+    console.log(`✅ Time tracked: ${seconds}s`);
+  } catch (error) {
+    console.error('❌ Error tracking time:', error);
+  }
+};
+
+
 
 // Convert R2.dev URL to custom domain
 const fixImageUrl = (url) => {
@@ -760,6 +847,10 @@ const ProductPage = () => {
   // Modal states
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({ title: '', content: '' });
+  const pageLoadTime = useRef(Date.now());
+  const scrollTracked = useRef({ 25: false, 50: false, 75: false, 100: false });
+  const viewTracked = useRef(false);
+
 
   // Function for opening modal
   const openModal = (type) => {
@@ -916,6 +1007,64 @@ If the part doesn't match your VIN or arrives damaged during shipping, we've got
     setSelectedImage(0);
     await fetchGalleryImages(product.id);
   };
+  useEffect(() => {
+    if (currentProduct && !viewTracked.current) {
+      trackProductView(
+        currentProduct.id,
+        currentProduct.title,
+        currentProduct.price || 0,
+        currentProduct.partCategory
+      );
+      viewTracked.current = true;
+      
+      // Reset page load time for this product
+      pageLoadTime.current = Date.now();
+      scrollTracked.current = { 25: false, 50: false, 75: false, 100: false };
+    }
+  }, [currentProduct]);
+
+  useEffect(() => {
+    if (!currentProduct) return;
+
+    const handleScroll = () => {
+      const scrollPercentage = Math.round(
+        (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+      );
+
+      // Track milestones
+      if (scrollPercentage >= 25 && !scrollTracked.current[25]) {
+        trackScrollDepth(currentProduct.id, 25);
+        scrollTracked.current[25] = true;
+      }
+      if (scrollPercentage >= 50 && !scrollTracked.current[50]) {
+        trackScrollDepth(currentProduct.id, 50);
+        scrollTracked.current[50] = true;
+      }
+      if (scrollPercentage >= 75 && !scrollTracked.current[75]) {
+        trackScrollDepth(currentProduct.id, 75);
+        scrollTracked.current[75] = true;
+      }
+      if (scrollPercentage >= 90 && !scrollTracked.current[100]) {
+        trackScrollDepth(currentProduct.id, 100);
+        scrollTracked.current[100] = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [currentProduct]);
+
+  useEffect(() => {
+    if (!currentProduct) return;
+
+    // Track time when component unmounts or user navigates away
+    return () => {
+      const secondsSpent = Math.floor((Date.now() - pageLoadTime.current) / 1000);
+      if (secondsSpent > 5) {  // Only track if user spent more than 5 seconds
+        trackTimeOnPage(currentProduct.id, secondsSpent);
+      }
+    };
+  }, [currentProduct]);
 
   const alternativeProducts = currentProduct
     ? allProducts.filter(product =>
@@ -954,14 +1103,23 @@ If the part doesn't match your VIN or arrives damaged during shipping, we've got
       setPendingNavigation(null);
     }
   };
-
   const handleWishlist = () => {
-    setIsWishlist(!isWishlist);
-  };
+      setIsWishlist(!isWishlist);
+    
+    // Track wishlist add (only when adding, not removing)
+      if (!isWishlist && currentProduct) {
+        trackWishlistAdd(
+          currentProduct.id,
+          currentProduct.title,
+          currentProduct.price || 0
+        );
+      }
+    };
 
   const handleProductChange = async (product) => {
     setIsWishlist(false);
     setUserZipCode('');
+    viewTracked.current = false;
     navigate(`/product/${product.slug}/${product.id}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

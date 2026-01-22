@@ -60,6 +60,10 @@ urlpatterns = [
     path('test-analytics-debug/', views.test_analytics_debug, name='test-analytics-debug'),
     path('analytics-config/', views.analytics_config, name='analytics-config'),
     path('verify-ga4/', views.verify_ga4_connection, name='verify-ga4'),
+    path('track-product-view/', views.track_product_view_api, name='track-product-view'),
+    path('track-wishlist/', views.track_wishlist_api, name='track-wishlist'),
+    path('track-scroll/', views.track_scroll_api, name='track-scroll'),
+    path('track-time-spent/', views.track_time_spent_api, name='track-time-spent'),
     # ============= VIEWSET ROUTES (Parts Inventory & Part Galleries) =============
     path("", include(router.urls)),
 ]
