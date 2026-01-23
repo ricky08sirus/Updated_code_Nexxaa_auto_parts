@@ -49,7 +49,7 @@ import "./Home.css";
 //   trackFormFieldInteraction: typeof trackFormFieldInteraction
 // });
 // Import Images
-import bannerImage from "../assets/images/banner-img.webp";
+import bannerImage from "../assets/images/banner-image.webp";
 
 import part1 from "../assets/images/WhatsApp Image 2026-01-03 at 10.40.38 AM.jpeg";
 import part2 from "../assets/images/Radio controller- Display.webp";
@@ -781,6 +781,7 @@ const Home = () => {
 
         <div className="banner-inner">
           <div className="banner-left">
+  {/* Real H1 for SEO - visible to search engines and screen readers */}
   <h1>Premium OEM Used Auto Parts - Nationwide Shipping for All Vehicle Makes and Models</h1>
   
   {/* Keep your styled version visually, but hide it from SEO */}
@@ -911,7 +912,7 @@ const Home = () => {
                   key={idx}
                   onClick={() => handlePartCardClick(part.name)}
                 >
-                  <img src={part.img} alt={part.name} />
+                  <img src={part.img} alt={part.name} loading="lazy"/>
                   <p className="part-name">{part.name}</p>
                 </div>
               ))}
@@ -1046,7 +1047,7 @@ const Home = () => {
                 onClick={() => handleBrandClick(brand)}
                 style={{ cursor: 'pointer' }}
               >
-                <img src={brand.img} alt={brand.name} title={brand.name} />
+                <img src={brand.img} alt={brand.name} title={brand.name} loading="lazy"/>
               </div>
             ))}
             {displayBrands.map((brand, idx) => (
@@ -1056,7 +1057,7 @@ const Home = () => {
                 onClick={() => handleBrandClick(brand)}
                 style={{ cursor: 'pointer' }}
               >
-                <img src={brand.img} alt={brand.name} title={brand.name} />
+                <img src={brand.img} alt={brand.name} title={brand.name} loading="lazy"/>
               </div>
             ))}
           </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import "./ProductDetails.css";
 import "./WelcomeOffer.css";
-import logoImage from "../assets/images/brands/logo-white.png";
+import logoImage from "../assets/images/brands/logowhite.webp";
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';

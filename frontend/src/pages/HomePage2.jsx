@@ -5,7 +5,7 @@ import brandData from "../assets/brandData";
 import "./Home.css";
 
 // Import Images
-import bannerImage from "../assets/images/banner-img.webp";
+import bannerImage from "../assets/images/banner-image.webp";
 
 import part1 from "../assets/images/WhatsApp Image 2026-01-03 at 10.40.38 AM.jpeg";
 import part2 from "../assets/images/Radio controller- Display.webp";

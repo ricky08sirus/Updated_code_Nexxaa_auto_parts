@@ -1690,3 +1690,11 @@ border: 1px solid #fff;
   font-weight: bold;
   line-height: 1.2;
 }
+
+.seo-only {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

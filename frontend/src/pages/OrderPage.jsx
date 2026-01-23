@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link, useParams } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import './OrderPage.css';
-import logoImage from "../assets/images/brands/Nexxa Logo (2).png";
+import logoImage from "../assets/images/brands/logowhite.webp";
 
 const OrderPage = () => {
   const location = useLocation();
