@@ -649,7 +649,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import { Heart, Share2, ChevronLeft, ChevronRight, Package, ShieldCheck } from 'lucide-react';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import './ProductPage.css';
-import logoImage from "../assets/images/brands/logo-white.png";
+import logoImage from "../assets/images/brands/logowhite.webp";
 import AuthModal from "../components/AuthModal";
 import visaIcon from "../assets/images/visa.png";
 import amexIcon from "../assets/images/amex.png";
@@ -1326,19 +1326,19 @@ If the part doesn't match your VIN or arrives damaged during shipping, we've got
             </div>
 
             <div className="nexxa-section">
-              {/* <div className="nexxa-section-title">Zip Code:</div> */}
+              <div className="nexxa-section-title">Zip Code:</div>
               <div className="nexxa-section-content">
-                {/* <input
+                <input
                   type="text"
                   placeholder="Enter your zip code"
                   value={userZipCode}
                   onChange={(e) => setUserZipCode(e.target.value)}
                   className="nexxa-quantity-input"
                   style={{width: '200px', padding: '8px'}}
-                /> */}
+                />
                 {userZipCode && (
                   <p style={{fontSize: '14px', color: '#1976d2', marginTop: '8px'}}>
-                    Delivering to: {userZipCode}
+                    ETA 5 To 7 Business Days: {userZipCode}
                   </p>
                 )}
               </div>
@@ -1389,14 +1389,14 @@ If the part doesn't match your VIN or arrives damaged during shipping, we've got
               </div>
             </div>
 
-            <div className="nexxa-section">
+            {/* <div className="nexxa-section">
               <div className="nexxa-section-title">Delivery:</div>
               <div className="nexxa-section-content">
                 <p style={{color: '#666'}}>
-                  {currentProduct.delivery || 'Estimated between Tue,Feb 3 and Thu, Mar 5 to 562114'}
+                  {currentProduct.delivery || 'Delivery 5 to 7 Business Days'}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <div className="nexxa-section">
               <div className="nexxa-section-title">Returns:</div>

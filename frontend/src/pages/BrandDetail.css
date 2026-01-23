@@ -4,13 +4,7 @@
 .brand-detail-container {
   min-height: 100vh;
   background-color: #ffffff;
-  padding-top: 80px; /* Space for fixed header/navbar */
-}
-
-/* Header Section */
-.brand-header {
-  /* text-center; */
-  padding: 48px 16px;
+  padding-top: 80px;
 }
 
 /* Header Section */
@@ -38,20 +32,21 @@
   padding: 0 16px 48px;
 }
 
-/* Two Column Grid */
+/* Two Column Grid - DESKTOP ONLY */
 .brand-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   align-items: start;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 
 /* Left Section - Logo and Description */
 .brand-left-section {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
+  width: 100%;
 }
 
 /* Brand Logo */
@@ -60,9 +55,7 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  /* background-color: #f9fafb; */
   border-radius: 12px;
-  /* border: 2px solid #e5e7eb; */
 }
 
 .brand-logo {
@@ -91,13 +84,22 @@
   text-align: justify;
 }
 
+/* Hide/Show description based on screen size */
+.mobile-only {
+  display: block;
+}
+
+.desktop-only {
+  display: none;
+}
+
 /* Right Column - Search Form */
 .brand-search-section {
   padding: 0;
   display: flex;
-  align-items: center;
-  min-height: 100%;
   flex-direction: column;
+  gap: 24px;
+  width: 100%;
 }
 
 /* Models Section */
@@ -145,481 +147,16 @@
   color: #ffffff;
 }
 
-/* Tablet Screens */
-@media (min-width: 768px) {
-  .brand-title {
-    font-size: 3rem;
-  }
-
-  .brand-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-  }
-
-  .brand-logo {
-    height: 140px;
-  }
-
-  .brand-description-title {
-    font-size: 1.875rem;
-  }
-
-  .brand-description-text {
-    font-size: 1.125rem;
-  }
-
-  .brand-models-title {
-    font-size: 2.25rem;
-  }
-
-  .brand-models-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .brand-model-title {
-    font-size: 1.25rem;
-  }
-}
-
-/* Desktop Screens */
-@media (min-width: 1024px) {
-  .brand-detail-container {
-    padding-top: 100px;
-  }
-
-  .brand-title {
-    font-size: 2.75rem;
-  }
-
-  .brand-grid {
-    grid-template-columns: 1.2fr 1fr;
-    gap: 64px;
-  }
-
-  .brand-logo {
-    height: 160px;
-  }
-
-  .brand-models-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Extra Large Screens */
-@media (min-width: 1280px) {
-  .brand-content {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  .brand-logo {
-    height: 180px;
-  }
-}
-
-/* Mobile Screens - Small Devices (up to 480px) */
-@media (max-width: 480px) {
-  .brand-detail-container {
-    padding-top: 60px;
-  }
-
-  .brand-header {
-    padding: 24px 12px 16px;
-  }
-
-  .brand-title {
-    font-size: 20px;
-    margin-bottom: 0;
-    padding: 0 8px;
-  }
-
-  .brand-grid {
-    gap: 24px;
-  }
-
-  .brand-left-section {
-    gap: 20px;
-  }
-
-  .brand-logo-container {
-    padding: 12px;
-  }
-
-  .brand-logo {
-    height: 80px;
-  }
-
-  .brand-description-title {
-    font-size: 18px;
-    margin-bottom: 12px;
-  }
-
-  .brand-description-text {
-    font-size: 14px;
-    line-height: 1.6;
-    text-align: left;
-  }
-
-  .brand-models-section {
-    margin-top: 32px;
-  }
-
-  .brand-models-title {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-
-  .brand-models-grid {
-    gap: 16px;
-  }
-
-  .brand-model-link {
-    padding: 12px 20px;
-  }
-
-  .brand-model-title {
-    font-size: 14px;
-  }
-}
-
-/* Mobile Screens - Medium Devices (481px to 767px) */
-@media (min-width: 481px) and (max-width: 767px) {
-  .brand-detail-container {
-    padding-top: 70px;
-  }
-
-  .brand-header {
-    padding: 32px 16px 20px;
-  }
-
-  .brand-title {
-    font-size: 24px;
-  }
-
-  .brand-grid {
-    gap: 28px;
-  }
-
-  .brand-left-section {
-    gap: 24px;
-  }
-
-  .brand-logo-container {
-    padding: 16px;
-  }
-
-  .brand-logo {
-    height: 100px;
-  }
-
-  .brand-description-title {
-    font-size: 20px;
-    margin-bottom: 14px;
-  }
-
-  .brand-description-text {
-    font-size: 15px;
-  }
-
-  .brand-models-section {
-    margin-top: 40px;
-  }
-
-  .brand-models-title {
-    font-size: 24px;
-    margin-bottom: 24px;
-  }
-
-  .brand-models-grid {
-    gap: 18px;
-  }
-
-  .brand-model-link {
-    padding: 14px 24px;
-  }
-
-  .brand-model-title {
-    font-size: 16px;
-  }
-}
-
-/* Landscape Mobile Optimization */
-@media (max-width: 767px) and (orientation: landscape) {
-  .brand-detail-container {
-    padding-top: 50px;
-  }
-
-  .brand-header {
-    padding: 20px 16px 16px;
-  }
-
-  .brand-logo {
-    height: 70px;
-  }
-
-  .brand-grid {
-    gap: 20px;
-  }
-}
-
-/* Ensure proper spacing on all mobile devices */
-@media (max-width: 767px) {
-  .brand-search-section {
-    margin-top: 8px;
-  }
-
-  .brand-model-link {
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
 /* ========================================
-   DESKTOP CORNER COUPON
+   UNIVERSAL POPUP COUPON (Mobile & Desktop)
 ======================================== */
-.corner-coupon {
-  position: fixed;
-  top: 80px;
-  right: -320px;
-  width: 300px;
-  background-image: url("../assets/images/bgimg.jpeg");
-  background-size: cover;
-  background-position: center;
-  border-radius: 12px;
-  box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.3);
-  z-index: 999;
-  transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  overflow: visible;
-}
-
-.corner-coupon.show {
-  left:6px;
-}
-
-.corner-close-btn {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 28px;
-  height: 28px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-  z-index: 10;
-}
-
-.corner-close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
-}
-
-.corner-coupon-content {
-  padding: 40px 20px 20px;
-  text-align: center;
-}
-
-.corner-logo {
-  margin-bottom: 12px;
-}
-
-.corner-logo-link {
-  display: inline-block;
-}
-
-.corner-logo-img {
-  height: 36px;
-  width: auto;
-}
-
-.corner-welcome-text {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-  color: white;
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  display: inline-block;
-  margin-bottom: 16px;
-}
-
-.corner-offer-box {
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid #ffd700;
-  border-radius: 12px;
-  padding: 20px 16px;
-  margin-bottom: 16px;
-}
-
-.corner-get-text {
-  font-size: 18px;
-  font-weight: 700;
-  color: gold;
-  margin-bottom: 4px;
-}
-
-.corner-discount-text {
-  font-size: 48px;
-  font-weight: 900;
-  background: linear-gradient(
-351deg, #f70f0f, #ffe500);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.corner-first-text {
-  font-size: 16px;
-  font-weight: 700;
-  color: gold;
-  margin-bottom: 2px;
-}
-
-.corner-purchase-text {
-  font-size: 20px;
-  font-weight: 800;
-  color: gold;
-}
-
-.corner-code-section {
-  margin-bottom: 12px;
-}
-
-.corner-use-code {
-  font-size: 11px;
-  color: white;
-  margin-bottom: 8px;
-  letter-spacing: 0.5px;
-}
-
-.corner-code-box {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: white;
-  border-radius: 8px;
-  padding: 8px;
-  border: 1px dashed rgba(255, 255, 255, 0.3);
-}
-
-.corner-code-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: black;
-  font-size: 14px;
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: 1px;
-  outline: none;
-}
-
-.corner-copy-btn {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s;
-  min-width: 36px;
-}
-
-.corner-copy-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
-}
-
-.corner-copied {
-  font-size: 11px;
-  color: #4ade80;
-  margin-top: 4px;
-  font-weight: 600;
-}
-
-.corner-auto-text {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 12px;
-  line-height: 1.3;
-  font-style: italic;
-}
-
-.corner-terms-section {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 12px;
-  border-radius: 0 0 0 12px;
-}
-
-.corner-terms-toggle {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  padding: 10px 12px;
-  border-radius: 6px;
-  color: #ffd700;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.3s;
-}
-
-.corner-terms-toggle:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.corner-terms-arrow {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.3s;
-}
-
-.corner-terms-arrow.open {
-  transform: rotate(180deg);
-}
-
-.corner-terms-content {
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 6px;
-  padding: 10px;
-  margin-top: 8px;
-  font-size: 9px;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.4;
-  text-align: left;
-}
-
-.corner-terms-content p {
-  margin: 6px 0;
-}
-
-.corner-terms-content strong {
-  color: #ffd700;
-}
-
-/* ========================================
-   MOBILE POPUP COUPON
-======================================== */
-.mobile-coupon-overlay {
+.coupon-overlay {
   position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
@@ -634,7 +171,7 @@
   to { opacity: 1; }
 }
 
-.mobile-coupon-popup {
+.coupon-popup {
   background-image: url("../assets/images/bgimg.jpeg");
   background-size: cover;
   background-position: center;
@@ -658,49 +195,49 @@
   }
 }
 
-.mobile-close-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 36px;
-    height: 36px;
-    background: #ffd700;
-    border: none;
-    border-radius: 50%;
-    color: #000000;
-    font-size: 26px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .3s;
-    z-index: 10;
+.popup-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: #ffd700;
+  border: none;
+  border-radius: 50%;
+  color: #000000;
+  font-size: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 10;
 }
 
-.mobile-close-btn:hover {
+.popup-close-btn:hover {
   background: rgba(187, 36, 36, 0.438);
   transform: rotate(90deg);
 }
 
-.mobile-coupon-content {
+.popup-coupon-content {
   padding: 50px 24px 24px;
   text-align: center;
 }
 
-.mobile-logo {
+/* .popup-logo {
   margin-bottom: 16px;
-}
+} */
 
-.mobile-logo-link {
+.popup-logo-link {
   display: inline-block;
 }
 
-.mobile-logo-img {
+.popup-logo-img {
   height: 40px;
   width: auto;
 }
 
-.mobile-welcome-text {
+.popup-welcome-text {
   background: linear-gradient(135deg, #d90e30, #000000);
   color: white;
   padding: 8px 20px;
@@ -709,54 +246,53 @@
   font-weight: 700;
   letter-spacing: 1px;
   display: inline-block;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
-.mobile-offer-box {
-  background: rgba(0, 0, 0, 0.4);
-  border: 3px solid #ffd700;
-  border-radius: 16px;
-  padding: 28px 20px;
-  margin-bottom: 20px;
+.popup-offer-box {
+background: #0006;
+    border: 3px solid #ffd700;
+    border-radius: 16px;
+    padding: 2px 3px;
+    margin-bottom: 13px;
 }
 
-.mobile-get-text {
+.popup-get-text {
   font-size: 22px;
   font-weight: 700;
   color: gold;
-  margin-bottom: 6px;
+  /* margin-bottom: 6px; */
 }
 
-.mobile-discount-text {
-  font-size: 64px;
-  font-weight: 900;
-  background: linear-gradient(
-351deg, #f70f0f, #ffe500);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  margin-bottom: 6px;
+.popup-discount-text {
+font-size: 35px;
+    font-weight: 900;
+    background: linear-gradient(351deg, #ff0000, #ffca00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+
 }
 
-.mobile-first-text {
+.popup-first-text {
   font-size: 20px;
   font-weight: 700;
   color: gold;
-  margin-bottom: 4px;
+  /* margin-bottom: 4px; */
 }
 
-.mobile-purchase-text {
+.popup-purchase-text {
   font-size: 24px;
   font-weight: 800;
   color: gold;
 }
 
-.mobile-code-section {
+/* .popup-code-section {
   margin-bottom: 16px;
-}
+} */
 
-.mobile-use-code {
+.popup-use-code {
   font-size: 13px;
   color: white;
   margin-bottom: 10px;
@@ -764,7 +300,7 @@
   font-weight: bold;
 }
 
-.mobile-code-box {
+.popup-code-box {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -774,7 +310,7 @@
   border: 1px dashed rgba(255, 255, 255, 0.3);
 }
 
-.mobile-code-input {
+.popup-code-input {
   flex: 1;
   background: transparent;
   border: none;
@@ -786,7 +322,7 @@
   outline: none;
 }
 
-.mobile-copy-btn {
+.popup-copy-btn {
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   border: none;
   padding: 8px 14px;
@@ -798,32 +334,31 @@
   min-width: 44px;
 }
 
-.mobile-copy-btn:active {
+.popup-copy-btn:active {
   transform: scale(0.95);
 }
 
-.mobile-copied {
+.popup-copied {
   font-size: 12px;
   color: #4ade80;
   margin-top: 6px;
   font-weight: 600;
 }
 
-.mobile-auto-text {
-  font-size: 11px;
-  color: white;
-  margin-bottom: 16px;
-  line-height: 1.4;
-  /* font-style: italic; */
+.popup-auto-text {
+font-size: 11px;
+    color: #fff907;
+    /* margin-bottom: 16px; */
+    line-height: 1.4;
 }
 
-.mobile-terms-section {
+.popup-terms-section {
   background: rgba(0, 0, 0, 0.6);
   padding: 16px;
   border-radius: 0 0 20px 20px;
 }
 
-.mobile-terms-toggle {
+.popup-terms-toggle {
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
   border: none;
@@ -839,21 +374,21 @@
   transition: all 0.3s;
 }
 
-.mobile-terms-toggle:active {
+.popup-terms-toggle:active {
   background: rgba(255, 255, 255, 0.15);
 }
 
-.mobile-terms-arrow {
+.popup-terms-arrow {
   width: 16px;
   height: 16px;
   transition: transform 0.3s;
 }
 
-.mobile-terms-arrow.open {
+.popup-terms-arrow.open {
   transform: rotate(180deg);
 }
 
-.mobile-terms-content {
+.popup-terms-content {
   background: rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   padding: 12px;
@@ -864,11 +399,11 @@
   text-align: left;
 }
 
-.mobile-terms-content p {
+.popup-terms-content p {
   margin: 8px 0;
 }
 
-.mobile-terms-content strong {
+.popup-terms-content strong {
   color: #ffd700;
 }
 
@@ -883,6 +418,8 @@
   margin: 24px 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+      width: 72%;
+    margin: auto;
 }
 
 .below-coupon-inner {
@@ -904,7 +441,7 @@
 }
 
 .below-welcome-text {
-  background:linear-gradient(351deg, #8b0b20, #fd304d);
+  background: linear-gradient(351deg, #8b0b20, #fd304d);
   color: white;
   padding: 6px 16px;
   border-radius: 6px;
@@ -926,15 +463,14 @@
 .below-get-text {
   font-size: 18px;
   font-weight: 700;
-  color:gold;
+  color: gold;
   margin-bottom: 4px;
 }
 
 .below-discount-text {
   font-size: 48px;
   font-weight: 900;
-  background: linear-gradient(
-351deg, #f70f0f, #ffe500);
+  background: linear-gradient(351deg, #f70f0f, #ffe500);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -971,7 +507,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background:white;
+  background: white;
   border-radius: 10px;
   padding: 8px;
   border: 1px dashed rgba(255, 255, 255, 0.3);
@@ -992,7 +528,7 @@
 .below-copy-btn {
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   border: none;
-  padding: 6px 16px;
+  padding: 6px 6px;
   border-radius: 8px;
   color: white;
   font-size: 12px;
@@ -1013,11 +549,11 @@
 }
 
 .below-auto-text {
-font-size: 10px;
-    color: white;
-    margin-bottom: 12px;
-    line-height: 1.3;
-    font-weight: bold
+  font-size: 10px;
+  color: white;
+  margin-bottom: 12px;
+  line-height: 1.3;
+  font-weight: bold;
 }
 
 .below-terms-section {
@@ -1076,34 +612,170 @@ font-size: 10px;
 }
 
 /* ========================================
-   RESPONSIVE ADJUSTMENTS
+   RESPONSIVE - TABLET & DESKTOP
 ======================================== */
-@media (max-width: 991px) {
-  .corner-coupon {
+
+/* Tablet Screens */
+@media (min-width: 768px) {
+  .brand-title {
+    font-size: 3rem;
+  }
+
+  .brand-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .brand-logo {
+    height: 140px;
+  }
+
+  .brand-description-title {
+    font-size: 1.875rem;
+  }
+
+  .brand-description-text {
+    font-size: 1.125rem;
+    text-align: justify;
+  }
+
+  /* Show desktop description, hide mobile */
+  .mobile-only {
     display: none;
+  }
+
+  .desktop-only {
+    display: block;
+  }
+
+  .brand-models-title {
+    font-size: 2.25rem;
+  }
+
+  .brand-models-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .brand-model-title {
+    font-size: 1.25rem;
   }
 }
 
-@media (min-width: 992px) {
-  .mobile-coupon-overlay {
-    display: none;
+/* Desktop Screens */
+@media (min-width: 1024px) {
+  .brand-detail-container {
+    padding-top: 100px;
+  }
+
+  .brand-title {
+    font-size: 2.75rem;
+  }
+
+  .brand-grid {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+  }
+
+  .brand-logo {
+    height: 160px;
+  }
+
+  .brand-models-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 576px) {
-  .mobile-discount-text {
-    font-size: 52px;
+/* Extra Large Screens */
+@media (min-width: 1280px) {
+  .brand-content {
+    padding-left: 32px;
+    padding-right: 32px;
   }
-  
-  .mobile-offer-box {
-    padding: 24px 16px;
+
+  .brand-logo {
+    height: 180px;
   }
-  
+}
+
+/* Mobile Screens - Small Devices */
+@media (max-width: 480px) {
+  .brand-detail-container {
+    padding-top: 60px;
+  }
+
+  .brand-header {
+    padding: 24px 12px 16px;
+  }
+
+  .brand-title {
+    font-size: 20px;
+    padding: 0 8px;
+  }
+
+  .brand-grid {
+    gap: 20px;
+  }
+
+  .brand-logo {
+    height: 80px;
+  }
+
+  .brand-description-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .brand-description-text {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .brand-models-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .brand-models-grid {
+    gap: 16px;
+  }
+
+  .brand-model-link {
+    padding: 12px 20px;
+  }
+
+  .brand-model-title {
+    font-size: 14px;
+  }
+
+  .popup-discount-text {
+    font-size: 40px;
+  }
+
   .below-discount-text {
     font-size: 40px;
   }
-  
-  .below-offer-box {
-    padding: 16px 12px;
+}
+
+/* Mobile Screens - Medium Devices */
+@media (min-width: 481px) and (max-width: 767px) {
+  .brand-title {
+    font-size: 24px;
+  }
+
+  .brand-logo {
+    height: 100px;
+  }
+
+  .brand-description-title {
+    font-size: 20px;
+  }
+
+  .brand-description-text {
+    font-size: 15px;
+  }
+
+  .brand-models-title {
+    font-size: 24px;
   }
 }

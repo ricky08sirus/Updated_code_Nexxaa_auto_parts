@@ -3,15 +3,14 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import VehicleSearchForm from "../components/VehicleSearchForm";
 import brandData from "../assets/brandData";
 import "./BrandDetail.css";
-import logoImage from "../assets/images/brands/logo-white.png";
+import logoImage from "../assets/images/brands/logowhite.webp";
 
 export default function BrandDetail() {
   const { brandSlug } = useParams();
   const navigate = useNavigate();
 
   // Coupon states
-  const [showMobilePopup, setShowMobilePopup] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [copied, setCopied] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
 
@@ -26,24 +25,11 @@ export default function BrandDetail() {
     b => b.slug.toLowerCase() === brandSlug.toLowerCase()
   );
 
-  // Check mobile and show popup
+  // Show popup after delay for ALL screen sizes
   useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth < 992;
-      setIsMobile(mobile);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
-    // Show mobile popup after delay
-    if (window.innerWidth < 992) {
-      setTimeout(() => {
-        setShowMobilePopup(true);
-      }, 500);
-    }
-
-    return () => window.removeEventListener('resize', checkMobile);
+    setTimeout(() => {
+      setShowPopup(true);
+    }, 500);
   }, []);
 
   // Copy coupon code
@@ -54,9 +40,9 @@ export default function BrandDetail() {
     });
   };
 
-  // Close mobile popup
-  const handleCloseMobilePopup = () => {
-    setShowMobilePopup(false);
+  // Close popup
+  const handleClosePopup = () => {
+    setShowPopup(false);
   };
 
   // Toggle terms
@@ -75,61 +61,61 @@ export default function BrandDetail() {
     );
   }
 
-  // Mobile Popup Coupon
-  const MobilePopupCoupon = () => (
-    <div className="mobile-coupon-overlay" onClick={handleCloseMobilePopup}>
-      <div className="mobile-coupon-popup" onClick={(e) => e.stopPropagation()}>
-        <button className="mobile-close-btn" onClick={handleCloseMobilePopup}>
+  // Universal Popup Coupon (Works for both mobile and desktop)
+  const PopupCoupon = () => (
+    <div className="coupon-overlay" onClick={handleClosePopup}>
+      <div className="coupon-popup" onClick={(e) => e.stopPropagation()}>
+        <button className="popup-close-btn" onClick={handleClosePopup}>
           ×
         </button>
         
-        <div className="mobile-coupon-content">
-          <div className="mobile-logo">
-            <Link to="/" className="mobile-logo-link">
-              <img src={logoImage} alt="Nexxa Logo" className="mobile-logo-img" />
+        <div className="popup-coupon-content">
+          <div className="popup-logo">
+            <Link to="/" className="popup-logo-link">
+              <img src={logoImage} alt="Nexxa Logo" className="popup-logo-img" />
             </Link>
           </div>
           
-          <div className="mobile-welcome-text">Welcome Offer</div>
+          <div className="popup-welcome-text">Welcome Offer</div>
           
-          <div className="mobile-offer-box">
-            <div className="mobile-get-text">GET</div>
-            <div className="mobile-discount-text">15% OFF</div>
-            <div className="mobile-first-text">YOUR FIRST</div>
-            <div className="mobile-purchase-text">PURCHASE*</div>
+          <div className="popup-offer-box">
+            <div className="popup-get-text">GET</div>
+            <div className="popup-discount-text">15% OFF</div>
+            <div className="popup-first-text">YOUR FIRST</div>
+            <div className="popup-purchase-text">PURCHASE*</div>
           </div>
           
-          <div className="mobile-code-section">
-            <div className="mobile-use-code">USE CODE:</div>
-            <div className="mobile-code-box">
+          <div className="popup-code-section">
+            <div className="popup-use-code">USE CODE:</div>
+            <div className="popup-code-box">
               <input 
                 type="text" 
                 value={couponCode} 
                 readOnly 
-                className="mobile-code-input"
+                className="popup-code-input"
               />
               <button 
-                className="mobile-copy-btn" 
+                className="popup-copy-btn" 
                 onClick={handleCopyCoupon}
                 title="Copy code"
               >
                 {copied ? '✓' : '📋'}
               </button>
             </div>
-            {copied && <div className="mobile-copied">Copied!</div>}
+            {copied && <div className="popup-copied">Copied!</div>}
           </div>
           
-          <div className="mobile-auto-text">
+          <div className="popup-auto-text">
             This Coupon Code<br />
             Automatically Send's to Your E-Mail
           </div>
         </div>
         
-        <div className="mobile-terms-section">
-          <button className="mobile-terms-toggle" onClick={toggleTerms}>
+        <div className="popup-terms-section">
+          <button className="popup-terms-toggle" onClick={toggleTerms}>
             <span>TERMS & CONDITIONS</span>
             <svg 
-              className={`mobile-terms-arrow ${termsOpen ? 'open' : ''}`}
+              className={`popup-terms-arrow ${termsOpen ? 'open' : ''}`}
               viewBox="0 0 24 24" 
               fill="none" 
               stroke="currentColor" 
@@ -140,7 +126,7 @@ export default function BrandDetail() {
           </button>
           
           {termsOpen && (
-            <div className="mobile-terms-content">
+            <div className="popup-terms-content">
               <p>
                 <strong>1. New Customers Only:</strong> Require account creation or while placing the order over call. 
                 The coupon will only work for the email/user ID/Order Number from Nexxa Auto Parts used at checkout for the first time.
@@ -155,7 +141,7 @@ export default function BrandDetail() {
     </div>
   );
 
-  // Below Form Coupon (Shows on Desktop and Mobile after closing popup)
+  // Below Form Coupon (Shows after closing popup)
   const BelowFormCoupon = () => (
     <div className="below-form-coupon">
       <div className="below-coupon-inner">
@@ -231,9 +217,10 @@ export default function BrandDetail() {
 
   return (
     <div className="brand-detail-container">
-      {/* Mobile Popup Coupon Only */}
-      {isMobile && showMobilePopup && <MobilePopupCoupon />}
+      {/* Universal Popup for ALL screen sizes */}
+      {showPopup && <PopupCoupon />}
 
+      {/* Main Heading */}
       <div className="brand-header">
         <h1 className="brand-title">
           Find Quality Used{" "}
@@ -245,8 +232,13 @@ export default function BrandDetail() {
       </div>
 
       <div className="brand-content">
+        {/* MOBILE VIEW ORDER: Logo → Search Form → Description → Models */}
+        {/* DESKTOP VIEW: Logo + Description on Left, Search Form on Right */}
+        
         <div className="brand-grid">
+          {/* Left Section - Logo and Description */}
           <div className="brand-left-section">
+            {/* Logo */}
             <div className="brand-logo-container">
               <img
                 src={brand.image}
@@ -255,7 +247,8 @@ export default function BrandDetail() {
               />
             </div>
 
-            <div className="brand-description-section">
+            {/* Description - Shows below search on mobile, here on desktop */}
+            <div className="brand-description-section desktop-only">
               <h2 className="brand-description-title">
                 Used {brand.title} Parts
               </h2>
@@ -265,17 +258,27 @@ export default function BrandDetail() {
             </div>
           </div>
 
+          {/* Right Section - Search Form */}
           <div className="brand-search-section">
             <VehicleSearchForm brandName={brand.title} />
             
-            {/* Desktop: Always show coupon below form */}
-            {!isMobile && <BelowFormCoupon />}
+            {/* Description - Shows after search form on mobile only */}
+        <div className="brand-description-section mobile-only">
+          <h2 className="brand-description-title">
+            Used {brand.title} Parts
+          </h2>
+          <p className="brand-description-text">
+            {brand.description}
+          </p>
+        </div>
+            
+            {/* Show coupon below form after closing popup */}
+            {!showPopup && <BelowFormCoupon />}
           </div>
         </div>
 
-        {/* Mobile: Show coupon below form after closing popup */}
-        {isMobile && !showMobilePopup && <BelowFormCoupon />}
 
+        {/* Models Section */}
         <div className="brand-models-section">
           <h2 className="brand-models-title">
             {brand.title} Models
