@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 // ============================================================================
@@ -22,23 +22,23 @@ import "./Home.css";
 // } from "../utils/analytics";
 //
 // REPLACE your current analytics imports with this:
-import {
-  trackEvent,
-  trackButtonClick,
-  trackLinkClick,
-  trackSearch,
-  initScrollTracking,
-  resetPageTimer,
-  trackTimeOnPage,
-  trackFilterChange,
-  trackCarouselInteraction,
-  trackBrandClick,
-  trackPartCategoryClick,
-  trackCTAClick,
-  trackAPIError,
-  trackFormFieldInteraction,
-} from "../utils/analytics";
-
+// import {
+//   trackEvent,
+//   trackButtonClick,
+//   trackLinkClick,
+//   trackSearch,
+//   initScrollTracking,
+//   resetPageTimer,
+//   trackTimeOnPage,
+//   trackFilterChange,
+//   trackCarouselInteraction,
+//   trackBrandClick,
+//   trackPartCategoryClick,
+//   trackCTAClick,
+//   trackAPIError,
+//   trackFormFieldInteraction,
+// } from "../utils/analytics";
+//
 // // Add these debug lines RIGHT AFTER the import
 // console.log('🔍 AFTER IMPORT CHECK:');
 // console.log('  trackFilterChange:', typeof trackFilterChange);
@@ -238,6 +238,75 @@ const brandsWithData = [
   { img: brand43, name: "Datsun", slug: "datsun" },
 ];
 
+
+
+
+const trackEvent = async (eventType, eventData = {}) => {
+  try {
+    await fetch(`${API_BASE_URL}/analytics/track/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_type: eventType,
+        event_data: eventData
+      })
+    });
+    console.log(`✅ Event tracked: ${eventType}`);
+  } catch (error) {
+    console.error(`❌ Error tracking ${eventType}:`, error);
+  }
+};
+
+
+
+const trackTimeOnPage = (pageId, seconds) => {
+  try {
+    const data = JSON.stringify({
+      product_id: pageId,
+      seconds_spent: seconds
+    });
+    
+    // Use sendBeacon for reliable tracking on page exit
+    if (navigator.sendBeacon) {
+      const blob = new Blob([data], { type: 'application/json' });
+      navigator.sendBeacon(`${API_BASE_URL}/track-time-spent/`, blob);
+    } else {
+      // Fallback
+      fetch(`${API_BASE_URL}/track-time-spent/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data,
+        keepalive: true
+      });
+    }
+    console.log(`✅ Time tracked: ${seconds}s on ${pageId}`);
+  } catch (error) {
+    console.error('❌ Error tracking time:', error);
+  }
+};
+
+
+
+
+const trackScrollDepth = async (pageId, percentage) => {
+  try {
+    await fetch(`${API_BASE_URL}/track-scroll/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        product_id: pageId,
+        scroll_percentage: percentage
+      })
+    });
+    console.log(`✅ Scroll ${percentage}% tracked`);
+  } catch (error) {
+    console.error('❌ Error tracking scroll:', error);
+  }
+};
+
+
+
+
 const Home = () => {
   const navigate = useNavigate();
   const scrollRef = React.useRef(null);
@@ -261,21 +330,90 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [searchFormStarted, setSearchFormStarted] = useState(false);
 
+  const pageLoadTime = useRef(Date.now());
+  const scrollTracked = useRef({ 25: false, 50: false, 75: false, 100: false });
+  const viewTracked = useRef(false);
+
+
+
+
   // Initialize tracking on mount
   useEffect(() => {
-    resetPageTimer();
-    const cleanupScroll = initScrollTracking();
-    
-    trackEvent('home_page_loaded', {
-      page_location: window.location.href,
-      referrer: document.referrer,
-    });
-    
+    if (!viewTracked.current) {
+      console.log('🏠 Home page loaded - Starting analytics tracking...');
+      
+      trackEvent('page_view', {
+        page_path: '/home',
+        page_title: 'Home Page',
+        page_location: window.location.href,
+        referrer: document.referrer,
+      });
+      
+      viewTracked.current = true;
+      pageLoadTime.current = Date.now();
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPercentage = Math.round(
+        (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+      );
+
+      // Track milestones
+      if (scrollPercentage >= 25 && !scrollTracked.current[25]) {
+        trackScrollDepth('home-page', 25);
+        scrollTracked.current[25] = true;
+      }
+      if (scrollPercentage >= 50 && !scrollTracked.current[50]) {
+        trackScrollDepth('home-page', 50);
+        scrollTracked.current[50] = true;
+      }
+      if (scrollPercentage >= 75 && !scrollTracked.current[75]) {
+        trackScrollDepth('home-page', 75);
+        scrollTracked.current[75] = true;
+      }
+      if (scrollPercentage >= 90 && !scrollTracked.current[100]) {
+        trackScrollDepth('home-page', 100);
+        scrollTracked.current[100] = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
     return () => {
-      trackTimeOnPage('/');
-      cleanupScroll();
+      const secondsSpent = Math.floor((Date.now() - pageLoadTime.current) / 1000);
+      if (secondsSpent > 5) {  // Only track if user spent more than 5 seconds
+        console.log(`⏱️ Total time on home page: ${secondsSpent}s`);
+        trackTimeOnPage('home-page', secondsSpent);
+      }
     };
   }, []);
+
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        console.log('👁️ User left home page (tab hidden)');
+        const secondsSpent = Math.floor((Date.now() - pageLoadTime.current) / 1000);
+        if (secondsSpent > 5) {
+          trackTimeOnPage('home-page', secondsSpent);
+        }
+      } else {
+        console.log('👁️ User returned to home page');
+        pageLoadTime.current = Date.now(); // Reset timer
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+
+
 
   // Preload banner image
   useEffect(() => {
@@ -326,7 +464,8 @@ const Home = () => {
   const handleSearchFormStart = () => {
     if (!searchFormStarted) {
       setSearchFormStarted(true);
-      trackEvent('search_form_started', {
+      trackEvent('form_start', {
+        form_name: 'vehicle_search',
         form_location: 'home_banner',
       });
     }
@@ -342,8 +481,10 @@ const Home = () => {
 
       if (data.success && data.data) {
         setManufacturers(data.data);
-        trackEvent('manufacturers_loaded', {
-          count: data.data.length,
+        trackEvent('search_filter_change', {
+          filter_type: 'manufacturers_loaded',
+          filter_value: `${data.data.length} manufacturers`,
+          page_location: 'home_page'
         });
       } else {
         throw new Error("Failed to load manufacturers");
@@ -351,7 +492,11 @@ const Home = () => {
     } catch (error) {
       console.error("Error fetching manufacturers:", error);
       setError("Failed to load manufacturers. Please refresh the page.");
-      trackAPIError('/manufacturers/', 'unknown', error.message);
+      trackEvent('error', {
+        error_type: 'api_error',
+        error_message: error.message,
+        error_location: '/manufacturers/'
+      });
     } finally {
       setLoadingManufacturers(false);
     }
@@ -368,17 +513,21 @@ const Home = () => {
 
       if (data.success && data.data) {
         setModels(data.data);
-        trackEvent('models_loaded', {
-          manufacturer_id: manufacturerId,
-          count: data.data.length,
-        });
-      } else {
+        trackEvent('search_filter_change', {
+          filter_type: 'models_loaded',
+          filter_value: `${data.data.length} models`,
+          page_location: 'home_page'
+        });      } else {
         throw new Error("Failed to load models");
       }
     } catch (error) {
       console.error("Error fetching models:", error);
       alert("Failed to load models. Please try again.");
-      trackAPIError(`/manufacturers/${manufacturerId}/models/`, 'unknown', error.message);
+      trackEvent('error', {
+        error_type: 'api_error',
+        error_message: error.message,
+        error_location: `/manufacturers/${manufacturerId}/models/`
+      });
     } finally {
       setLoadingModels(false);
     }
@@ -393,8 +542,10 @@ const Home = () => {
 
       if (data.success && data.data) {
         setPartCategories(data.data);
-        trackEvent('part_categories_loaded', {
-          count: data.data.length,
+        trackEvent('search_filter_change', {
+          filter_type: 'part_categories_loaded',
+          filter_value: `${data.data.length} categories`,
+          page_location: 'home_page'
         });
       } else {
         throw new Error("Failed to load part categories");
@@ -402,7 +553,11 @@ const Home = () => {
     } catch (error) {
       console.error("Error fetching part categories:", error);
       setError("Failed to load part categories. Please refresh the page.");
-      trackAPIError('/part-categories/', 'unknown', error.message);
+      trackEvent('error', {
+        error_type: 'api_error',
+        error_message: error.message,
+        error_location: '/part-categories/'
+      });
     } finally {
       setLoadingParts(false);
     }
@@ -414,8 +569,11 @@ const Home = () => {
   handleSearchFormStart();
   
   if (value) {
-    trackFilterChange('year', value, 'home_page_search');
-    trackFormFieldInteraction('vehicle_search', 'year', value);
+    trackEvent('search_filter_change', {
+        filter_type: 'year',
+        filter_value: value,
+        page_location: 'home_page_search'
+      });
   }
 };  
   const handleManufacturerChange = (e) => {
@@ -427,8 +585,11 @@ const Home = () => {
     if (value) {
       const mfgData = manufacturers.find(m => m.id === parseInt(value));
       if (mfgData) {
-        trackFilterChange('manufacturer', mfgData.name, 'home_page_search');
-        trackFormFieldInteraction('vehicle_search', 'manufacturer', mfgData.name);
+        trackEvent('search_filter_change', {
+          filter_type: 'manufacturer',
+          filter_value: mfgData.name,
+          page_location: 'home_page_search'
+        });
       }
     }
   };
@@ -441,8 +602,11 @@ const Home = () => {
     if (value) {
       const modelData = models.find(m => m.id === parseInt(value));
       if (modelData) {
-        trackFilterChange('model', modelData.name, 'home_page_search');
-        trackFormFieldInteraction('vehicle_search', 'model', modelData.name);
+        trackEvent('search_filter_change', {
+          filter_type: 'model',
+          filter_value: modelData.name,
+          page_location: 'home_page_search'
+        });
       }
     }
   };
@@ -455,8 +619,11 @@ const Home = () => {
     if (value) {
       const partData = partCategories.find(p => p.id === parseInt(value));
       if (partData) {
-        trackFilterChange('part_category', partData.name, 'home_page_search');
-        trackFormFieldInteraction('vehicle_search', 'part_category', partData.name);
+        trackEvent('search_filter_change', {
+          filter_type: 'part_category',
+          filter_value: partData.name,
+          page_location: 'home_page_search'
+        });
       }
     }
   };
@@ -464,22 +631,38 @@ const Home = () => {
   const handleSearch = () => {
     if (!selectedYear) {
       alert("Please select a year");
-      trackEvent('search_validation_failed', { missing_field: 'year' });
+      trackEvent('error', {
+        error_type: 'validation_error',
+        error_message: 'Missing year',
+        error_location: 'home_search_form'
+      });
       return;
     }
     if (!selectedManufacturer) {
       alert("Please select a manufacturer");
-      trackEvent('search_validation_failed', { missing_field: 'manufacturer' });
+      trackEvent('error', {
+        error_type: 'validation_error',
+        error_message: 'Missing manufacturer',
+        error_location: 'home_search_form'
+      });
       return;
     }
     if (!selectedModel) {
       alert("Please select a model");
-      trackEvent('search_validation_failed', { missing_field: 'model' });
+      trackEvent('error', {
+        error_type: 'validation_error',
+        error_message: 'Missing model',
+        error_location: 'home_search_form'
+      });
       return;
     }
     if (!selectedPart) {
       alert("Please select a part category");
-      trackEvent('search_validation_failed', { missing_field: 'part_category' });
+      trackEvent('error', {
+        error_type: 'validation_error',
+        error_message: 'Missing part category',
+        error_location: 'home_search_form'
+      });
       return;
     }
 
@@ -494,15 +677,29 @@ const Home = () => {
     const searchQuery = `${selectedYear} ${manufacturerData?.name} ${modelData?.name} ${partData?.name}`;
     trackSearch(searchQuery, 0);
     
-    trackEvent('parts_search_submitted', {
+    trackEvent('search', {
+      search_term: searchQuery,
+      results_count: 0, 
       year: selectedYear,
       manufacturer: manufacturerData?.name,
       model: modelData?.name,
       part_category: partData?.name,
       search_location: 'home_page_banner',
     });
+
+    trackEvent('form_submit', {
+      form_name: 'vehicle_search',
+      success: true,
+      form_location: 'home_banner'
+    });
+
+
     
-    trackCTAClick('Search Now', 'home_banner', 'primary_button');
+    trackEvent('button_click', {
+      button_name: 'Search Now',
+      click_location: 'home_banner'
+    });
+
 
     const params = new URLSearchParams({
       year: selectedYear,
@@ -518,12 +715,19 @@ const Home = () => {
   };
 
   const handleBrandClick = (brand) => {
-    trackBrandClick(brand.name, brand.slug, 'brands_marquee');
+    trackEvent('brand_click', {
+      brand_name: brand.name,
+      brand_slug: brand.slug,
+      click_location: 'brands_marquee'
+    });
     navigate(`/used/${brand.slug}/parts`);
   };
 
   const handlePartCardClick = (partName) => {
-    trackPartCategoryClick(partName, 'parts_carousel');
+    trackEvent('part_category_click', {
+      category_name: partName,
+      click_location: 'parts_carousel'
+    });
   };
 
   const scroll = (direction) => {
@@ -532,7 +736,11 @@ const Home = () => {
       if (direction === "left") current.scrollLeft -= 300;
       else current.scrollLeft += 300;
 
-      trackCarouselInteraction('parts_carousel', 'manual_scroll', direction);
+      trackEvent('carousel_interaction', {
+        carousel_name: 'parts_carousel',
+        action: 'manual_scroll',
+        direction: direction
+      });
     }
   };
 

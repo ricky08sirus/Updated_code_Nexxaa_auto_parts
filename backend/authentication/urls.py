@@ -8,7 +8,11 @@ from .views import (
     user_profile_view,
     update_profile_view,
     logout_view,
-    create_shipping_address  # Import from views
+    create_shipping_address,
+    analytics_status,
+    analytics_test_connection,
+    track_analytics_event,
+    batch_track_events,       # Import from views
 )
 from .views import test_analytics, test_analytics_debug, analytics_config
 
@@ -63,7 +67,18 @@ urlpatterns = [
     path('track-product-view/', views.track_product_view_api, name='track-product-view'),
     path('track-wishlist/', views.track_wishlist_api, name='track-wishlist'),
     path('track-scroll/', views.track_scroll_api, name='track-scroll'),
+    
     path('track-time-spent/', views.track_time_spent_api, name='track-time-spent'),
+    path('analytics/status/', analytics_status, name='analytics_status'),
+    
+    # Test connection
+    path('analytics/test-connection/', analytics_test_connection, name='analytics_test_connection'),
+    
+    # Track single event
+    path('analytics/track/', track_analytics_event, name='track_analytics_event'),
+    
+    # Batch track multiple events
+    path('analytics/batch-track/', batch_track_events, name='batch_track_events'),
     # ============= VIEWSET ROUTES (Parts Inventory & Part Galleries) =============
     path("", include(router.urls)),
 ]

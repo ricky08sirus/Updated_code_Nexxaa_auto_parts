@@ -1,9 +1,13 @@
 # authentication/views.py
 from rest_framework.decorators import api_view, permission_classes, action
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from .analytics import track_event
 from rest_framework import status, viewsets, filters
+import json
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
     ContactSubmission,
@@ -35,7 +39,21 @@ from .analytics import (
     track_product_page_view,
     track_add_to_wishlist,
     track_scroll_depth,
-    track_time_on_page
+    track_time_on_page,
+    test_analytics_connection,
+    get_analytics_status,
+    track_button_click,
+    track_link_click,
+    track_search,
+    track_page_view,
+    track_carousel_interaction,
+    track_brand_click,
+    track_cta_click,
+    track_error,
+    track_form_start,
+    track_form_submit,
+    track_filter_change,
+
 )
 
 logger = logging.getLogger(__name__)
@@ -1270,3 +1288,324 @@ def track_time_spent_api(request):
             'error': str(e)
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+
+
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def analytics_status(request):
+    """
+    GET /api/analytics/status
+    Check analytics configuration status
+    """
+    try:
+        status_info = get_analytics_status()
+        return JsonResponse({
+            'success': True,
+            'status': status_info
+        })
+    except Exception as e:
+        logger.error(f"Error getting analytics status: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def analytics_test_connection(request):
+    """
+    POST /api/analytics/test-connection
+    Test the analytics connection by sending a test event
+    """
+    try:
+        result = test_analytics_connection(request)
+        return JsonResponse({
+            'success': result['success'],
+            'result': result
+        })
+    except Exception as e:
+        logger.error(f"Error testing analytics connection: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def track_analytics_event(request):
+    """
+    POST /api/analytics/track
+    Generic endpoint to track any analytics event from frontend
+    
+    Body format:
+    {
+        "event_type": "button_click" | "link_click" | "search" | etc.,
+        "event_data": { ... event specific data ... }
+    }
+    """
+    try:
+        data = json.loads(request.body)
+        event_type = data.get('event_type')
+        event_data = data.get('event_data', {})
+        
+        if not event_type:
+            return JsonResponse({
+                'success': False,
+                'error': 'event_type is required'
+            }, status=400)
+        
+        # Route to appropriate tracking function
+        result = False
+        
+        if event_type == 'button_click':
+            result = track_button_click(
+                request,
+                button_name=event_data.get('button_name', 'unknown'),
+                location=event_data.get('click_location', 'unknown'),
+                total_clicks=event_data.get('total_clicks')
+            )
+        
+        elif event_type == 'link_click':
+            result = track_link_click(
+                request,
+                link_text=event_data.get('link_text', ''),
+                link_url=event_data.get('link_url', '')
+            )
+        
+        elif event_type == 'search':
+            result = track_search(
+                request,
+                search_term=event_data.get('search_term', ''),
+                results_count=event_data.get('results_count', 0)
+            )
+        
+        elif event_type == 'page_view':
+            result = track_page_view(
+                request,
+                page_path=event_data.get('page_path', request.path),
+                page_title=event_data.get('page_title')
+            )
+        
+        elif event_type == 'carousel_interaction':
+            result = track_carousel_interaction(
+                request,
+                carousel_name=event_data.get('carousel_name', 'unknown'),
+                action=event_data.get('action', 'unknown'),
+                direction=event_data.get('direction')
+            )
+        
+        elif event_type == 'brand_click':
+            result = track_brand_click(
+                request,
+                brand_name=event_data.get('brand_name', 'unknown'),
+                brand_slug=event_data.get('brand_slug', 'unknown'),
+                location=event_data.get('click_location', 'unknown')
+            )
+        
+        elif event_type == 'cta_click':
+            result = track_cta_click(
+                request,
+                cta_name=event_data.get('cta_name', 'unknown'),
+                cta_location=event_data.get('cta_location', 'unknown'),
+                cta_type=event_data.get('cta_type', 'button')
+            )
+        
+        elif event_type == 'error':
+            result = track_error(
+                request,
+                error_type=event_data.get('error_type', 'unknown'),
+                error_message=event_data.get('error_message', ''),
+                error_location=event_data.get('error_location', 'unknown')
+            )
+        
+        elif event_type == 'form_start':
+            result = track_form_start(
+                request,
+                form_name=event_data.get('form_name', 'unknown')
+            )
+        
+        elif event_type == 'form_submit':
+            result = track_form_submit(
+                request,
+                form_name=event_data.get('form_name', 'unknown'),
+                success=event_data.get('success', True)
+            )
+        
+        elif event_type == 'search_filter_change':
+            result = track_filter_change(
+                request,
+                filter_type=event_data.get('filter_type', 'unknown'),
+                filter_value=event_data.get('filter_value', ''),
+                location=event_data.get('page_location', 'unknown')
+            )
+        
+        else:
+            return JsonResponse({
+                'success': False,
+                'error': f'Unknown event_type: {event_type}'
+            }, status=400)
+        
+        return JsonResponse({
+            'success': result,
+            'event_type': event_type,
+            'message': 'Event tracked successfully' if result else 'Event tracking failed'
+        })
+    
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'error': 'Invalid JSON in request body'
+        }, status=400)
+    
+    except Exception as e:
+        logger.error(f"Error tracking analytics event: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def batch_track_events(request):
+    """
+    POST /api/analytics/batch-track
+    Track multiple events in a single request
+    
+    Body format:
+    {
+        "events": [
+            {
+                "event_type": "button_click",
+                "event_data": { ... }
+            },
+            {
+                "event_type": "page_view",
+                "event_data": { ... }
+            }
+        ]
+    }
+    """
+    try:
+        data = json.loads(request.body)
+        events = data.get('events', [])
+        
+        if not events:
+            return JsonResponse({
+                'success': False,
+                'error': 'events array is required'
+            }, status=400)
+        
+        results = []
+        for event in events:
+            event_type = event.get('event_type')
+            event_data = event.get('event_data', {})
+            
+            # Track each event individually
+            result = False
+            
+            if event_type == 'button_click':
+                result = track_button_click(
+                    request,
+                    button_name=event_data.get('button_name', 'unknown'),
+                    location=event_data.get('click_location', 'unknown'),
+                    total_clicks=event_data.get('total_clicks')
+                )
+            elif event_type == 'link_click':
+                result = track_link_click(
+                    request,
+                    link_text=event_data.get('link_text', ''),
+                    link_url=event_data.get('link_url', '')
+                )
+            elif event_type == 'search':
+                result = track_search(
+                    request,
+                    search_term=event_data.get('search_term', ''),
+                    results_count=event_data.get('results_count', 0)
+                )
+            elif event_type == 'page_view':
+                result = track_page_view(
+                    request,
+                    page_path=event_data.get('page_path', request.path),
+                    page_title=event_data.get('page_title')
+                )
+            elif event_type == 'carousel_interaction':
+                result = track_carousel_interaction(
+                    request,
+                    carousel_name=event_data.get('carousel_name', 'unknown'),
+                    action=event_data.get('action', 'unknown'),
+                    direction=event_data.get('direction')
+                )
+            elif event_type == 'brand_click':
+                result = track_brand_click(
+                    request,
+                    brand_name=event_data.get('brand_name', 'unknown'),
+                    brand_slug=event_data.get('brand_slug', 'unknown'),
+                    location=event_data.get('click_location', 'unknown')
+                )
+            elif event_type == 'cta_click':
+                result = track_cta_click(
+                    request,
+                    cta_name=event_data.get('cta_name', 'unknown'),
+                    cta_location=event_data.get('cta_location', 'unknown'),
+                    cta_type=event_data.get('cta_type', 'button')
+                )
+            elif event_type == 'error':
+                result = track_error(
+                    request,
+                    error_type=event_data.get('error_type', 'unknown'),
+                    error_message=event_data.get('error_message', ''),
+                    error_location=event_data.get('error_location', 'unknown')
+                )
+            elif event_type == 'form_start':
+                result = track_form_start(
+                    request,
+                    form_name=event_data.get('form_name', 'unknown')
+                )
+            elif event_type == 'form_submit':
+                result = track_form_submit(
+                    request,
+                    form_name=event_data.get('form_name', 'unknown'),
+                    success=event_data.get('success', True)
+                )
+            elif event_type == 'search_filter_change':
+                result = track_filter_change(
+                    request,
+                    filter_type=event_data.get('filter_type', 'unknown'),
+                    filter_value=event_data.get('filter_value', ''),
+                    location=event_data.get('page_location', 'unknown')
+                )
+            
+            results.append({
+                'event_type': event_type,
+                'success': result
+            })
+        
+        total_events = len(results)
+        successful_events = sum(1 for r in results if r['success'])
+        
+        return JsonResponse({
+            'success': True,
+            'total_events': total_events,
+            'successful_events': successful_events,
+            'failed_events': total_events - successful_events,
+            'results': results
+        })
+    
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'error': 'Invalid JSON in request body'
+        }, status=400)
+    
+    except Exception as e:
+        logger.error(f"Error in batch tracking: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
