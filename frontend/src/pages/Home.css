@@ -60,7 +60,7 @@ position: relative;
 
 }
 
-.banner-left h1 {
+.banner-title {
   font-size:43px;
   font-weight: 800;
   line-height: 1.2;
@@ -1676,25 +1676,3 @@ border: 1px solid #fff;
 }
 
 /* In your Home.css */
-.banner-left h1 {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-.banner-title {
-  /* Your existing H1 styles go here */
-  font-size: 3rem;
-  font-weight: bold;
-  line-height: 1.2;
-}
-
-.seo-only {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
