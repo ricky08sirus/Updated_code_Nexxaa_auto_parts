@@ -675,7 +675,7 @@ const Home = () => {
     );
     
     const searchQuery = `${selectedYear} ${manufacturerData?.name} ${modelData?.name} ${partData?.name}`;
-    trackSearch(searchQuery, 0);
+    //trackSearch(searchQuery, 0);
     
     trackEvent('search', {
       search_term: searchQuery,
