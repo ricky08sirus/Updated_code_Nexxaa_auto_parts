@@ -781,11 +781,8 @@ const Home = () => {
 
         <div className="banner-inner">
           <div className="banner-left">
-  {/* Real H1 for SEO - visible to search engines and screen readers */}
-  <h1>Premium OEM Used Auto Parts - Nationwide Shipping for All Vehicle Makes and Models</h1>
-  
-  {/* Keep your styled version visually, but hide it from SEO */}
-  <div className="banner-title" aria-hidden="true">
+  {/* Main visual heading - H2 because H1 is in index.html for SEO */}
+  <div className="banner-title">
     At <span className="highlight">Nexxa Auto</span> <br />
     Millions of <br />
     <span className="highlight">OEM Used Parts.</span> <br />
