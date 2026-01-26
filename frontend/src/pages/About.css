@@ -31,14 +31,14 @@ body {
   flex: 1;
 }
 
-.about-text h2 {
+.about-text h1 {
   font-size: 38px;
   font-weight: bold;
   margin-bottom: 20px;
   color: #000;
 }
 
-.about-text h2 span {
+.about-text h1 span {
   color: #ef4444;
 }
 
@@ -108,7 +108,7 @@ color: black;
     gap: 40px;
   }
 
-  .about-text h2,
+  .about-text h1,
   .about-container-full h2 {
     font-size: 32px;
   }
@@ -134,7 +134,7 @@ color: black;
     flex-direction: column;
   }
 
-  .about-text h2,
+  .about-text h1,
   .about-container-full h2 {
     font-size: 28px;
     margin-bottom: 15px;
@@ -160,7 +160,7 @@ color: black;
     padding: 40px 15px;
   }
 
-  .about-text h2,
+  .about-text h1,
   .about-container-full h2 {
     font-size: 24px;
   }

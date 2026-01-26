@@ -410,7 +410,7 @@ const OrderPage = () => {
       <div className="order-container">
         <div className="order-main-content">
           <div className="review-order-section">
-            <h2 className="section-title">Review Order</h2>
+            <h1 className="section-title">Review Order</h1>
             
             <div className="seller-info">
               <div className="seller-details">

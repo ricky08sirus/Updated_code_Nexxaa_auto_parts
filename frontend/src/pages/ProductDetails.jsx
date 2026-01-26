@@ -3,6 +3,8 @@ import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import "./ProductDetails.css";
 import "./WelcomeOffer.css";
 import logoImage from "../assets/images/brands/logowhite.webp";
+import { Helmet } from 'react-helmet';
+
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
@@ -390,6 +392,16 @@ const ProductDetails = () => {
 
   return (
     <div className="product-details">
+      <Helmet>
+      <title>
+        {year} {manufacturerName} {modelName} {partCategoryName} - Get Quote | Nexxa Auto
+      </title>
+      <meta 
+        name="description" 
+        content={`Request a quote for ${year} ${manufacturerName} ${modelName} ${partCategoryName}. High-quality used OEM parts with warranty. Fast response in 2-45 minutes. Free shipping available.`}
+      />
+      <link rel="canonical" href={window.location.href} />
+    </Helmet>
       {/* Mobile Welcome Popup */}
       {isMobile && showWelcomePopup && (
         <div className="welcome-popup-overlay" onClick={handleCloseWelcomePopup}>

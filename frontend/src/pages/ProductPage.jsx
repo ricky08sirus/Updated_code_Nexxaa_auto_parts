@@ -655,6 +655,8 @@ import visaIcon from "../assets/images/visa.png";
 import amexIcon from "../assets/images/amex.png";
 import discoverIcon from "../assets/images/discover.png";
 import mastercardIcon from "../assets/images/images.png";
+import { Helmet } from 'react-helmet';
+
 
 // API Configuration
 const API_BASE = 'https://nexxaauto.com/api';
@@ -1208,6 +1210,16 @@ If the part doesn't match your VIN or arrives damaged during shipping, we've got
 
   return (
     <div>
+      <Helmet>
+      <title>
+        {currentProduct.title} - {currentProduct.condition} | Nexxa Auto Parts
+      </title>
+      <meta 
+        name="description" 
+        content={`${currentProduct.title} in ${currentProduct.condition} condition. ${currentProduct.description} ${currentProduct.price ? `Only $${currentProduct.price.toFixed(2)}` : 'Best price guaranteed'}. Free shipping. 12-day returns.`}
+      />
+      <link rel="canonical" href={`https://nexxaauto.com/product/${currentProduct.slug}/${currentProduct.id}`} />
+    </Helmet>
       <header className="nexxa-header">
         <Link to="/" className="nexxa-logo-link">
           <img src={logoImage} alt="Nexxa Logo" className="nexxa-logo-img" />

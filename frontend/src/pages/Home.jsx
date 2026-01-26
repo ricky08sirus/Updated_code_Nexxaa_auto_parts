@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
+import { Helmet } from 'react-helmet'; 
 // ============================================================================
 
 //
@@ -757,6 +758,17 @@ const Home = () => {
     : brandsWithData;
 
   return (
+    <>
+        <Helmet>
+      <title>Nexxa Auto</title>
+      <meta 
+        name="description" 
+        content="Nexxa Auto Parts offers premium OEM used auto parts with nationwide shipping. Find engines, transmissions, and VIN-matched parts for all vehicle makes and models. Expert support and low mileage parts."
+      />
+      <meta name="keywords" content="used auto parts, OEM parts, auto parts nationwide, VIN matching, low mileage parts" />
+      <link rel="canonical" href="https://nexxaauto.com/" />
+    </Helmet>
+  
     <div>
       {error && (
         <div
@@ -780,14 +792,14 @@ const Home = () => {
         <div className="banner-gradient"></div>
 
         <div className="banner-inner">
-          <div className="banner-left">
-  {/* Main visual heading - H2 because H1 is in index.html for SEO */}
-  <div className="banner-title">
+<div className="banner-left">
+  {/* SEO-optimized H1 */}
+  <h1 className="banner-title">
     At <span className="highlight">Nexxa Auto</span> <br />
     Millions of <br />
     <span className="highlight">OEM Used Parts.</span> <br />
     Matched to Your Vehicle.
-  </div>
+  </h1>
 
   <p className="why-description">
     Nexxa Auto Parts offers reliable OEM used car parts with nationwide
@@ -1061,6 +1073,7 @@ const Home = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

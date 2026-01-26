@@ -173,9 +173,9 @@ export default function VehicleSearchForm({ brandName = null }) {
     <div className="vehicle-search-form">
       {/* Header */}
       <div className="search-form-header">
-        <h2 className="search-form-title">
+        <h1 className="search-form-title">
           One smart search. Your perfect fit starts here.
-        </h2>
+        </h1>
       </div>
 
       {/* Form */}

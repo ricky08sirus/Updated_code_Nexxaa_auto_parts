@@ -25,7 +25,7 @@ body {
   flex: 1;
 }
 
-.contact-left h2 {
+.contact-left h1 {
   margin-bottom: 15px;
   font-size: 38px;
   font-weight: bold;
@@ -206,7 +206,7 @@ font-size: 25px;
     margin-top: 0;
   }
 
-  .contact-left h2 {
+  .contact-left h1 {
     font-size: 32px;
   }
 
@@ -225,7 +225,7 @@ font-size: 25px;
     padding: 25px;
   }
 
-  .contact-left h2 {
+  .contact-left h1 {
     font-size: 28px;
   }
 
@@ -271,7 +271,7 @@ font-size: 25px;
     gap: 25px;
   }
 
-  .contact-left h2 {
+  .contact-left h1 {
     font-size: 26px;
     margin-bottom: 12px;
   }
@@ -348,7 +348,7 @@ font-size: 25px;
 
 /* Extra Small Phones (max-width: 360px) */
 @media (max-width: 360px) {
-  .contact-left h2 {
+  .contact-left h1 {
     font-size: 22px;
   }
 

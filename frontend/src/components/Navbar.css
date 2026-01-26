@@ -304,3 +304,264 @@ nav .absolute nav a svg {
   /* border: 1px solid darkred; */
 }
 }
+/* =============================== */
+/* NAVBAR BASE                     */
+/* =============================== */
+nav {
+  width: 100%;
+  background: linear-gradient(45deg, #167687b5, #16768736);
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  position: fixed;
+  z-index: 100;
+  padding: 3px 6px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Scrolled state */
+nav.bg-scrolled {
+  background: linear-gradient(4deg, #001012, #127385);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* =============================== */
+/* LOGO                            */
+/* =============================== */
+nav img {
+  height: 55px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+nav img:hover {
+  transform: scale(1.05);
+}
+
+/* =============================== */
+/* SCROLLING TEXT (BRAND STRIP)    */
+/* =============================== */
+.scroll-container {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  background: black;
+  border-radius: 6px;
+  padding: 4px 0;
+  min-width: 0;
+}
+
+.scrolling-text {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: scroll-left 90s linear infinite;
+}
+
+.scroll-item {
+  display: inline-block;
+  margin: 0 6px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  color: white;
+  background: #1f1f1f;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.scroll-item:hover {
+  color: red;
+  background-color: #2a2a2a;
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* =============================== */
+/* HAMBURGER BUTTON                */
+/* =============================== */
+nav button {
+  background: none;
+  border: 1px solid white;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  padding: 6px 10px;
+  margin-right: 1rem;
+}
+
+nav button:hover {
+  color: darkred;
+  border-color: darkred;
+}
+
+/* =============================== */
+/* MOBILE MENU OVERLAY             */
+/* =============================== */
+.fixed.inset-0 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
+
+/* =============================== */
+/* MOBILE DRAWER MENU DESIGN       */
+/* =============================== */
+nav .absolute {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 320px;
+  max-width: 85vw;
+  background: linear-gradient(135deg, #001012, #127385);
+  color: #fff;
+  padding: 1.5rem;
+  overflow-y: auto;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.6);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Close button container */
+nav .absolute .flex.justify-end {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+nav .absolute button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+nav .absolute button:hover {
+  background: rgba(167, 20, 7, 0.2);
+  border-color: #a71407;
+  transform: rotate(90deg);
+}
+
+/* Drawer Navigation Links */
+nav .absolute nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+nav .absolute nav a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+nav .absolute nav a:hover {
+  background: rgba(167, 20, 7, 0.2);
+  color: #ff6b6b;
+  transform: translateX(8px);
+  border-left: 3px solid #a71407;
+}
+
+/* Icons inside Drawer Links */
+nav .absolute nav a svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* =============================== */
+/* RESPONSIVE ADJUSTMENTS          */
+/* =============================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  nav .absolute {
+    width: 280px;
+  }
+
+  .scroll-item {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  nav img {
+    height: 47px;
+  }
+
+  nav button {
+    margin-right: 0.5rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  nav .absolute {
+    width: 260px;
+    padding: 1rem;
+  }
+
+  nav img {
+    height: 40px;
+  }
+
+  nav button {
+    padding: 4px 8px;
+    margin-right: 0;
+  }
+
+  nav .absolute nav a {
+    font-size: 0.9rem;
+    padding: 0.875rem 1rem;
+  }
+
+  .scroll-item {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  nav .absolute {
+    width: 240px;
+  }
+
+  nav .absolute nav a {
+    font-size: 0.85rem;
+    padding: 0.75rem 0.875rem;
+    gap: 10px;
+  }
+}

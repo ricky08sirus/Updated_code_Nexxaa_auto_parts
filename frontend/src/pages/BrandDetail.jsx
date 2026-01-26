@@ -4,6 +4,8 @@ import VehicleSearchForm from "../components/VehicleSearchForm";
 import brandData from "../assets/brandData";
 import "./BrandDetail.css";
 import logoImage from "../assets/images/brands/logowhite.webp";
+import { Helmet } from 'react-helmet';
+
 
 export default function BrandDetail() {
   const { brandSlug } = useParams();
@@ -216,7 +218,16 @@ export default function BrandDetail() {
   );
 
   return (
+    
     <div className="brand-detail-container">
+      <Helmet>
+      <title>Used {brand.title} Parts - OEM Quality Auto Parts | Nexxa Auto</title>
+      <meta 
+        name="description" 
+        content={`Find high-quality used ${brand.title} parts at competitive prices. OEM certified auto parts with warranty. Fast shipping across USA. Get quotes in 2-45 minutes.`}
+      />
+      <link rel="canonical" href={`https://nexxaauto.com/brand/${brand.slug}`} />
+    </Helmet>
       {/* Universal Popup for ALL screen sizes */}
       {showPopup && <PopupCoupon />}
 

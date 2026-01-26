@@ -43,7 +43,7 @@ const { partCategoryName, year, manufacturerName, modelName } =
               <div className="success-icon">✓</div>
             </div>
 
-            <h3>Request Received!</h3>
+            <h1>Request Received!</h1>
             <p>
               Thank you for your inquiry! We've received your request for the{" "}
               <strong>{partCategoryName}</strong> for your {year}{" "}

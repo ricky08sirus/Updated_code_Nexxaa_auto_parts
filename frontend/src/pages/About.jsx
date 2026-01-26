@@ -2,16 +2,26 @@ import React from "react";
 import "./About.css";
 import aboutImg1 from "../assets/images/aboutimg1.png";
 import aboutImg2 from "../assets/images/boutimg2.png";
+import { Helmet } from 'react-helmet';
 
 const About = () => {
   return (
+    <>
+      <Helmet>
+        <title>About Us - Leading OEM Used Auto Parts Provider | Nexxa Auto</title>
+        <meta 
+          name="description" 
+          content="Learn about Nexxa Auto Parts - your trusted source for quality OEM used auto parts. Serving customers nationwide with expert support and low mileage parts."
+        />
+        <link rel="canonical" href="https://nexxaauto.com/about" />
+      </Helmet>
     <div className="about-page">
 
       {/* SECTION 1 - Left: Text, Right: Image */}
       <section className="about-section">
         <div className="about-container">
           <div className="about-text">
-            <h2>Welcome to <span>Nexxa</span></h2>
+            <h1>Welcome to <span>Nexxa</span></h1>
             <p>
               At Nexxa, we are dedicated to delivering high-quality used OEM auto parts and accessories that meet or exceed industry standards. As one of America's leading distributors of automobile components and replacement parts, Nexxa stands for reliability, affordability, and trust.
             </p>
@@ -58,6 +68,7 @@ const About = () => {
       </section>
 
     </div>
+    </>
   );
 };
 

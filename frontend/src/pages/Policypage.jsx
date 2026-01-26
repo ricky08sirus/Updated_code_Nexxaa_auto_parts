@@ -1,8 +1,19 @@
 import React from "react";
 import "./Privacypolicy.css";
+import { Helmet } from 'react-helmet';
+
 
 const PrivacyPolicy = () => {
   return (
+    <>
+    <Helmet>
+  <title>Privacy Policy - How We Protect Your Data | Nexxa Auto Parts</title>
+  <meta 
+    name="description" 
+    content="Read Nexxa Auto Parts privacy policy to understand how we collect, use, and protect your personal information when you shop for auto parts."
+  />
+  <link rel="canonical" href="https://nexxaauto.com/privacy-policy" />
+</Helmet>
     <div className="privacy-container">
       <div className="privacy-content">
         <h1 className="privacy-title">Privacy Policy</h1>
@@ -173,6 +184,7 @@ const PrivacyPolicy = () => {
         </section>
       </div>
     </div>
+    </>
   );
 };
 

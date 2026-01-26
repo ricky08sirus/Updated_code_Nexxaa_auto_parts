@@ -1,8 +1,19 @@
 import React from "react";
 import "./Terms.css";
+import { Helmet } from 'react-helmet';
+
 
 const TermsAndConditions = () => {
   return (
+      <>
+      <Helmet>
+  <title>Terms & Conditions - Shop with Confidence | Nexxa Auto Parts</title>
+  <meta 
+    name="description" 
+    content="Review Nexxa Auto Parts terms and conditions including shipping, returns, warranties, and purchase agreements for used OEM auto parts."
+  />
+  <link rel="canonical" href="https://nexxaauto.com/terms-and-conditions" />
+</Helmet>
     <div className="terms-container">
       {/* Main Heading */}
       <h1 className="main-heading">Terms and Conditions</h1>
@@ -129,6 +140,7 @@ For assistance, reply with the keyword "HELP" or visit our website. You can also
       <p className="paragraph">If you have any questions about these Terms and Conditions, please contact us at:</p>
       <p className="paragraph">📧 Email: info@nexxaauto.com</p>
     </div>
+    </>
   );
 };
 

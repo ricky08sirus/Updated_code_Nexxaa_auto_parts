@@ -6,6 +6,8 @@ import {
   FaLocationDot,
   FaPhone,
 } from "react-icons/fa6";
+import { Helmet } from 'react-helmet';
+
 
 
 const Contact = () => {
@@ -108,6 +110,15 @@ const Contact = () => {
   };
 
   return (
+    <>
+      <Helmet>
+        <title>Contact Us - Get Expert Help with Used Auto Parts | Nexxa Auto</title>
+        <meta 
+          name="description" 
+          content="Contact Nexxa Auto Parts for expert assistance with OEM used auto parts. Our specialists are ready to help you find the perfect part for your vehicle."
+        />
+        <link rel="canonical" href="https://nexxaauto.com/contact" />
+      </Helmet>
     <section className="contact-page">
       {showSuccessAnimation && (
         <div className="success-overlay">
@@ -120,9 +131,9 @@ const Contact = () => {
       <div className="contact-wrapper">
         {/* LEFT */}
         <div className="contact-left">
-          <h2>
+          <h1>
             Contact <span>Us</span>
-          </h2>
+          </h1>
 
           <p style={{color:"black", fontWeight:"normal"}}>
             We're proud to serve customers nationwide with top-quality
@@ -268,7 +279,7 @@ const Contact = () => {
 </div>
 
     </section>
-    
+    </>
   );
 };
 
