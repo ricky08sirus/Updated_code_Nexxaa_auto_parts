@@ -28,53 +28,67 @@
 # CMD ["nginx", "-g", "daemon off;"]
 
 # Frontend Build Stage
-FROM node:18-alpine AS builder
+# FROM node:18-alpine AS builder
 
-WORKDIR /app
+# WORKDIR /app
 
-# Install Chromium and dependencies for Puppeteer
-RUN apk add --no-cache \
-    chromium \
-    nss \
-    freetype \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont
+# # Install Chromium and dependencies for Puppeteer
+# RUN apk add --no-cache \
+#     chromium \
+#     nss \
+#     freetype \
+#     harfbuzz \
+#     ca-certificates \
+#     ttf-freefont
 
-# Tell Puppeteer to use installed Chromium
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+# # Tell Puppeteer to use installed Chromium
+# ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+# ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
-# Copy package files
-COPY package*.json ./
+# # Copy package files
+# COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --legacy-peer-deps
+# # Install dependencies
+# # RUN npm ci --legacy-peer-deps
+# RUN npm install --legacy-peer-deps
 
-# Copy source code
-COPY . .
 
-# Build argument for API URL
-ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
+# # Copy source code
+# COPY . .
 
-# Build and prerender
-RUN npm run build && node scripts/prerender.mjs
+# # Build argument for API URL
+# ARG REACT_APP_API_URL
+# ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
-# Verify prerendering worked
-RUN echo "Checking prerendered files..." && \
-    ls -la /app/dist && \
-    ls -la /app/dist/about || echo "Warning: /about folder not found"
+# # Build and prerender
+# RUN npm run build && node scripts/prerender.mjs
 
-# Production Stage - Nginx
+# # Verify prerendering worked
+# RUN echo "Checking prerendered files..." && \
+#     ls -la /app/dist && \
+#     ls -la /app/dist/about || echo "Warning: /about folder not found"
+
+# # Production Stage - Nginx
+# FROM nginx:alpine
+
+# # Copy ALL built and pre-rendered files
+# COPY --from=builder /app/dist /usr/share/nginx/html
+
+# # Copy nginx configuration
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# EXPOSE 80
+
+# CMD ["nginx", "-g", "daemon off;"]
+# Stage 1: Build
+
+
+
+
 FROM nginx:alpine
 
-# Copy ALL built and pre-rendered files
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Copy nginx configuration
+COPY dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
