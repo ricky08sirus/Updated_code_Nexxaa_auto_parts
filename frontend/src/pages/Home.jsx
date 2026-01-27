@@ -922,7 +922,7 @@ const Home = () => {
                   onClick={() => handlePartCardClick(part.name)}
                 >
                   <img src={part.img} alt={part.name} loading="lazy"/>
-                  <p className="part-name">{part.name}</p>
+                  <h2 className="part-name">{part.name}</h2>
                 </div>
               ))}
             </div>

@@ -25,10 +25,11 @@ const ProductDetails = () => {
 
   // Safety check if user opens page directly
   if (!year || !manufacturerId || !modelId || !partCategoryId) {
+    
     return (
       <div className="product-details">
         <div className="product-error">
-          <h2>No product selected</h2>
+          <h1>No product selected</h1>
           <p>Please search for a product first.</p>
           <button onClick={() => navigate("/")}>Go to Home</button>
         </div>

@@ -301,9 +301,9 @@ export default function BrandDetail() {
                 key={index}
                 className="brand-model-link"
               >
-                <h3 className="brand-model-title">
+                <h2 className="brand-model-title">
                   Used {brand.title} {model.name} Parts
-                </h3>
+                </h2>
               </button>
             ))}
           </div>
