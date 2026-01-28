@@ -1,0 +1,30 @@
+# Dependencies (Docker will install fresh)
+node_modules
+
+# Build output (Docker will create new)
+dist
+
+# Git files (not needed in production)
+.git
+.gitignore
+.github
+
+# Environment files
+.env.local
+.env.test
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode
+.idea
+
+# Documentation
+*.md
+README.md
