@@ -51,6 +51,7 @@ import { Helmet } from 'react-helmet';
 // });
 // Import Images
 import bannerImage from "../assets/images/banner-image.webp";
+import brandData from "../assets/brandData";
 
 import part1 from "../assets/images/WhatsApp Image 2026-01-03 at 10.40.38 AM.jpeg";
 import part2 from "../assets/images/Radio controller- Display.webp";
@@ -197,7 +198,7 @@ const brandsWithData = [
   { img: brand1, name: "Acura", slug: "acura" },
   { img: brand2, name: "American Motors", slug: "american-motors" },
   { img: brand3, name: "Audi", slug: "audi" },
-  { img: brand4, name: "Mercedes-Benz", slug: "mercedes-benz" },
+  { img: brand4, name: "Mercedes-Benz", slug: "benz" },
   { img: brand5, name: "BMW", slug: "bmw" },
   { img: brand6, name: "Buick", slug: "buick" },
   { img: brand7, name: "Cadillac", slug: "cadillac" },
@@ -227,7 +228,7 @@ const brandsWithData = [
   { img: brand31, name: "Plymouth", slug: "plymouth" },
   { img: brand32, name: "Pontiac", slug: "pontiac" },
   { img: brand33, name: "Porsche", slug: "porsche" },
-  { img: brand34, name: "Range Rover", slug: "range-rover" },
+  { img: brand34, name: "Land Rover", slug: "land-rover" },
   { img: brand35, name: "Saab", slug: "saab" },
   { img: brand36, name: "Saturn", slug: "saturn" },
   { img: brand37, name: "Scion", slug: "scion" },
@@ -717,7 +718,8 @@ const Home = () => {
 
   const handleBrandClick = (brand) => {
     trackEvent('brand_click', {
-      brand_name: brand.name,
+      // brand_name: brand.name,
+      brand_name: brand.title,
       brand_slug: brand.slug,
       click_location: 'brands_marquee'
     });
@@ -753,9 +755,10 @@ const Home = () => {
   );
 
   // Use API-matched brands if available, otherwise fallback to static data
-  const displayBrands = brandsWithManufacturers.length > 0 
-    ? brandsWithManufacturers 
-    : brandsWithData;
+  // const displayBrands = brandsWithManufacturers.length > 0 
+  //   ? brandsWithManufacturers 
+  //   : brandsWithData;
+  const displayBrands = Object.values(brandData)
 
   return (
     <>
@@ -922,7 +925,7 @@ const Home = () => {
                   onClick={() => handlePartCardClick(part.name)}
                 >
                   <img src={part.img} alt={part.name} loading="lazy"/>
-                  <h2 className="part-name">{part.name}</h2>
+                  <h2 className="part-name" style={{fontSize:"16px", fontWeight:"bold",background:"linear-gradient(45deg, #006583, #111827)",color: "white"}}>{part.name}</h2>
                 </div>
               ))}
             </div>
@@ -1045,33 +1048,33 @@ const Home = () => {
       </section>
 
       <section className="brands-section">
-        <h2>Search by Brands</h2>
-        <p>We stock parts for all major automotive brands</p>
-        <div className="brands-marquee">
-          <div className="brands-track">
-            {displayBrands.map((brand, idx) => (
-              <div 
-                className="brand-card" 
-                key={idx}
-                onClick={() => handleBrandClick(brand)}
-                style={{ cursor: 'pointer' }}
-              >
-                <img src={brand.img} alt={brand.name} title={brand.name} loading="lazy"/>
-              </div>
-            ))}
-            {displayBrands.map((brand, idx) => (
-              <div 
-                className="brand-card" 
-                key={`dup-${idx}`}
-                onClick={() => handleBrandClick(brand)}
-                style={{ cursor: 'pointer' }}
-              >
-                <img src={brand.img} alt={brand.name} title={brand.name} loading="lazy"/>
-              </div>
-            ))}
+          <h2>Search by Brands</h2>
+          <p>We stock parts for all major automotive brands</p>
+          <div className="brands-marquee">
+            <div className="brands-track">
+              {displayBrands.map((brand, idx) => (
+                <div 
+                  className="brand-card" 
+                  key={idx}
+                  onClick={() => handleBrandClick(brand)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={brand.image} alt={brand.title} title={brand.title} loading="lazy"/>
+                </div>
+              ))}
+              {displayBrands.map((brand, idx) => (
+                <div 
+                  className="brand-card" 
+                  key={`dup-${idx}`}
+                  onClick={() => handleBrandClick(brand)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={brand.image} alt={brand.title} title={brand.title} loading="lazy"/>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
     </div>
     </>
   );
