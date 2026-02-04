@@ -5,7 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="./src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nexxaauto</title>
-    
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="D+lQM4zn1WOfE3bTTJTv2Q" async></script>
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-675QHD8DWY"></script>
     <script>
@@ -16,6 +17,22 @@
         'send_page_view': false,
         'debug_mode': true,
       });
+    </script>
+
+    <!-- Dynamic Text Replacement - Store in global variable -->
+    <script>
+      // Extract URL parameter and make it globally available
+      const urlParams = new URLSearchParams(window.location.search);
+      window.DYNAMIC_PART_NAME = urlParams.get('part_name') || null;
+      
+      // Optional: Track in Google Analytics
+      if (window.DYNAMIC_PART_NAME) {
+        window.addEventListener('load', function() {
+          gtag('event', 'dynamic_keyword', {
+            'keyword': window.DYNAMIC_PART_NAME
+          });
+        });
+      }
     </script>
   </head>
   <body>
