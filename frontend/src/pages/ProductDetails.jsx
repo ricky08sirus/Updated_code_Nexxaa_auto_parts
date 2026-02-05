@@ -1047,15 +1047,42 @@ const ProductDetails = () => {
           )}
 
           {/* Dynamic Heading */}
-          <h1 className="product-heading">
-            Find Qualified Quality Used {partCategoryName} for {year}{" "}
-            {manufacturerName} {modelName}
-          </h1>
+          {/* <div className="product-header"> */}
+          {/*   <h1 className="product-heading"> */}
+          {/*       Have the Exact OEM {partCategoryName} for Your {year} {manufacturerName} {modelName} */}
+          {/*   </h1> */}
+          {/*   <p className="product-subheading"> */}
+          {/*       used OEM • Tested • Guaranteed fit */}
+          {/*   </p> */}
+          {/* </div> */}
+          {/* <div className="mb-8"> */}
+          {/*     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-tight"> */}
+          {/*          Have the Exact OEM {partCategoryName} for Your {year} {manufacturerName} {modelName} */}
+          {/*     </h1> */}
+          {/*     <p className="text-base text-gray-600"> */}
+          {/*           used OEM • Tested • Guaranteed fit */}
+          {/*     </p> */}
+          {/* </div> */}
+          {/**/}
+          {/**/}
+          {/* <p className="product-subheading"> */}
+          {/*   Fill the form below and our team will contact you shortly with availability and pricing. */}
+          {/*   for this use */}
+          {/* </p> */}
 
-          <p className="product-subheading">
-            Fill the form below and our team will contact you shortly with
-            availability and pricing.
-          </p>
+          <div className="space-y-3 mb-8">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+                  Have the Exact OEM {partCategoryName} for Your {year} {manufacturerName} {modelName}
+              </h1>
+  
+              <p className="text-base text-gray-600">
+                 used OEM • Tested • Guaranteed fit
+              </p>
+  
+              <p className="text-sm text-gray-700 pt-2">
+                Fill the form below and our team will contact you shortly with availability and pricing for this use.
+              </p>
+          </div>
 
           {/* Error Message */}
           {error && (
@@ -1119,7 +1146,7 @@ const ProductDetails = () => {
 
               {/* Customer Information */}
               <div className="form-section">
-                <h3 className="form-section-title">Your Contact Information</h3>
+                {/* <h3 className="form-section-title">Your Contact Information</h3> */}
 
                 <div className="form-group">
                   <label htmlFor="name">
@@ -1203,7 +1230,7 @@ const ProductDetails = () => {
                     </>
                   )
                   : (
-                    "Search Parts"
+                    "Get My Exact Price"
                   )}
               </button>
 
