@@ -1,0 +1,647 @@
+/* ABS Pump Page Unique Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.abs-pump-page-wrapper {
+  min-height: 100vh;
+  background-color: #f3f4f6;
+}
+
+/* Hero Section */
+.abs-pump-hero-section {
+  background: linear-gradient(to right, #1f2937, #374151, #0e7490);
+  padding: 3rem 0;
+  padding-top: 5rem;
+}
+
+.abs-pump-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.abs-pump-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .abs-pump-hero-grid {
+    grid-template-columns: 1fr 2fr; /* Image column smaller, content column larger */
+  }
+}
+
+/* Image Section */
+.abs-pump-image-container {
+  position: relative;
+}
+
+.abs-pump-image-wrapper {
+  background-color: #111827;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.abs-pump-image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.abs-pump-image-overlay {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+}
+
+.abs-pump-overlay-text {
+  color: white;
+}
+
+.abs-pump-overlay-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+
+.abs-pump-text-red {
+  color: #dc2626;
+}
+
+/* Content Section */
+.abs-pump-content-section {
+  color: white;
+}
+
+.abs-pump-main-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+/* Horizontal layout container for description and form */
+.abs-pump-content-horizontal {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .abs-pump-content-horizontal {
+    grid-template-columns: 1fr 1fr; /* Equal columns for paragraph and form */
+  }
+}
+
+.abs-pump-description-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.abs-pump-description {
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  line-height: 1.625;
+}
+
+/* Search Form */
+.abs-pump-search-container {
+  background-color: linear-gradient(45deg,#000,#167687);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+
+
+.abs-pump-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .abs-pump-form-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.abs-pump-form-select {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: #1f2937;
+  font-size: 0.875rem;
+}
+
+.abs-pump-form-select:focus {
+  outline: 2px solid #0891b2;
+}
+
+.abs-pump-form-select:disabled {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+}
+
+.abs-pump-submit-button {
+  width: 100%;
+  background-color: #dc2626;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.abs-pump-submit-button:hover {
+  background-color: #b91c1c;
+}
+
+.abs-pump-vin-link {
+  font-size: 0.75rem;
+  text-align: center;
+  margin-top: 0.75rem;
+  color: #9ca3af;
+}
+
+.abs-pump-link-highlight {
+  color: #22d3ee;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Features Section */
+.abs-pump-features-section {
+  background-color: #fce7f3;
+  padding: 1rem 0;
+}
+
+.abs-pump-features-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .abs-pump-features-layout {
+    grid-template-columns: 1fr 2fr; /* Left column smaller, right column larger */
+  }
+}
+
+.abs-pump-left-section {
+  display: flex;
+  align-items: flex-start;
+}
+
+.abs-pump-right-section {
+  display: flex;
+  flex-direction: column;
+  /* gap: 2rem; */
+}
+
+/* Customer Story */
+.abs-pump-customer-story {
+  background:linear-gradient(135deg,#7f1d1d,#167687);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.abs-pump-story-heading {
+  color: #fbbf24;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.abs-pump-story-text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Features Grid */
+.abs-pump-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.abs-pump-feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.abs-pump-feature-icon {
+  background-color: #111827;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.abs-pump-icon-svg {
+  width: 2rem;
+  height: 2rem;
+  color: white;
+}
+
+.abs-pump-feature-title {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.abs-pump-feature-subtitle {
+  font-size: 0.75rem;
+  color: #4b5563;
+}
+
+/* Price Section */
+.abs-pump-price-section {
+  width: 100%;
+}
+
+.abs-pump-price-heading {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+.abs-pump-price-grid {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.abs-pump-price-card {
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  flex: 1;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.abs-pump-price-card.abs-pump-dealership {
+  background:linear-gradient(50deg,#1e3a8a,#111827)
+;
+}
+
+.abs-pump-price-card.abs-pump-nexxa {
+  background:linear-gradient(47deg,#af1204,#111827)
+;
+}
+
+.abs-pump-price-card.abs-pump-discount {
+  background:linear-gradient(58deg,#630693,#111827);
+}
+
+.abs-pump-price-label {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.abs-pump-price-value {
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.abs-pump-discount-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Models Section */
+.abs-pump-models-section {
+  margin-top: 3rem;
+}
+
+.abs-pump-models-heading {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #111827;
+}
+
+.abs-pump-models-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.abs-pump-model-button {
+  background: linear-gradient(135deg, #1f2937 0%, #0e7490 100%);
+  color: white;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.abs-pump-model-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #374151 0%, #0891b2 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .abs-pump-main-heading {
+    font-size: 1.5rem;
+  }
+
+  /* .abs-pump-content-horizontal {
+    grid-template-columns: 1fr;
+  } */
+
+  /* .abs-pump-features-grid {
+    grid-template-columns: 1fr;
+  } */
+
+  .abs-pump-price-grid {
+    flex-direction: column;
+  }
+
+  .abs-pump-hero-section {
+    padding: 2rem 0;
+        padding-top: 6rem;
+
+  }
+
+  .abs-pump-image {
+    height: 200px;
+  }
+
+  .abs-pump-models-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .abs-pump-features-layout {
+    grid-template-columns: 1fr;
+  }
+}
+/* ========================================
+   ABS PUMP SEARCH FORM - 2x2 GRID LAYOUT
+   ======================================== */
+
+.abs-pump-search-container {
+  background: linear-gradient(45deg,#000,#167687);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+.abs-pump-form-title {
+  font-size: 18px;
+  font-weight: 600;
+  color:white;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form Row - 2 fields per row */
+.abs-pump-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+/* Select Dropdown Styles */
+.abs-pump-form-select {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 15px;
+  color: #374151;
+  background-color: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23374151' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+
+.abs-pump-form-select:hover {
+  border-color: #006583;
+  background-color: #ffffff;
+}
+
+.abs-pump-form-select:focus {
+  border-color: #006583;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 101, 131, 0.1);
+}
+
+.abs-pump-form-select:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+
+.abs-pump-submit-button:hover {
+  background: linear-gradient(135deg, #005070, #003d50);
+  box-shadow: 0 6px 16px rgba(0, 101, 131, 0.4);
+  transform: translateY(-2px);
+}
+
+.abs-pump-submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 101, 131, 0.3);
+}
+
+/* VIN Link */
+.abs-pump-vin-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.abs-pump-link-highlight {
+  color: #006583;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.abs-pump-link-highlight:hover {
+  color: #004d63;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .abs-pump-search-container {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .abs-pump-form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .abs-pump-form-title {
+    font-size: 16px;
+  }
+
+  .abs-pump-form-select {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .abs-pump-submit-button {
+    padding: 12px 18px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .abs-pump-search-container {
+    padding: 15px;
+  }
+
+  .abs-pump-form-title {
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+
+  .abs-pump-form-select {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+
+  .abs-pump-submit-button {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .abs-pump-vin-link {
+    font-size: 13px;
+  }
+}
+
+
+/* Add this to your Anti_Lock_Brake_Pumb.css file */
+
+/* SEO Models Container - H2 Tags Section */
+.abs-pump-seo-models-container {
+  margin-top: 40px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+/* Individual H2 Model Tags for SEO */
+.abs-pump-seo-model-h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ccc;
+    padding: 12px 16px;
+    background: linear-gradient(to right, #000000, #167687);
+    border-left: 3px solid #000;
+    border-radius: 4px;
+    margin: 0;
+    transition: all .3s ease;
+    box-shadow: 0 1px 3px #0000000d;
+}
+
+.abs-pump-seo-model-h2:hover {
+  background: linear-gradient(to right, #0d187c, #0d557e);
+  border-left-color: #1180c1;
+  box-shadow: 0 2px 6px rgba(227, 30, 36, 0.1);
+  transform: translateX(5px);
+}
+
+/* Responsive Design for SEO Models */
+@media (max-width: 768px) {
+  .abs-pump-seo-models-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .abs-pump-seo-model-h2 {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .abs-pump-seo-models-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .abs-pump-seo-models-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Alternative: Compact List Style (uncomment if you prefer a more compact layout) */
+/*
+.abs-pump-seo-models-container {
+  column-count: 3;
+  column-gap: 20px;
+}
+
+.abs-pump-seo-model-h2 {
+  break-inside: avoid;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .abs-pump-seo-models-container {
+    column-count: 1;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .abs-pump-seo-models-container {
+    column-count: 2;
+  }
+}
+*/
