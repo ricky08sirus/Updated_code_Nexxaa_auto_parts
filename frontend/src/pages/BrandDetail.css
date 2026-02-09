@@ -1,28 +1,13 @@
 /* BrandDetail.css */
 
-/* Main Container */
+/* Main Container with Background */
 .brand-detail-container {
   min-height: 100vh;
-  background-color: #ffffff;
+  background: linear-gradient(#ffffff8a, #f8f9fac7), url(https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   padding-top: 80px;
-}
-
-/* Header Section */
-.brand-header {
-  text-align: center;
-  padding: 48px 16px 24px;
-}
-
-.brand-title {
-  font-size: 2.25rem;
-  font-weight: bold;
-  color: #111827;
-  margin-bottom: 0;
-  line-height: 1.2;
-}
-
-.brand-title-highlight {
-  color: #dc2626;
 }
 
 /* Main Content Container */
@@ -32,42 +17,63 @@
   padding: 0 16px 48px;
 }
 
-/* Two Column Grid - DESKTOP ONLY */
-.brand-grid {
+/* ========================================
+   TOP SECTION - Logo and Heading in One Line
+======================================== */
+.brand-top-section {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-items: start;
-  margin-bottom: 32px;
-}
-
-/* Left Section - Logo and Description */
-.brand-left-section {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-}
-
-/* Brand Logo */
-.brand-logo-container {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 20px;
-  border-radius: 12px;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px 16px;
+  flex-wrap: wrap;
+}
+
+.brand-logo-container {
+  flex-shrink: 0;
 }
 
 .brand-logo {
-  height: 120px;
+  height: 80px;
   width: auto;
   object-fit: contain;
-  max-width: 100%;
+  max-width: 150px;
+}
+
+.brand-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111827;
+  margin: 0;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.brand-title-highlight {
+  color: #dc2626;
+}
+
+/* ========================================
+   DESKTOP LAYOUT (Hidden on mobile)
+======================================== */
+.desktop-layout {
+  display: none;
+}
+
+/* MIDDLE SECTION - Description and Search */
+.brand-middle-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
 }
 
 /* Description */
 .brand-description-section {
-  padding: 0;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .brand-description-title {
@@ -78,33 +84,282 @@
 }
 
 .brand-description-text {
-  color: black;
+  color: #374151;
   font-size: 1rem;
   line-height: 1.75;
   text-align: justify;
 }
 
-/* Hide/Show description based on screen size */
-.mobile-only {
-  display: block;
-}
-
-.desktop-only {
-  display: none;
-}
-
-/* Right Column - Search Form */
+/* Search Form */
 .brand-search-section {
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  width: 100%;
 }
 
-/* Models Section */
+/* NEW SECTION - Features and Stories */
+.brand-features-stories-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+  flex-direction: row-reverse;
+}
+
+/* LEFT - Feature Images and Price Points */
+.brand-features-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Feature Images Grid */
+.feature-images-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.feature-image-card {
+  background: transparent;
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feature-image-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 0 0 2px #dc2626,
+    0 0 20px rgba(220, 38, 38, 0.4);
+}
+
+.feature-icon {
+  font-size: 52px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.feature-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.feature-description {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Price Point Section */
+.price-point-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.price-point-title {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.price-boxes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.price-box {
+  border-radius: 10px;
+  padding: 18px 14px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.price-box:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.price-box.dealership {
+  background: linear-gradient(50deg, #1e3a8a, #111827);
+  color: white;
+}
+
+.price-box.certified {
+  background: linear-gradient(47deg, #af1204, #111827);
+  color: white;
+}
+
+.price-box.discount {
+  background: linear-gradient(58deg, #630693, #111827);
+  color: white;
+}
+
+.price-box-label {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  opacity: 0.95;
+  letter-spacing: 0.3px;
+}
+
+.price-box-amount {
+  font-size: 24px;
+  font-weight: 900;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* RIGHT - Recent Stories */
+.brand-stories-right {
+  display: flex;
+  align-items: stretch;
+}
+
+.recent-stories-container {
+  background: linear-gradient(135deg, #7f1d1d, #167687);
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+  width: 100%;
+  border: 3px solid #991b1b;
+  height: max-content;
+}
+
+.recent-stories-title {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.story-card {
+  background: rgba(255, 255, 255, 0.15);
+  border-left: 5px solid #fbbf24;
+  border-radius: 10px;
+  padding: 18px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.story-card:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.story-text {
+  font-size: 14px;
+  color: white;
+  line-height: 1.7;
+  margin: 0 0 10px 0;
+  font-weight: 500;
+}
+
+.story-date {
+  font-size: 11px;
+  color: #fbbf24;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   MOBILE LAYOUT (Default - Hidden on desktop)
+======================================== */
+.mobile-layout {
+  display: block;
+}
+
+.brand-search-section-mobile {
+  margin-bottom: 24px;
+}
+
+/* Mobile Search Form - 2x2 Grid Layout */
+.brand-search-section-mobile form {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+}
+
+.brand-search-section-mobile form > div:nth-child(1),
+.brand-search-section-mobile form > div:nth-child(2) {
+  grid-column: span 1 !important;
+}
+
+.brand-search-section-mobile form > div:nth-child(3),
+.brand-search-section-mobile form > div:nth-child(4) {
+  grid-column: span 1 !important;
+}
+
+.brand-search-section-mobile form > div:nth-child(5),
+.brand-search-section-mobile form > div:nth-child(6) {
+  grid-column: span 2 !important;
+}
+
+/* Ensure form inputs are properly sized */
+.brand-search-section-mobile form select,
+.brand-search-section-mobile form input,
+.brand-search-section-mobile form button {
+  width: 100% !important;
+}
+
+.feature-images-grid-mobile {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.brand-stories-mobile {
+  margin-bottom: 24px;
+}
+
+.price-point-section-mobile {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
+.brand-description-section-mobile {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+/* ========================================
+   Models Section
+======================================== */
 .brand-models-section {
-  margin-top: 32px;
+  margin-top: 48px;
 }
 
 .brand-models-title {
@@ -112,6 +367,7 @@
   font-weight: bold;
   color: #111827;
   margin-bottom: 32px;
+  text-align: center;
 }
 
 /* Models Grid */
@@ -145,6 +401,7 @@
   font-weight: bold;
   text-align: center;
   color: #ffffff;
+  margin: 0;
 }
 
 /* ========================================
@@ -156,7 +413,6 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  /* height: 100%; */
   background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
@@ -224,10 +480,6 @@
   text-align: center;
 }
 
-/* .popup-logo {
-  margin-bottom: 16px;
-} */
-
 .popup-logo-link {
   display: inline-block;
 }
@@ -250,36 +502,33 @@
 }
 
 .popup-offer-box {
-background: #0006;
-    border: 3px solid #ffd700;
-    border-radius: 16px;
-    padding: 2px 3px;
-    margin-bottom: 13px;
+  background: #0006;
+  border: 3px solid #ffd700;
+  border-radius: 16px;
+  padding: 2px 3px;
+  margin-bottom: 13px;
 }
 
 .popup-get-text {
   font-size: 22px;
   font-weight: 700;
   color: gold;
-  /* margin-bottom: 6px; */
 }
 
 .popup-discount-text {
-font-size: 35px;
-    font-weight: 900;
-    background: linear-gradient(351deg, #ff0000, #ffca00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-
+  font-size: 35px;
+  font-weight: 900;
+  background: linear-gradient(351deg, #ff0000, #ffca00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
 }
 
 .popup-first-text {
   font-size: 20px;
   font-weight: 700;
   color: gold;
-  /* margin-bottom: 4px; */
 }
 
 .popup-purchase-text {
@@ -287,10 +536,6 @@ font-size: 35px;
   font-weight: 800;
   color: gold;
 }
-
-/* .popup-code-section {
-  margin-bottom: 16px;
-} */
 
 .popup-use-code {
   font-size: 13px;
@@ -346,10 +591,9 @@ font-size: 35px;
 }
 
 .popup-auto-text {
-font-size: 11px;
-    color: #fff907;
-    /* margin-bottom: 16px; */
-    line-height: 1.4;
+  font-size: 11px;
+  color: #fff907;
+  line-height: 1.4;
 }
 
 .popup-terms-section {
@@ -408,9 +652,9 @@ font-size: 11px;
 }
 
 /* ========================================
-   BELOW FORM COUPON
+   BELOW PRICE POINT COUPON
 ======================================== */
-.below-form-coupon {
+.below-price-coupon {
   background-image: url("../assets/images/bgimg.jpeg");
   background-size: cover;
   background-position: center;
@@ -418,8 +662,9 @@ font-size: 11px;
   margin: 24px 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-      width: 72%;
-    margin: auto;
+  width: 100%;
+  max-width: 500px;
+  margin: 24px auto;
 }
 
 .below-coupon-inner {
@@ -528,7 +773,7 @@ font-size: 11px;
 .below-copy-btn {
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   border: none;
-  padding: 6px 6px;
+  padding: 6px 12px;
   border-radius: 8px;
   color: white;
   font-size: 12px;
@@ -617,40 +862,55 @@ font-size: 11px;
 
 /* Tablet Screens */
 @media (min-width: 768px) {
-  .brand-title {
-    font-size: 3rem;
+  /* Hide mobile layout, show desktop layout */
+  .mobile-layout {
+    display: none;
   }
 
-  .brand-grid {
-    display: grid;
+  .desktop-layout {
+    display: block;
+  }
+
+  .brand-top-section {
+    justify-content: flex-start;
+    padding: 32px 24px;
+  }
+
+  .brand-logo {
+    height: 100px;
+    max-width: 180px;
+  }
+
+  .brand-title {
+    font-size: 2.5rem;
+    text-align: left;
+  }
+
+  .brand-middle-section {
     grid-template-columns: 1fr 1fr;
     gap: 48px;
   }
 
-  .brand-logo {
-    height: 140px;
+  .brand-features-stories-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 32px;
   }
 
-  .brand-description-title {
-    font-size: 1.875rem;
+  .brand-features-left {
+    flex: 1.2;
   }
 
-  .brand-description-text {
-    font-size: 1.125rem;
-    text-align: justify;
+  .brand-stories-right {
+    flex: 1;
   }
 
-  /* Show desktop description, hide mobile */
-  .mobile-only {
-    display: none;
+  .price-boxes-grid {
+    gap: 16px;
   }
 
-  .desktop-only {
-    display: block;
-  }
-
-  .brand-models-title {
-    font-size: 2.25rem;
+  .price-box-amount {
+    font-size: 24px;
   }
 
   .brand-models-grid {
@@ -668,17 +928,21 @@ font-size: 11px;
     padding-top: 100px;
   }
 
-  .brand-title {
-    font-size: 2.75rem;
-  }
-
-  .brand-grid {
-    grid-template-columns: 1.2fr 1fr;
-    gap: 64px;
-  }
-
   .brand-logo {
-    height: 160px;
+    height: 120px;
+    max-width: 200px;
+  }
+
+  .brand-title {
+    font-size: 3rem;
+  }
+
+  .feature-icon {
+    font-size: 56px;
+  }
+
+  .feature-title {
+    font-size: 16px;
   }
 
   .brand-models-grid {
@@ -694,58 +958,118 @@ font-size: 11px;
   }
 
   .brand-logo {
-    height: 180px;
+    height: 140px;
   }
 }
 
 /* Mobile Screens - Small Devices */
-@media (max-width: 480px) {
+@media (max-width: 767px) {
   .brand-detail-container {
     padding-top: 60px;
   }
 
-  .brand-header {
-    padding: 24px 12px 16px;
-  }
-
-  .brand-title {
-    font-size: 20px;
-    padding: 0 8px;
-  }
-
-  .brand-grid {
-    gap: 20px;
+  .brand-top-section {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 20px 12px;
+    gap: 12px;
   }
 
   .brand-logo {
-    height: 80px;
+    height: 60px;
+    max-width: 80px;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+    text-align: left;
+    flex: 1;
+  }
+
+  .feature-images-grid-mobile {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .feature-icon {
+    font-size: 36px;
+  }
+
+  .feature-title {
+    font-size: 12px;
+  }
+
+  .feature-description {
+    font-size: 10px;
+  }
+
+  .price-point-section-mobile {
+    padding: 20px 16px;
+  }
+
+  .price-point-title {
+    font-size: 1rem;
+  }
+
+  .price-boxes-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .price-box {
+    padding: 14px 12px;
+  }
+
+  .price-box-label {
+    font-size: 12px;
+  }
+
+  .price-box-amount {
+    font-size: 20px;
+  }
+
+  .recent-stories-container {
+    padding: 20px 16px;
+  }
+
+  .recent-stories-title {
+    font-size: 1rem;
+  }
+
+  .story-text {
+    font-size: 12px;
+  }
+
+  .story-card {
+    padding: 14px;
+  }
+
+  .story-date {
+    font-size: 10px;
+  }
+
+  .brand-description-section-mobile {
+    padding: 16px;
   }
 
   .brand-description-title {
-    font-size: 18px;
-    margin-bottom: 12px;
+    font-size: 1.125rem;
   }
 
   .brand-description-text {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 0.875rem;
   }
 
   .brand-models-title {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-
-  .brand-models-grid {
-    gap: 16px;
+    font-size: 1.5rem;
   }
 
   .brand-model-link {
-    padding: 12px 20px;
+    padding: 14px 16px;
   }
 
   .brand-model-title {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .popup-discount-text {
@@ -755,27 +1079,110 @@ font-size: 11px;
   .below-discount-text {
     font-size: 40px;
   }
+
+  /* Mobile Search Form - 2x2 Grid Layout for all mobile screens */
+  .brand-search-section-mobile form {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* First row: Year and Make */
+  .brand-search-section-mobile form > div:nth-child(1),
+  .brand-search-section-mobile form > div:nth-child(2) {
+    grid-column: span 1 !important;
+  }
+
+  /* Second row: Model and Part Category */
+  .brand-search-section-mobile form > div:nth-child(3),
+  .brand-search-section-mobile form > div:nth-child(4) {
+    grid-column: span 1 !important;
+  }
+
+  /* Third row: Search button and VIN link (full width) */
+  .brand-search-section-mobile form > div:nth-child(5),
+  .brand-search-section-mobile form > div:nth-child(6) {
+    grid-column: span 2 !important;
+  }
+
+  .brand-search-section-mobile form > button {
+    grid-column: span 2 !important;
+  }
+
+  /* Ensure all form elements take full width of their grid cell */
+  .brand-search-section-mobile form select,
+  .brand-search-section-mobile form input,
+  .brand-search-section-mobile form button {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .brand-search-section-mobile form > div {
+    margin-bottom: 0 !important;
+  }
 }
 
-/* Mobile Screens - Medium Devices */
+/* Mobile Screens - Medium Devices (481px - 767px) */
 @media (min-width: 481px) and (max-width: 767px) {
-  .brand-title {
-    font-size: 24px;
-  }
-
   .brand-logo {
-    height: 100px;
+    height: 70px;
+    max-width: 100px;
   }
 
-  .brand-description-title {
-    font-size: 20px;
+  .brand-title {
+    font-size: 1.25rem;
   }
 
-  .brand-description-text {
-    font-size: 15px;
+  .feature-icon {
+    font-size: 40px;
   }
 
-  .brand-models-title {
-    font-size: 24px;
+  .feature-title {
+    font-size: 13px;
   }
+
+  .price-boxes-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .price-box-label {
+    font-size: 11px;
+  }
+
+  .price-box-amount {
+    font-size: 18px;
+  }
+}
+
+/* Brand Not Found */
+.brand-not-found {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+}
+
+.brand-not-found-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.brand-not-found-link {
+  padding: 12px 24px;
+  background: #dc2626;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.brand-not-found-link:hover {
+  background: #b91c1c;
+  transform: scale(1.05);
 }

@@ -1,12 +1,18 @@
-// Remove the environment check at the top - we'll control it via npm script
 import puppeteer from "puppeteer";
 import { writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { exec } from "child_process";
+import { partsData } from "../src/assets/PartsData.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = join(__dirname, "../dist");
+
+// Generate part routes dynamically from partsData
+const partRoutes = Object.keys(partsData).map(partSlug => ({
+  path: `/parts/${partSlug}`,
+  output: `parts/${partSlug}/index.html`
+}));
 
 const routes = [
   { path: '/', output: 'index.html' },
@@ -61,6 +67,9 @@ const routes = [
   { path: '/used/toyota/parts', output: 'used/toyota/parts/index.html' },
   { path: '/used/volkswagen/parts', output: 'used/volkswagen/parts/index.html' },
   { path: '/used/volvo/parts', output: 'used/volvo/parts/index.html' },
+
+  // ADD ALL PART DETAIL PAGES HERE
+  ...partRoutes,
 ];
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -76,7 +85,7 @@ async function waitForServer(url, max = 40) {
   throw new Error("Server did not start in time");
 }
 
-async function renderRoute(browser, route, index) {
+async function renderRoute(browser, route, index, totalRoutes) {
   const page = await browser.newPage();
 
   try {
@@ -101,23 +110,47 @@ async function renderRoute(browser, route, index) {
       timeout: 45000,
     });
 
-    // Wait for content
+    // Wait for H1
     try {
       await page.waitForSelector("h1", { timeout: 15000 });
     } catch {
       console.warn(`⚠️ H1 not detected on ${route.path}`);
     }
 
-    await wait(1000); // Increased wait time
+    // For part detail pages, wait for ALL H2 tags to render
+    if (route.path.startsWith('/parts/')) {
+      try {
+        // Wait for the SEO models container
+        await page.waitForSelector(".abs-pump-seo-models-container", { timeout: 15000 });
+        
+        // Wait for all H2 tags to be rendered
+        await page.waitForFunction(
+          () => {
+            const h2Elements = document.querySelectorAll('.abs-pump-seo-model-h2');
+            return h2Elements.length >= 750;
+          },
+          { timeout: 20000 }
+        );
+        
+        // Extra wait to ensure everything is fully rendered
+        await wait(2000);
+      } catch (error) {
+        console.warn(`⚠️ Timeout waiting for all H2 tags on ${route.path}`);
+      }
+    } else {
+      await wait(1000);
+    }
 
     const html = await page.content();
     const hasH1 = html.includes("<h1");
+    const h2Count = (html.match(/<h2[^>]*class="abs-pump-seo-model-h2"/g) || []).length;
 
     const outputPath = join(distDir, route.output);
     mkdirSync(dirname(outputPath), { recursive: true });
     writeFileSync(outputPath, html, "utf-8");
 
-    console.log(`${hasH1 ? "✅" : "⚠️"} [${index + 1}/${routes.length}] ${route.path}`);
+    const h2Info = route.path.startsWith('/parts/') ? ` (${h2Count} H2 tags)` : '';
+    console.log(`${hasH1 ? "✅" : "⚠️"} [${index + 1}/${totalRoutes}] ${route.path}${h2Info}`);
 
     return { success: true, hasH1 };
   } catch (e) {
@@ -129,7 +162,8 @@ async function renderRoute(browser, route, index) {
 }
 
 async function prerender() {
-  console.log(`🚀 Starting prerender for ${routes.length} pages`);
+  const totalRoutes = routes.length;
+  console.log(`🚀 Starting prerender for ${totalRoutes} pages`);
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -154,8 +188,8 @@ async function prerender() {
     throw err;
   }
 
-  for (let i = 0; i < routes.length; i++) {
-    await renderRoute(browser, routes[i], i);
+  for (let i = 0; i < totalRoutes; i++) {
+    await renderRoute(browser, routes[i], i, totalRoutes);
   }
 
   server.kill();

@@ -6,7 +6,6 @@ import "./BrandDetail.css";
 import logoImage from "../assets/images/brands/logowhite.webp";
 import { Helmet } from 'react-helmet';
 
-
 export default function BrandDetail() {
   const { brandSlug } = useParams();
   const navigate = useNavigate();
@@ -18,14 +17,98 @@ export default function BrandDetail() {
 
   const couponCode = "WEL-NAP-1002";
 
-  // Debug
-  console.log("URL brandSlug:", brandSlug);
-  console.log("Available slugs:", Object.values(brandData).map(b => b.slug));
-
   // Safe slug match
   const brand = Object.values(brandData).find(
     b => b.slug.toLowerCase() === brandSlug.toLowerCase()
   );
+
+  // Recent customer stories (dynamic data based on brand)
+  const getRecentStories = () => {
+    if (!brand) return [];
+    
+    // Dynamic stories based on the brand
+    const brandStories = {
+      acura: [
+        {
+          id: 1,
+          text: `Just Shipped 2015 Acura TLX Control Arm, Another Happy customer From Florida.`,
+          date: "2 days ago"
+        },
+        {
+          id: 2,
+          text: `2018 Acura MDX Transmission delivered to California - Perfect condition!`,
+          date: "5 days ago"
+        }
+      ],
+      honda: [
+        {
+          id: 1,
+          text: `Just Shipped 2016 Honda Civic Engine, Another Happy customer From Texas.`,
+          date: "1 day ago"
+        },
+        {
+          id: 2,
+          text: `2019 Honda Accord Suspension parts delivered to New York - Great quality!`,
+          date: "3 days ago"
+        }
+      ],
+      toyota: [
+        {
+          id: 1,
+          text: `Just Shipped 2017 Toyota Camry Transmission, Another Happy customer From Arizona.`,
+          date: "2 days ago"
+        },
+        {
+          id: 2,
+          text: `2020 Toyota RAV4 Engine parts delivered to Washington - Excellent service!`,
+          date: "4 days ago"
+        }
+      ],
+      // Default stories for other brands
+      default: [
+        {
+          id: 1,
+          text: `Just Shipped ${new Date().getFullYear() - 7} ${brand?.title} Parts, Another Happy customer From Florida.`,
+          date: "2 days ago"
+        },
+        {
+          id: 2,
+          text: `${new Date().getFullYear() - 5} ${brand?.title} Quality parts delivered - Customer satisfied!`,
+          date: "5 days ago"
+        }
+      ]
+    };
+
+    return brandStories[brand.slug.toLowerCase()] || brandStories.default;
+  };
+
+  const [recentStories, setRecentStories] = useState([]);
+
+  // Update stories when brand changes
+  useEffect(() => {
+    if (brand) {
+      setRecentStories(getRecentStories());
+    }
+  }, [brand]);
+
+  // Feature images (for the 3 icons below search)
+  const featureImages = [
+    {
+      icon: "📷",
+      title: "Real Part Image",
+      description: ""
+    },
+    {
+      icon: "✓",
+      title: "Fitment Guaranteed",
+      description: "VIN Matched Parts"
+    },
+    {
+      icon: "🚚",
+      title: "Fast Shipping",
+      description: "Nationwide Delivery"
+    }
+  ];
 
   // Show popup after delay for ALL screen sizes
   useEffect(() => {
@@ -143,9 +226,9 @@ export default function BrandDetail() {
     </div>
   );
 
-  // Below Form Coupon (Shows after closing popup)
-  const BelowFormCoupon = () => (
-    <div className="below-form-coupon">
+  // Below Price Point Coupon (Shows after closing popup)
+  const BelowPricePointCoupon = () => (
+    <div className="below-price-coupon">
       <div className="below-coupon-inner">
         <div className="below-logo">
           <Link to="/" className="below-logo-link">
@@ -218,48 +301,44 @@ export default function BrandDetail() {
   );
 
   return (
-    
     <div className="brand-detail-container">
       <Helmet>
-      <title>Used {brand.title} Parts - OEM Quality Auto Parts | Nexxa Auto</title>
-      <meta 
-        name="description" 
-        content={`Find high-quality used ${brand.title} parts at competitive prices. OEM certified auto parts with warranty. Fast shipping across USA. Get quotes in 2-45 minutes.`}
-      />
-      <link rel="canonical" href={`https://nexxaauto.com/brand/${brand.slug}`} />
-    </Helmet>
+        <title>Used {brand.title} Parts - OEM Quality Auto Parts | Nexxa Auto</title>
+        <meta 
+          name="description" 
+          content={`Find high-quality used ${brand.title} parts at competitive prices. OEM certified auto parts with warranty. Fast shipping across USA. Get quotes in 2-45 minutes.`}
+        />
+        <link rel="canonical" href={`https://nexxaauto.com/brand/${brand.slug}`} />
+      </Helmet>
+
       {/* Universal Popup for ALL screen sizes */}
       {showPopup && <PopupCoupon />}
 
-      {/* Main Heading */}
-      <div className="brand-header">
-        <h1 className="brand-title">
-          Find Quality Used{" "}
-          <span className="brand-title-highlight">
-            {brand.title.toUpperCase()}
-          </span>{" "}
-          Parts
-        </h1>
-      </div>
-
       <div className="brand-content">
-        {/* MOBILE VIEW ORDER: Logo → Search Form → Description → Models */}
-        {/* DESKTOP VIEW: Logo + Description on Left, Search Form on Right */}
-        
-        <div className="brand-grid">
-          {/* Left Section - Logo and Description */}
-          <div className="brand-left-section">
-            {/* Logo */}
-            <div className="brand-logo-container">
-              <img
-                src={brand.image}
-                alt={`${brand.title} logo`}
-                className="brand-logo"
-              />
-            </div>
+        {/* TOP SECTION - Heading and Logo in one line */}
+        <div className="brand-top-section">
+          <div className="brand-logo-container">
+            <img
+              src={brand.image}
+              alt={`${brand.title} logo`}
+              className="brand-logo"
+            />
+          </div>
+          <h1 className="brand-title">
+            Find Quality Used{" "}
+            <span className="brand-title-highlight">
+              {brand.title.toUpperCase()}
+            </span>{" "}
+            Parts
+          </h1>
+        </div>
 
-            {/* Description - Shows below search on mobile, here on desktop */}
-            <div className="brand-description-section desktop-only">
+        {/* DESKTOP LAYOUT */}
+        <div className="desktop-layout">
+          {/* MIDDLE SECTION - Description and Search Form side by side */}
+          <div className="brand-middle-section">
+            {/* Left - Description */}
+            <div className="brand-description-section">
               <h2 className="brand-description-title">
                 Used {brand.title} Parts
               </h2>
@@ -267,27 +346,134 @@ export default function BrandDetail() {
                 {brand.description}
               </p>
             </div>
+
+            {/* Right - Search Form */}
+            <div className="brand-search-section">
+              <VehicleSearchForm brandName={brand.title} />
+            </div>
           </div>
 
-          {/* Right Section - Search Form */}
-          <div className="brand-search-section">
+          {/* Feature Images, Price Points, Stories, and Coupon */}
+          <div className="brand-features-stories-wrapper">
+            {/* Left Side - Feature Images, Price Points, and Coupon */}
+            <div className="brand-features-left">
+              <div className="feature-images-grid">
+                {featureImages.map((feature, index) => (
+                  <div key={index} className="feature-image-card">
+                    <div className="feature-icon">{feature.icon}</div>
+                    <h3 className="feature-title">{feature.title}</h3>
+                    {feature.description && (
+                      <p className="feature-description">{feature.description}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Price Point Approx Section */}
+              <div className="price-point-section">
+                <h3 className="price-point-title">Price Point Approx*</h3>
+                <div className="price-boxes-grid">
+                  <div className="price-box dealership">
+                    <div className="price-box-label">Dealership New</div>
+                    <div className="price-box-amount">$1000</div>
+                  </div>
+                  <div className="price-box certified">
+                    <div className="price-box-label">Nexxa Certified Used</div>
+                    <div className="price-box-amount">$300</div>
+                  </div>
+                  <div className="price-box discount">
+                    <div className="price-box-amount">Upto 70% off</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Coupon Below Price Point - Desktop */}
+              {!showPopup && <BelowPricePointCoupon />}
+            </div>
+
+            {/* Right Side - Recent Customer Stories */}
+            <div className="brand-stories-right">
+              <div className="recent-stories-container">
+                <h3 className="recent-stories-title">Recent Customer Stories :</h3>
+                <div className="stories-list">
+                  {recentStories.map((story) => (
+                    <div key={story.id} className="story-card">
+                      <p className="story-text">{story.text}</p>
+                      <span className="story-date">{story.date}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* MOBILE LAYOUT */}
+        <div className="mobile-layout">
+          {/* Search Form */}
+          <div className="brand-search-section-mobile">
             <VehicleSearchForm brandName={brand.title} />
-            
-            {/* Description - Shows after search form on mobile only */}
-        <div className="brand-description-section mobile-only">
-          <h2 className="brand-description-title">
-            Used {brand.title} Parts
-          </h2>
-          <p className="brand-description-text">
-            {brand.description}
-          </p>
-        </div>
-            
-            {/* Show coupon below form after closing popup */}
-            {!showPopup && <BelowFormCoupon />}
           </div>
-        </div>
 
+          {/* Feature Images Grid */}
+          <div className="feature-images-grid-mobile">
+            {featureImages.map((feature, index) => (
+              <div key={index} className="feature-image-card">
+                <div className="feature-icon">{feature.icon}</div>
+                <h3 className="feature-title">{feature.title}</h3>
+                {feature.description && (
+                  <p className="feature-description">{feature.description}</p>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Recent Customer Stories */}
+          <div className="brand-stories-mobile">
+            <div className="recent-stories-container">
+              <h3 className="recent-stories-title">Recent Customer Stories :</h3>
+              <div className="stories-list">
+                {recentStories.map((story) => (
+                  <div key={story.id} className="story-card">
+                    <p className="story-text">{story.text}</p>
+                    <span className="story-date">{story.date}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Price Point Approx Section */}
+          <div className="price-point-section-mobile">
+            <h3 className="price-point-title">Price Point Approx*</h3>
+            <div className="price-boxes-grid">
+              <div className="price-box dealership">
+                <div className="price-box-label">Dealership New</div>
+                <div className="price-box-amount">$1000</div>
+              </div>
+              <div className="price-box certified">
+                <div className="price-box-label">Nexxa Certified Used</div>
+                <div className="price-box-amount">$300</div>
+              </div>
+              <div className="price-box discount">
+                <div className="price-box-amount">Upto 70% off</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="brand-description-section-mobile">
+            <h2 className="brand-description-title">
+              Used {brand.title} Parts
+            </h2>
+            <p className="brand-description-text">
+              {brand.description}
+            </p>
+          </div>
+
+          {/* Coupon Below Description - Mobile */}
+          {!showPopup && <BelowPricePointCoupon />}
+        </div>
 
         {/* Models Section */}
         <div className="brand-models-section">

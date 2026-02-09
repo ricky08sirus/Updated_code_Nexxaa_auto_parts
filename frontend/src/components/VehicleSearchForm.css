@@ -30,10 +30,10 @@
   gap: 16px;
 }
 
-/* Input Row - Three columns on desktop */
+/* Input Row - MOBILE: 2x2 Grid, DESKTOP: 3+1 Layout */
 .search-input-row {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr; /* Mobile default: 2 columns */
   gap: 12px;
 }
 
@@ -71,7 +71,7 @@
   opacity: 0.6;
 }
 
-/* Parts Selector - Full Width */
+/* Parts Selector - Full Width (Not needed anymore since it's in grid) */
 .search-parts-row {
   width: 100%;
 }
@@ -80,7 +80,7 @@
 .search-submit-btn {
   width: 100%;
   padding: 14px 24px;
-  background:linear-gradient(137deg, #ff002b, #770518);
+  background: linear-gradient(137deg, #ff002b, #770518);
   color: #ffffff;
   font-size: 1.125rem;
   font-weight: 600;
@@ -124,19 +124,61 @@
   color: #dc2626;
 }
 
-/* Tablet Screens */
+/* ========================================
+   MOBILE SCREENS - 2x2 Grid Layout
+======================================== */
+@media (max-width: 767px) {
+  .vehicle-search-form {
+    padding: 24px 16px;
+  }
+
+  .search-form-title {
+    font-size: 14px;
+  }
+
+  /* 2x2 Grid: Year | Make on Row 1, Model | Parts on Row 2 */
+  .search-input-row {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px;
+  }
+
+  .search-select {
+    padding: 12px 14px;
+    font-size: 0.875rem;
+    padding-right: 35px;
+  }
+
+  .search-submit-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+
+  .search-footer-text {
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   TABLET SCREENS - 3 Columns + 1 Full Width
+======================================== */
 @media (min-width: 768px) {
   .vehicle-search-form {
     padding: 40px;
   }
 
   .search-form-title {
-    font-size:15px;
+    font-size: 15px;
   }
 
+  /* 3 Columns for Year, Make, Model + Parts full width below */
   .search-input-row {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+  }
+
+  /* Make the 4th child (Parts) span full width */
+  .search-input-row > select:nth-child(4) {
+    grid-column: 1 / -1;
   }
 
   .search-select {
@@ -146,6 +188,7 @@
   .search-submit-btn {
     padding: 16px 28px;
   }
+  
   .brand-title {
     font-size: 20px;
     font-weight: 700;
@@ -153,17 +196,19 @@
     margin-bottom: 24px;
     line-height: 1.2;
     text-align: center;
-}
-  .brand-logo-container{
+  }
+  
+  .brand-logo-container {
     margin: auto;
   }
 }
 
-/* Desktop Screens */
+/* ========================================
+   DESKTOP SCREENS
+======================================== */
 @media (min-width: 1024px) {
   .vehicle-search-form {
     max-width: 100%;
-    /* margin-bottom: 22rem; */
   }
 
   .search-form-header {

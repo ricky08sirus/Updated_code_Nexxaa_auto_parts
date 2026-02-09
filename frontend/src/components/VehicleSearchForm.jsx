@@ -180,9 +180,9 @@ export default function VehicleSearchForm({ brandName = null }) {
 
       {/* Form */}
       <div className="search-form-container">
-        {/* Year, Make, Model Row */}
+        {/* ALL 4 FIELDS IN ONE ROW - Mobile: 2x2 Grid, Desktop: 3+1 Layout */}
         <div className="search-input-row">
-          {/* Year Selector */}
+          {/* Year Selector - Position 1 */}
           <select
             id="year"
             name="year"
@@ -198,7 +198,7 @@ export default function VehicleSearchForm({ brandName = null }) {
             ))}
           </select>
 
-          {/* Manufacturer Selector */}
+          {/* Manufacturer Selector - Position 2 */}
           <select
             id="manufacturer"
             name="manufacturer"
@@ -215,7 +215,7 @@ export default function VehicleSearchForm({ brandName = null }) {
             ))}
           </select>
 
-          {/* Model Selector */}
+          {/* Model Selector - Position 3 */}
           <select
             id="model"
             name="model"
@@ -231,10 +231,8 @@ export default function VehicleSearchForm({ brandName = null }) {
               </option>
             ))}
           </select>
-        </div>
 
-        {/* Parts Selector - Full Width */}
-        <div className="search-parts-row">
+          {/* Parts Selector - Position 4 (MOVED INSIDE GRID) */}
           <select
             id="part"
             name="part"
