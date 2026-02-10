@@ -40,6 +40,16 @@
 /* Image Section */
 .abs-pump-image-container {
   position: relative;
+      padding: 10px 10px;
+    background: #ffffff24;
+    border-radius: 1rem;
+}
+
+/* Mobile: Image comes first */
+@media (max-width: 767px) {
+  .abs-pump-image-container {
+    order: 1;
+  }
 }
 
 .abs-pump-image-wrapper {
@@ -81,6 +91,27 @@
   color: white;
 }
 
+/* Mobile ordering - Image, Heading, Form, Description */
+@media (max-width: 767px) {
+  .abs-pump-content-section {
+    order: 2;
+    /* display: flex;
+    flex-direction: column; */
+  }
+  
+  .abs-pump-main-heading {
+    order: 1; /* Heading comes second (after image) */
+  }
+  
+  .abs-pump-search-container {
+    order: 2; /* Form comes third */
+  }
+  
+  .abs-pump-description-section {
+    order: 3; /* Description comes fourth */
+  }
+}
+
 .abs-pump-main-heading {
   font-size: 2rem;
   font-weight: bold;
@@ -88,7 +119,15 @@
   line-height: 1.3;
 }
 
-/* Horizontal layout container for description and form */
+/* Mobile: Stack heading and description vertically */
+@media (max-width: 767px) {
+  .abs-pump-main-heading {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Horizontal layout container for description and form - Desktop only */
 .abs-pump-content-horizontal {
   display: grid;
   grid-template-columns: 1fr;
@@ -108,6 +147,13 @@
   gap: 1rem;
 }
 
+/* Mobile: Add spacing after form */
+@media (max-width: 767px) {
+  .abs-pump-description-section {
+    margin-top: 1.5rem;
+  }
+}
+
 .abs-pump-description {
   margin-bottom: 0;
   font-size: 0.875rem;
@@ -116,43 +162,84 @@
 
 /* Search Form */
 .abs-pump-search-container {
-  background-color: linear-gradient(45deg,#000,#167687);
+  background: linear-gradient(45deg,#000,#167687);
   border-radius: 0.5rem;
   padding: 1.5rem;
 }
 
+/* Mobile: Full width form with spacing */
+@media (max-width: 767px) {
+  .abs-pump-search-container {
+    width: 100%;
+    margin-bottom: 0;
+    margin-top: 1.5rem;
+  }
+}
 
+.abs-pump-form-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
 .abs-pump-form-row {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
 
+/* Desktop: 4 fields horizontally in one row */
 @media (min-width: 768px) {
   .abs-pump-form-row {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: 2 fields horizontally, then 2 fields below horizontally */
+@media (max-width: 767px) {
+  .abs-pump-form-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 }
 
 .abs-pump-form-select {
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  border: none;
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 15px;
+  color: #374151;
+  background-color: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
   outline: none;
-  background-color: white;
-  color: #1f2937;
-  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23374151' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+
+.abs-pump-form-select:hover {
+  border-color: #006583;
+  background-color: #ffffff;
 }
 
 .abs-pump-form-select:focus {
-  outline: 2px solid #0891b2;
+  border-color: #006583;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 101, 131, 0.1);
 }
 
 .abs-pump-form-select:disabled {
-  background-color: #e5e7eb;
+  background-color: #f3f4f6;
+  color: #9ca3af;
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .abs-pump-submit-button {
@@ -171,6 +258,13 @@
 
 .abs-pump-submit-button:hover {
   background-color: #b91c1c;
+  box-shadow: 0 6px 16px rgba(0, 101, 131, 0.4);
+  transform: translateY(-2px);
+}
+
+.abs-pump-submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 101, 131, 0.3);
 }
 
 .abs-pump-vin-link {
@@ -184,6 +278,11 @@
   color: #22d3ee;
   text-decoration: underline;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.abs-pump-link-highlight:hover {
+  color: #004d63;
 }
 
 /* Features Section */
@@ -213,12 +312,11 @@
 .abs-pump-right-section {
   display: flex;
   flex-direction: column;
-  /* gap: 2rem; */
 }
 
 /* Customer Story */
 .abs-pump-customer-story {
-  background:linear-gradient(135deg,#7f1d1d,#167687);
+  background: linear-gradient(135deg,#7f1d1d,#167687);
   color: white;
   border-radius: 0.5rem;
   padding: 1.5rem;
@@ -309,17 +407,15 @@
 }
 
 .abs-pump-price-card.abs-pump-dealership {
-  background:linear-gradient(50deg,#1e3a8a,#111827)
-;
+  background: linear-gradient(50deg,#1e3a8a,#111827);
 }
 
 .abs-pump-price-card.abs-pump-nexxa {
-  background:linear-gradient(47deg,#af1204,#111827)
-;
+  background: linear-gradient(47deg,#af1204,#111827);
 }
 
 .abs-pump-price-card.abs-pump-discount {
-  background:linear-gradient(58deg,#630693,#111827);
+  background: linear-gradient(58deg,#630693,#111827);
 }
 
 .abs-pump-price-label {
@@ -375,19 +471,41 @@
   background: linear-gradient(135deg, #374151 0%, #0891b2 100%);
 }
 
+/* SEO Models Container - H2 Tags Section */
+.abs-pump-seo-models-container {
+  margin-top: 40px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+/* Individual H2 Model Tags for SEO */
+.abs-pump-seo-model-h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ccc;
+  padding: 12px 16px;
+  background: linear-gradient(to right, #000000, #167687);
+  border-left: 3px solid #000;
+  border-radius: 4px;
+  margin: 0;
+  transition: all .3s ease;
+  box-shadow: 0 1px 3px #0000000d;
+}
+
+.abs-pump-seo-model-h2:hover {
+  background: linear-gradient(to right, #0d187c, #0d557e);
+  border-left-color: #1180c1;
+  box-shadow: 0 2px 6px rgba(227, 30, 36, 0.1);
+  transform: translateX(5px);
+}
+
 /* Responsive Design */
 @media (max-width: 767px) {
   .abs-pump-main-heading {
     font-size: 1.5rem;
   }
-
-  /* .abs-pump-content-horizontal {
-    grid-template-columns: 1fr;
-  } */
-
-  /* .abs-pump-features-grid {
-    grid-template-columns: 1fr;
-  } */
 
   .abs-pump-price-grid {
     flex-direction: column;
@@ -395,8 +513,7 @@
 
   .abs-pump-hero-section {
     padding: 2rem 0;
-        padding-top: 6rem;
-
+    padding-top: 6rem;
   }
 
   .abs-pump-image {
@@ -410,117 +527,15 @@
   .abs-pump-features-layout {
     grid-template-columns: 1fr;
   }
-}
-/* ========================================
-   ABS PUMP SEARCH FORM - 2x2 GRID LAYOUT
-   ======================================== */
-
-.abs-pump-search-container {
-  background: linear-gradient(45deg,#000,#167687);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
-}
-
-.abs-pump-form-title {
-  font-size: 18px;
-  font-weight: 600;
-  color:white;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Form Row - 2 fields per row */
-.abs-pump-form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-/* Select Dropdown Styles */
-.abs-pump-form-select {
-  width: 100%;
-  padding: 12px 15px;
-  font-size: 15px;
-  color: #374151;
-  background-color: #f9fafb;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  outline: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23374151' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 12px;
-  padding-right: 40px;
-}
-
-.abs-pump-form-select:hover {
-  border-color: #006583;
-  background-color: #ffffff;
-}
-
-.abs-pump-form-select:focus {
-  border-color: #006583;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(0, 101, 131, 0.1);
-}
-
-.abs-pump-form-select:disabled {
-  background-color: #f3f4f6;
-  color: #9ca3af;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-
-
-.abs-pump-submit-button:hover {
-  background: linear-gradient(135deg, #005070, #003d50);
-  box-shadow: 0 6px 16px rgba(0, 101, 131, 0.4);
-  transform: translateY(-2px);
-}
-
-.abs-pump-submit-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 101, 131, 0.3);
-}
-
-/* VIN Link */
-.abs-pump-vin-link {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 14px;
-  color: #6b7280;
-}
-
-.abs-pump-link-highlight {
-  color: #006583;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: underline;
-  transition: color 0.3s ease;
-}
-
-.abs-pump-link-highlight:hover {
-  color: #004d63;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .abs-pump-search-container {
-    padding: 20px;
-    max-width: 100%;
-  }
-
-  .abs-pump-form-row {
+  
+  .abs-pump-seo-models-container {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
+  }
+  
+  .abs-pump-seo-model-h2 {
+    font-size: 14px;
+    padding: 10px 12px;
   }
 
   .abs-pump-form-title {
@@ -535,6 +550,18 @@
   .abs-pump-submit-button {
     padding: 12px 18px;
     font-size: 15px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .abs-pump-seo-models-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .abs-pump-seo-models-container {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -562,86 +589,3 @@
     font-size: 13px;
   }
 }
-
-
-/* Add this to your Anti_Lock_Brake_Pumb.css file */
-
-/* SEO Models Container - H2 Tags Section */
-.abs-pump-seo-models-container {
-  margin-top: 40px;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 15px;
-}
-
-/* Individual H2 Model Tags for SEO */
-.abs-pump-seo-model-h2 {
-    font-size: 16px;
-    font-weight: 600;
-    color: #ccc;
-    padding: 12px 16px;
-    background: linear-gradient(to right, #000000, #167687);
-    border-left: 3px solid #000;
-    border-radius: 4px;
-    margin: 0;
-    transition: all .3s ease;
-    box-shadow: 0 1px 3px #0000000d;
-}
-
-.abs-pump-seo-model-h2:hover {
-  background: linear-gradient(to right, #0d187c, #0d557e);
-  border-left-color: #1180c1;
-  box-shadow: 0 2px 6px rgba(227, 30, 36, 0.1);
-  transform: translateX(5px);
-}
-
-/* Responsive Design for SEO Models */
-@media (max-width: 768px) {
-  .abs-pump-seo-models-container {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  
-  .abs-pump-seo-model-h2 {
-    font-size: 14px;
-    padding: 10px 12px;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .abs-pump-seo-models-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1025px) {
-  .abs-pump-seo-models-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Alternative: Compact List Style (uncomment if you prefer a more compact layout) */
-/*
-.abs-pump-seo-models-container {
-  column-count: 3;
-  column-gap: 20px;
-}
-
-.abs-pump-seo-model-h2 {
-  break-inside: avoid;
-  margin-bottom: 8px;
-}
-
-@media (max-width: 768px) {
-  .abs-pump-seo-models-container {
-    column-count: 1;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .abs-pump-seo-models-container {
-    column-count: 2;
-  }
-}
-*/
