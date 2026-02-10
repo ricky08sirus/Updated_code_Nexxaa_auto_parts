@@ -2,9 +2,9 @@
 // Frontend data for all premium parts
 
 export const partsData = {
-  "anti-brake-pump": {
-    id: "anti-brake-pump",
-    slug: "anti-brake-pump",
+  "abs": {  // CHANGED: Key from "anti-brake-pump" to "abs"
+    id: "abs",  // CHANGED: ID from "anti-brake-pump" to "abs"
+    slug: "abs",  // CHANGED: Slug from "anti-brake-pump" to "abs"
     name: "Anti-Lock Brake Pump",
     heading: "Used Anti-Lock Brake Pump (ABS)",
     image: "/images/WhatsApp Image 2026-01-03 at 10.40.38 AM.jpeg",
@@ -111,7 +111,7 @@ export const partsData = {
 // Home page list
 export const premiumPartsList = [
   {
-    id: "anti-brake-pump",
+    id: "abs",  // CHANGED: ID from "anti-brake-pump" to "abs"
     name: "Brake Module Pump",
     image: "/images/WhatsApp Image 2026-01-03 at 10.40.38 AM.jpeg",
   },

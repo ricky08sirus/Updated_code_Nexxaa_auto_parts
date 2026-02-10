@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { partsData } from "../assets/PartsData.js";
+import { partsData } from "../assets/PartsData.js";  
 import { allModels } from "../assets/ModelsData.js";
 import './Anti_Lock_Brake_Pumb.css';
 
@@ -12,7 +12,7 @@ export default function PartDetailPage() {
   const { partSlug } = useParams(); // Get the part slug from URL
 
   // Get the part data based on URL parameter
-  const partData = partsData[partSlug];
+  const partData = Object.values(partsData).find(part => part.slug === partSlug);
 
 
   // Form selections state
@@ -39,6 +39,11 @@ export default function PartDetailPage() {
     { length: currentYear - 1989 },
     (_, i) => currentYear + 1 - i
   );
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // If part not found, redirect to home
   useEffect(() => {

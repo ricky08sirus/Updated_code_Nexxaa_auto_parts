@@ -10,8 +10,8 @@ const distDir = join(__dirname, "../dist");
 
 // Generate part routes dynamically from partsData
 const partRoutes = Object.keys(partsData).map(partSlug => ({
-  path: `/parts/${partSlug}`,
-  output: `parts/${partSlug}/index.html`
+  path: `/used/${partSlug}`,
+  output: `used/${partSlug}/index.html`
 }));
 
 const routes = [
@@ -117,8 +117,8 @@ async function renderRoute(browser, route, index, totalRoutes) {
       console.warn(`⚠️ H1 not detected on ${route.path}`);
     }
 
-    // For part detail pages, wait for ALL H2 tags to render
-    if (route.path.startsWith('/parts/')) {
+    // For part detail pages ONLY (not brand pages), wait for ALL H2 tags to render
+    if (route.path.startsWith('/used/') && !route.path.includes('/parts')) {
       try {
         // Wait for the SEO models container
         await page.waitForSelector(".abs-pump-seo-models-container", { timeout: 15000 });
@@ -149,7 +149,7 @@ async function renderRoute(browser, route, index, totalRoutes) {
     mkdirSync(dirname(outputPath), { recursive: true });
     writeFileSync(outputPath, html, "utf-8");
 
-    const h2Info = route.path.startsWith('/parts/') ? ` (${h2Count} H2 tags)` : '';
+    const h2Info = (route.path.startsWith('/used/') && !route.path.includes('/parts')) ? ` (${h2Count} H2 tags)` : '';
     console.log(`${hasH1 ? "✅" : "⚠️"} [${index + 1}/${totalRoutes}] ${route.path}${h2Info}`);
 
     return { success: true, hasH1 };
