@@ -87,25 +87,31 @@ function App() {
     <AuthProvider>
       {!hideNavbar && <Navbar />}
       <CallModal />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/privacy-policy" element={<Privacypolicy />} />
-        <Route path="/product-details" element={<ProductDetails />} />
-        <Route path="/warranty" element={<Warranty />} />
-        <Route path="/terms-and-condition" element={<Terms />} />
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/request-part" element={<HomePage2 />} />
-        <Route path="/order-a-part" element={<RequestPart />} />
-        <Route path="/order-a-part/thank-you" element={<Thankyou />} />
-        <Route path="/product/:slug/:id" element={<ProductPage />} />
-        <Route path="/used/:brandSlug/parts" element={<BrandDetail />} />
-        <Route path="/order/:slug/:id" element={<OrderPage />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/parts/:partSlug" element={<PartDetailPage />} />
-      </Routes>
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/about" element={<About />} />
+  <Route path="/contact" element={<Contact />} />
+  <Route path="/privacy-policy" element={<Privacypolicy />} />
+  <Route path="/product-details" element={<ProductDetails />} />
+  <Route path="/warranty" element={<Warranty />} />
+  <Route path="/terms-and-condition" element={<Terms />} />
+  <Route path="/landing" element={<Landing />} />
+  <Route path="/request-part" element={<HomePage2 />} />
+  <Route path="/order-a-part" element={<RequestPart />} />
+  <Route path="/order-a-part/thank-you" element={<Thankyou />} />
+  
+  {/* Product and brand routes - specific patterns first */}
+  <Route path="/product/:slug/:id" element={<ProductPage />} />
+  <Route path="/order/:slug/:id" element={<OrderPage />} />
+  
+  {/* Part routes - more specific BEFORE generic */}
+  <Route path="/used/:brandSlug/parts" element={<BrandDetail />} />
+  <Route path="/used/:partSlug" element={<PartDetailPage />} />
+  
+  {/* Auth routes */}
+  <Route path="/signin" element={<SignIn />} />
+  <Route path="/register" element={<Register />} />
+</Routes>
       <Footer />
     </AuthProvider>
   );

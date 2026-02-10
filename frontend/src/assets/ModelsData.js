@@ -3,7 +3,7 @@
 // This data should be imported from your Excel sheet
 
 export const allModels = [
-"Used Acura CL Abs",
+"Used Acura CL",
 "Used Acura ILX",
 "Used Acura Integra",
 "Used Acura Legend",

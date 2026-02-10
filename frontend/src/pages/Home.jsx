@@ -39,7 +39,7 @@ console.log("API Base URL:", API_BASE_URL);
 
 // Parts images array with names mapped to partsData IDs
 const partsImages = [
-  { img: part1, name: "Anti Brake Module Pump", id: "anti-brake-pump" },
+  { img: part1, name: "Anti Brake Module Pump", id: "abs" },
   { img: part2, name: "Radio Controller", id: "radio-controller" },
   { img: part3, name: "Display Unit", id: "display-unit" },
   { img: part4, name: "Speedometer - Instr.Cluster", id: "speedometer" },
@@ -493,8 +493,10 @@ const Home = () => {
     navigate(`/used/${brand.slug}/parts`);
   };
 
-  // UPDATED: Handle part card click - navigate to dynamic detail page
+  // FIXED: Handle part card click - navigate to dynamic detail page
   const handlePartCardClick = (part) => {
+    console.log('Part clicked:', part); // Debug log
+    
     // Track analytics
     trackEvent('part_category_click', {
       category_name: part.name,
@@ -502,12 +504,16 @@ const Home = () => {
       click_location: 'parts_carousel'
     });
 
-    // Navigate to dynamic part detail page if it exists in partsData
-    if (partsData[part.id]) {
-      navigate(`/parts/${part.id}`);
+    // Check if this part has a detail page in partsData
+    const partDetail = Object.values(partsData).find(p => p.id === part.id || p.slug === part.id);
+    
+    if (partDetail) {
+      console.log('Navigating to:', `/used/${partDetail.slug}`); // Debug log
+      navigate(`/used/${partDetail.slug}`); // Navigate using the slug from partsData
     } else {
       console.log(`No detail page configured for: ${part.id}`);
       // Optionally show a message or handle differently
+      alert(`Detail page for ${part.name} is coming soon!`);
     }
   };
 
@@ -699,7 +705,7 @@ const Home = () => {
                         color: "white"
                       }}
                     >
-                      {part.name}
+                      Used {part.name}
                     </h2>
                   </div>
                 ))}
