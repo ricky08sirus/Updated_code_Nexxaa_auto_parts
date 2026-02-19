@@ -77,13 +77,15 @@ services:
       dockerfile: Dockerfile
     container_name: nginx_proxy
     ports:
-      - "80:80"
-      - "443:443"
+      - "7070:80"
+      - "7444:443"
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /etc/ssl/certs:/etc/ssl/certs:ro
+      - /etc/ssl/safalogics:/etc/ssl/safalogics:ro
+      - /etc/ssl/takeano:/etc/ssl/takeano:ro
     depends_on:
       - backend
       - frontend
