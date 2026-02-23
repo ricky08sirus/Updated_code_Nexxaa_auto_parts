@@ -192,6 +192,17 @@ const ProductDetails = () => {
       const data = await response.json();
 
       if (response.ok && data.success) {
+	      if (window.gtag) {
+        	gtag('event', 'conversion', {
+          		'send_to': 'AW-17686189298/6KwmCPfHmPgbEPKpt_FB',
+          		'value': 1.0,
+          		'currency': 'USD',
+         		'transaction_id': data.id || Date.now().toString(),
+          		'debug_mode': true
+        	});
+        	console.log('✅ Google Ads conversion tracked!');
+      }
+
         setSuccess(true);
         setShowPopup(true);
 
