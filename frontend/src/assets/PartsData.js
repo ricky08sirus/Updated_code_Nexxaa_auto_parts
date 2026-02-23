@@ -1090,10 +1090,10 @@ export const partsData = {
     ],
   },
 },
-"axel-assembly": {
-  id: "axel-assembly",
-  slug: "axel-assembly",
-  name: "Axel Assembly",
+"axle-assembly": {
+  id: "axle-assembly",
+  slug: "axle-assembly",
+  name: "Axle Assembly",
   heading: "Find Quality Used Axle Assembly",
   image: "/images/Axle Assembly.jpeg",
   description1: "A used axle assembly is a complete drivetrain component removed from a donor vehicle and sold as a replacement unit. It transfers power from the transmission or differential to the wheels and supports the vehicle's weight.",
@@ -1618,7 +1618,7 @@ export const premiumPartsList = [
     image: "/images/Engine.webp",
   },
   {
-    id: "axel-assembly",
+    id: "axle-assembly",
     name: "Axel Assembly",
     image: "/images/Axle Assembly.jpeg",
   },

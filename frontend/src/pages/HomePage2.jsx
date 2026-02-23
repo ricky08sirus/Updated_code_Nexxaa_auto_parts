@@ -99,7 +99,7 @@ const partsImages = [
   { img: part9, name: "Engine" },
   { img: part10, name: "Transmission" },
   { img: part11, name: "Transfercase" },
-  { img: part12, name: "Axel Assembly" },
+  { img: part12, name: "Axle Assembly" },
   { img: part13, name: "Drive Shaft" },
   { img: part14, name: "Rims" },
 ];

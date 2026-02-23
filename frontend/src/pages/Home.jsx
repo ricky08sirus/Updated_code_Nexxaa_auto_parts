@@ -51,7 +51,7 @@ const partsImages = [
   { img: part8, name: "Engine Computers", id: "engine-computer" },    
   { img: part9, name: "Engine", id: "engine" },
   { img: part10, name: "Transmission", id: "transmission" },
-  { img: part12, name: "Axel Assembly", id: "axel-assembly" },
+  { img: part12, name: "Axle Assembly", id: "axle-assembly" },
   { img: part13, name: "Drive Shaft", id: "drive-shaft" },
   { img: part14, name: "Rims", id: "rims" },
 ];
