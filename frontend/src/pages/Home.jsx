@@ -4,11 +4,12 @@ import "./Home.css";
 import { Helmet } from 'react-helmet'; 
 
 // Import Images
-import bannerImage from "../assets/images/banner-image.webp";
+import bannerImage from "../assets/images/banner-img.jpg";
 import brandData from "../assets/brandData";
 
 // Import partsData for premium parts section
 import { partsData } from "../assets/PartsData.js";
+import SearchByPartsCategory from "../components/SearchByPartsCategory";
 
 
 // Parts images array - map to partsData
@@ -47,7 +48,7 @@ const partsImages = [
   { img: part11, name: "Transfer Case", id: "transfer-case" },
   { img: part6, name: "Mechanical Parts", id: "mechanical-parts" },
   { img: part7, name: "Body Parts", id: "body-parts" },
-  { img: part8, name: "Engine Computers", id: "engine-computers" },
+  { img: part8, name: "Engine Computers", id: "engine-computer" },    
   { img: part9, name: "Engine", id: "engine" },
   { img: part10, name: "Transmission", id: "transmission" },
   { img: part12, name: "Axel Assembly", id: "axel-assembly" },
@@ -212,10 +213,10 @@ const Home = () => {
   }, []);
 
   // Preload banner image
-  useEffect(() => {
-    const preloadBanner = new Image();
-    preloadBanner.src = bannerImage;
-  }, []);
+  // useEffect(() => {
+  //   const preloadBanner = new Image();
+  //   preloadBanner.src = bannerImage;
+  // }, []);
 
   // Fetch manufacturers on mount
   useEffect(() => {
@@ -536,6 +537,8 @@ const Home = () => {
         />
         <meta name="keywords" content="used auto parts, OEM parts, auto parts nationwide, VIN matching, low mileage parts" />
         <link rel="canonical" href="https://nexxaauto.com/" />
+          <link rel="preload" as="image" href={bannerImage} fetchpriority="high" />
+
       </Helmet>
   
       <div>
@@ -553,10 +556,17 @@ const Home = () => {
           </div>
         )}
 
-        <section
-          className="banner"
-          style={{ backgroundImage: `url(${bannerImage})` }}
-        >
+        <section className="banner">
+  <img
+    src={bannerImage}
+    alt="Nexxa Auto Parts - OEM Used Auto Parts"
+    className="banner-bg-img"
+    fetchpriority="high"
+    loading="eager"
+    decoding="async"
+    width="1920"
+    height="1080"
+  />
           <div className="banner-overlay"></div>
           <div className="banner-gradient"></div>
 
@@ -827,6 +837,8 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+<SearchByPartsCategory />
 
         <section className="brands-section">
           <h2>Search by Brands</h2>

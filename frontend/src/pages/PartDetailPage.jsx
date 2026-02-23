@@ -396,7 +396,98 @@ export default function PartDetailPage() {
               </div>
             </div>
           </div>
+{partData.seoContent && (
+  <div className="abs-pump-seo-content">
+    <div className="abs-pump-zigzag-container">
 
+      {/* Intro as the FIRST zigzag block (left) */}
+      {/* Intro as the FIRST zigzag block (left) */}
+<div className="abs-pump-zigzag-block abs-pump-zigzag-left">
+  <h2 className="abs-pump-seo-heading">{partData.seoContent.intro.heading}</h2>
+
+  {partData.seoContent.intro.paragraphs?.map((p, i) => (
+    <p key={i} className="abs-pump-seo-paragraph">{p}</p>
+  ))}
+
+  {partData.seoContent.intro.bullets?.length > 0 && (
+    <ul className="abs-pump-seo-list">
+      {partData.seoContent.intro.bullets.map((b, i) => (
+        <li key={i}>{b}</li>
+      ))}
+    </ul>
+  )}
+
+  {/* FIX: render checkItems in intro if present (radio-controller, mechanical-parts) */}
+  {partData.seoContent.intro.checkItems && (
+    <div className="abs-pump-check-items">
+      {partData.seoContent.intro.checkItems.map((item, i) => (
+        <div key={i} className="abs-pump-check-item">
+          <strong>{item.label}</strong>
+          <p>{item.text}</p>
+        </div>
+      ))}
+    </div>
+  )}
+
+  {partData.seoContent.intro.footer && (
+    <p className="abs-pump-seo-paragraph abs-pump-footer-note">
+      {partData.seoContent.intro.footer}
+    </p>
+  )}
+</div>
+
+      {/* All sections continue the zigzag: index 0 = right, 1 = left, 2 = right ... */}
+      {partData.seoContent.sections.map((section, idx) => (
+        <div
+          key={idx}
+          className={`abs-pump-zigzag-block ${idx % 2 === 0 ? 'abs-pump-zigzag-right' : 'abs-pump-zigzag-left'}`}
+        >
+          <h2 className="abs-pump-seo-heading">{section.heading}</h2>
+
+          {section.paragraphs?.map((p, i) => (
+            <p key={i} className="abs-pump-seo-paragraph">{p}</p>
+          ))}
+
+          {section.bullets && (
+            <ul className="abs-pump-seo-list">
+              {section.bullets.map((b, i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          )}
+
+          {section.checkItems && (
+            <div className="abs-pump-check-items">
+              {section.checkItems.map((item, i) => (
+                <div key={i} className="abs-pump-check-item">
+                  <strong>{item.label}</strong>
+                  <p>{item.text}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {section.subParagraphs?.map((p, i) => (
+            <p key={i} className="abs-pump-seo-paragraph abs-pump-sub-para">{p}</p>
+          ))}
+
+          {section.subBullets && (
+            <ul className="abs-pump-seo-list abs-pump-sub-list">
+              {section.subBullets.map((b, i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          )}
+
+          {section.footer && (
+            <p className="abs-pump-seo-paragraph abs-pump-footer-note">{section.footer}</p>
+          )}
+        </div>
+      ))}
+
+    </div>
+  </div>
+)}
           {/* SEO Section - ALL 750+ Models in H2 Tags */}
           <div className="abs-pump-models-section">
             <h2 className="abs-pump-models-heading">{partData.modelsHeading}</h2>

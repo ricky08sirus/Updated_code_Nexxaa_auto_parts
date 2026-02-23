@@ -33,19 +33,18 @@
 
 @media (min-width: 768px) {
   .abs-pump-hero-grid {
-    grid-template-columns: 1fr 2fr; /* Image column smaller, content column larger */
+    grid-template-columns: 1fr 2fr;
   }
 }
 
 /* Image Section */
 .abs-pump-image-container {
   position: relative;
-      padding: 10px 10px;
-    background: #ffffff24;
-    border-radius: 1rem;
+  padding: 10px 10px;
+  background: #ffffff24;
+  border-radius: 1rem;
 }
 
-/* Mobile: Image comes first */
 @media (max-width: 767px) {
   .abs-pump-image-container {
     order: 1;
@@ -91,24 +90,21 @@
   color: white;
 }
 
-/* Mobile ordering - Image, Heading, Form, Description */
 @media (max-width: 767px) {
   .abs-pump-content-section {
     order: 2;
-    /* display: flex;
-    flex-direction: column; */
   }
-  
+
   .abs-pump-main-heading {
-    order: 1; /* Heading comes second (after image) */
+    order: 1;
   }
-  
+
   .abs-pump-search-container {
-    order: 2; /* Form comes third */
+    order: 2;
   }
-  
+
   .abs-pump-description-section {
-    order: 3; /* Description comes fourth */
+    order: 3;
   }
 }
 
@@ -119,7 +115,6 @@
   line-height: 1.3;
 }
 
-/* Mobile: Stack heading and description vertically */
 @media (max-width: 767px) {
   .abs-pump-main-heading {
     margin-top: 0;
@@ -127,7 +122,7 @@
   }
 }
 
-/* Horizontal layout container for description and form - Desktop only */
+/* Horizontal layout container */
 .abs-pump-content-horizontal {
   display: grid;
   grid-template-columns: 1fr;
@@ -137,7 +132,7 @@
 
 @media (min-width: 768px) {
   .abs-pump-content-horizontal {
-    grid-template-columns: 1fr 1fr; /* Equal columns for paragraph and form */
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -147,7 +142,6 @@
   gap: 1rem;
 }
 
-/* Mobile: Add spacing after form */
 @media (max-width: 767px) {
   .abs-pump-description-section {
     margin-top: 1.5rem;
@@ -162,12 +156,11 @@
 
 /* Search Form */
 .abs-pump-search-container {
-  background: linear-gradient(45deg,#000,#167687);
+  background: linear-gradient(45deg, #000, #167687);
   border-radius: 0.5rem;
   padding: 1.5rem;
 }
 
-/* Mobile: Full width form with spacing */
 @media (max-width: 767px) {
   .abs-pump-search-container {
     width: 100%;
@@ -190,14 +183,12 @@
   margin-bottom: 1rem;
 }
 
-/* Desktop: 4 fields horizontally in one row */
 @media (min-width: 768px) {
   .abs-pump-form-row {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Mobile: 2 fields horizontally, then 2 fields below horizontally */
 @media (max-width: 767px) {
   .abs-pump-form-row {
     grid-template-columns: repeat(2, 1fr);
@@ -300,7 +291,7 @@
 
 @media (min-width: 768px) {
   .abs-pump-features-layout {
-    grid-template-columns: 1fr 2fr; /* Left column smaller, right column larger */
+    grid-template-columns: 1fr 2fr;
   }
 }
 
@@ -316,7 +307,7 @@
 
 /* Customer Story */
 .abs-pump-customer-story {
-  background: linear-gradient(135deg,#7f1d1d,#167687);
+  background: linear-gradient(135deg, #7f1d1d, #167687);
   color: white;
   border-radius: 0.5rem;
   padding: 1.5rem;
@@ -407,15 +398,15 @@
 }
 
 .abs-pump-price-card.abs-pump-dealership {
-  background: linear-gradient(50deg,#1e3a8a,#111827);
+  background: linear-gradient(50deg, #1e3a8a, #111827);
 }
 
 .abs-pump-price-card.abs-pump-nexxa {
-  background: linear-gradient(47deg,#af1204,#111827);
+  background: linear-gradient(47deg, #af1204, #111827);
 }
 
 .abs-pump-price-card.abs-pump-discount {
-  background: linear-gradient(58deg,#630693,#111827);
+  background: linear-gradient(58deg, #630693, #111827);
 }
 
 .abs-pump-price-label {
@@ -471,7 +462,7 @@
   background: linear-gradient(135deg, #374151 0%, #0891b2 100%);
 }
 
-/* SEO Models Container - H2 Tags Section */
+/* SEO Models Container */
 .abs-pump-seo-models-container {
   margin-top: 40px;
   padding: 20px;
@@ -480,7 +471,6 @@
   gap: 15px;
 }
 
-/* Individual H2 Model Tags for SEO */
 .abs-pump-seo-model-h2 {
   font-size: 16px;
   font-weight: 600;
@@ -490,7 +480,7 @@
   border-left: 3px solid #000;
   border-radius: 4px;
   margin: 0;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   box-shadow: 0 1px 3px #0000000d;
 }
 
@@ -501,7 +491,125 @@
   transform: translateX(5px);
 }
 
-/* Responsive Design */
+/* =============================================
+   SEO CONTENT SECTION - ZIGZAG LAYOUT
+   ============================================= */
+
+.abs-pump-seo-content {
+  margin: 40px 0;
+}
+
+.abs-pump-zigzag-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.abs-pump-zigzag-block {
+  padding: 36px 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+/* LEFT block: white background, teal left border, pushed in from right */
+.abs-pump-zigzag-left {
+  background: #ffffff;
+  border-left: 5px solid #0e7490;
+  margin-right: 80px;
+  margin-left: 0;
+  border-radius:10px 0px 0px 10px;
+}
+
+/* RIGHT block: light blue background, red right border, pushed in from left */
+.abs-pump-zigzag-right {
+  background: #f0f9ff;
+  border-right: 5px solid #dc2626;
+  margin-left: 80px;
+  margin-right: 0;
+  border-radius: 12px 0 0 12px;
+}
+
+.abs-pump-seo-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 14px;
+}
+
+.abs-pump-seo-paragraph {
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+
+.abs-pump-sub-para {
+  margin-top: 12px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.abs-pump-footer-note {
+  margin-top: 14px;
+  font-style: italic;
+  color: #6b7280;
+  border-top: 1px dashed #e5e7eb;
+  padding-top: 10px;
+}
+
+.abs-pump-seo-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0 14px;
+}
+
+.abs-pump-seo-list li {
+  font-size: 0.95rem;
+  color: #374151;
+  padding: 5px 0 5px 20px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.abs-pump-seo-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #0e7490;
+  font-size: 0.9rem;
+}
+
+.abs-pump-sub-list li::before {
+  content: "→";
+  color: #dc2626;
+}
+
+.abs-pump-check-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 12px 0;
+}
+
+.abs-pump-check-item strong {
+  display: block;
+  font-size: 1rem;
+  color: #111827;
+  margin-bottom: 5px;
+}
+
+.abs-pump-check-item p {
+  font-size: 0.92rem;
+  color: #4b5563;
+  margin: 0;
+  padding-left: 16px;
+  line-height: 1.65;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
 @media (max-width: 767px) {
   .abs-pump-main-heading {
     font-size: 1.5rem;
@@ -527,12 +635,12 @@
   .abs-pump-features-layout {
     grid-template-columns: 1fr;
   }
-  
+
   .abs-pump-seo-models-container {
     grid-template-columns: 1fr;
     gap: 10px;
   }
-  
+
   .abs-pump-seo-model-h2 {
     font-size: 14px;
     padding: 10px 12px;
@@ -551,11 +659,38 @@
     padding: 12px 18px;
     font-size: 15px;
   }
+
+  /* Zigzag collapses to full width on mobile */
+  .abs-pump-zigzag-left,
+  .abs-pump-zigzag-right {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 12px;
+    border-right: none;
+    border-left: 4px solid #0e7490;
+  }
+
+  .abs-pump-zigzag-right {
+    border-left-color: #dc2626;
+    background: #f0f9ff;
+  }
+
+  .abs-pump-zigzag-block {
+    padding: 24px 20px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .abs-pump-seo-models-container {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .abs-pump-zigzag-left {
+    margin-right: 40px;
+  }
+
+  .abs-pump-zigzag-right {
+    margin-left: 40px;
   }
 }
 
