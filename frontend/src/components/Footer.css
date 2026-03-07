@@ -1,0 +1,345 @@
+.footer {
+  background:linear-gradient(344deg, #000, #167687);
+  color: #fff;
+  padding: 50px 20px 20px;
+}
+
+.footer-container {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+/* ----------------------------- */
+/* Columns                       */
+/* ----------------------------- */
+.footer-col {
+  text-align: left;
+}
+
+.footer-col h4 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: white;
+}
+
+.footer-col p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+/* ----------------------------- */
+/* ✅ Logo Styling (New)         */
+/* ----------------------------- */
+.footer-logo {
+  width: 160px;
+  height: auto;
+  display: block;
+  margin-bottom: 15px;
+  /* filter: brightness(0) invert(1);  */
+  transition: transform 0.3s ease;
+}
+
+.footer-logo:hover {
+  transform: scale(1.05);
+}
+
+/* ----------------------------- */
+/* Quick Links                   */
+/* ----------------------------- */
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+  color: #e50914;
+}
+
+/* ----------------------------- */
+/* Newsletter                    */
+/* ----------------------------- */
+.newsletter {
+  display: flex;
+  margin-top: 10px;
+}
+
+.newsletter input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 4px 0 0 4px;
+  background-color: whitesmoke;
+  color: black;
+}
+
+.newsletter button {
+  padding: 10px 16px;
+  border: none;
+  background-color: #e50914;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter button:hover {
+  background-color: #c40812;
+}
+
+/* ----------------------------- */
+/* Footer Bottom                 */
+/* ----------------------------- */
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #aaa;
+  border-top: 1px solid #222;
+  padding-top: 15px;
+}
+
+/* ----------------------------- */
+/* Responsive                    */
+/* ----------------------------- */
+@media (max-width: 992px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-logo {
+    margin: 0 auto 15px;
+    width: 130px;
+  }
+
+  .newsletter {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .newsletter input,
+  .newsletter button {
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+
+/* ============================ */
+/* SOCIAL ICONS STYLING         */
+/* ============================ */
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  border-radius: 50%;
+  color: #ccc;
+  background-color: #111;
+  transition: all 0.3s ease;
+  border: 1px solid #333;
+}
+
+.social-icons a:hover {
+  transform: translateY(-4px) scale(1.1);
+  color: white;
+}
+
+/* Specific platform colors on hover */
+.social-icons a.facebook:hover {
+  background-color: #1877f2;
+}
+
+.social-icons a.instagram:hover {
+  background: linear-gradient(45deg, #fd1d1d, #fcb045, #833ab4);
+}
+
+.social-icons a.whatsapp:hover {
+  background-color: #25d366;
+}
+
+.social-icons a.linkedin:hover {
+  background-color: #0077b5;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .social-icons {
+    justify-content: center;
+  }
+  .social-icons a {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-icons {
+    gap: 10px;
+  }
+  .social-icons a {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
+/* Add this to your Footer.css file */
+
+/* Payment Methods Section */
+.payment-methods {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.payment-label {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.payment-icon {
+  font-size: 40px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.8;
+}
+
+.payment-icon:hover {
+  transform: translateY(-3px);
+  opacity: 1;
+}
+
+/* Individual Card Colors */
+.payment-icon.visa {
+  color: #1a1f71;
+}
+
+.payment-icon.mastercard {
+  color: #eb001b;
+}
+
+.payment-icon.amex {
+  color: #006fcf;
+}
+
+.payment-icon.discover {
+  color: #ff6000;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .payment-methods {
+    margin-top: 15px;
+    padding-top: 15px;
+    text-align: center;
+  }
+
+  .payment-label {
+    font-size: 13px;
+  }
+
+  .payment-icons {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .payment-icon {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-icon {
+    font-size: 32px;
+  }
+
+  .payment-icons {
+    gap: 8px;
+  }
+}
+
+.payment-icons-images {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.payment-card-img {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.85;
+  filter: grayscale(20%);
+}
+
+.payment-card-img:hover {
+  transform: translateY(-3px);
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+@media (max-width: 768px) {
+  .payment-icons-images {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .payment-card-img {
+    height: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-card-img {
+    height: 24px;
+  }
+
+  .payment-icons-images {
+    gap: 8px;
+  }
+}

@@ -1,0 +1,564 @@
+<!-- authentication/templates/admin/send_inquiry_email.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email - {{ inquiry.name }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f9; color: #2d3748; line-height: 1.6; }
+        .header { background: #417690; color: white; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .header h2 { font-size: 1.2rem; font-weight: 500; }
+        .breadcrumbs { background: #f8f9fa; padding: 10px 20px; border-bottom: 1px solid #dee2e6; font-size: 0.875rem; }
+        .breadcrumbs a { color: #417690; text-decoration: none; }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 30px 20px; }
+        .page-title { font-size: 1.8rem; text-align: center; margin-bottom: 30px; color: #1e40af; font-weight: 600; }
+        .inquiry-info { background: #ffffff; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .inquiry-info h3 { margin-top: 0; margin-bottom: 15px; color: #1e40af; font-size: 1.1rem; font-weight: 600; }
+        .inquiry-info p { margin: 6px 0; color: #4b5563; }
+        .inquiry-info strong { color: #1f2937; font-weight: 600; }
+        .form-section { background: #ffffff; padding: 20px; margin: 20px 0; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .form-section h3 { color: #1e40af; margin-top: 0; margin-bottom: 10px; font-size: 1.1rem; font-weight: 600; }
+        .form-section > p { color: #6b7280; margin-bottom: 15px; font-size: 0.9rem; }
+        .part-item { background: #f9fafb; padding: 20px; margin: 15px 0; border-radius: 6px; border: 1px solid #e5e7eb; position: relative; }
+        .part-item h4 { margin-top: 0; margin-bottom: 15px; color: #374151; font-size: 1rem; font-weight: 600; }
+        .form-row { margin: 12px 0; }
+        .form-row label { display: block; font-weight: 500; margin-bottom: 5px; color: #374151; font-size: 0.875rem; }
+        .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: #ffffff; color: #111827; font-size: 0.9rem; font-family: inherit; transition: border-color 0.2s ease; }
+        .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: #1e40af; box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1); }
+        .form-row textarea { min-height: 80px; resize: vertical; }
+        .add-part-btn, .remove-part-btn, .fetch-btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all 0.2s ease; }
+        .add-part-btn { background: #1e40af; color: white; margin-top: 15px; }
+        .add-part-btn:hover { background: #1e3a8a; }
+        .remove-part-btn { background: #dc2626; color: white; position: absolute; top: 15px; right: 15px; padding: 6px 12px; font-size: 0.8rem; }
+        .remove-part-btn:hover { background: #b91c1c; }
+        .fetch-btn { background: #16a34a; color: white; margin-top: 10px; }
+        .fetch-btn:hover { background: #15803d; }
+        .fetch-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+        .submit-section { background: #ffffff; padding: 25px; border-radius: 8px; margin: 25px 0; text-align: center; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .submit-section h3 { color: #1e40af; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; font-weight: 600; }
+        .submit-section > p { color: #6b7280; margin-bottom: 20px; font-size: 0.95rem; }
+        .submit-btn { background: #16a34a; color: white; padding: 12px 40px; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; font-weight: 500; transition: background 0.2s ease; }
+        .submit-btn:hover { background: #15803d; }
+        .cancel-btn { background: #6b7280; color: white; padding: 12px 40px; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; margin-left: 10px; font-weight: 500; transition: background 0.2s ease; text-decoration: none; display: inline-block; }
+        .cancel-btn:hover { background: #4b5563; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .auto-badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; }
+        .image-preview { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .image-preview img { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 2px solid #e5e7eb; }
+        .api-filter-section { background: #eff6ff; padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #bfdbfe; }
+        @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Django Administration</h2>
+    </div>
+    
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a> &rsaquo;
+        <a href="/admin/authentication/partsinquiry/">Parts Inquiries</a> &rsaquo;
+        <a href="/admin/authentication/partsinquiry/{{ inquiry.id }}/change/">{{ inquiry.name }}</a> &rsaquo; 
+        Send Email
+    </div>
+    
+    <div class="container">
+        <h1 class="page-title">📧 Send Email Response to Parts Inquiry</h1>
+        
+        <div class="inquiry-info">
+            <h3>Inquiry Details</h3>
+            <div class="grid-2">
+                <div>
+                    <p><strong>Customer:</strong> {{ inquiry.name }}</p>
+                    <p><strong>Email:</strong> {{ inquiry.email }}</p>
+                    <p><strong>Phone:</strong> {{ inquiry.phone|default:"Not provided" }}</p>
+                </div>
+                <div>
+                    <p><strong>Vehicle:</strong> {{ inquiry.year }} {{ inquiry.manufacturer }} {{ inquiry.model }}</p>
+                    <p><strong>Part Category:</strong> {{ inquiry.part_category }}</p>
+                    <p><strong>Inquiry Date:</strong> {{ inquiry.created_at|date:"F d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <form method="post" id="emailForm">
+            {% csrf_token %}
+            
+            <div class="form-section">
+                <h3>📝 Custom Message</h3>
+                <p>Add a personalized message that will appear at the top of the email</p>
+                <div class="form-row">
+                    <textarea name="custom_message" placeholder="Example: Thank you for your inquiry! We have the following parts available for your vehicle..."></textarea>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>🔧 Parts to Include in Email</h3>
+                <p>Select parts from your inventory database - images and prices will auto-fill!</p>
+                <div id="parts-container"></div>
+                <button type="button" class="add-part-btn" onclick="addPart()">➕ Add Part</button>
+                <input type="hidden" name="part_count" id="part_count" value="0">
+            </div>
+            
+            <div class="submit-section">
+                <h3>✅ Ready to Send?</h3>
+                <p>This will send an email to <strong>{{ inquiry.email }}</strong></p>
+                <button type="submit" class="submit-btn">📧 Send Email Now</button>
+                <a href="/admin/authentication/partsinquiry/{{ inquiry.id }}/change/" class="cancel-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        let partCount = 0;
+        let manufacturers = [];
+        let models = [];
+        let categories = [];
+        let partGalleries = [];
+        
+        const API_BASE = 'https://nexxaauto.com/api';
+        const inquiryYear = {{ inquiry.year }};
+        const inquiryManufacturer = "{{ inquiry.manufacturer }}";
+        const inquiryModel = "{{ inquiry.model }}";
+        const inquiryCategory = "{{ inquiry.part_category }}";
+
+        /**
+         * Load all reference data from API
+         */
+        async function loadReferenceData() {
+            try {
+                console.log('🔄 Loading reference data from API...');
+                
+                const [mfgRes, modelsRes, catRes, galRes] = await Promise.all([
+                    fetch(`${API_BASE}/manufacturers/`),
+                    fetch(`${API_BASE}/models/`),
+                    fetch(`${API_BASE}/part-categories/`),
+                    fetch(`${API_BASE}/part-galleries/?page_size=1000`)
+                ]);
+                
+                // Parse responses
+                const mfgData = await mfgRes.json();
+                const modelsData = await modelsRes.json();
+                const catData = await catRes.json();
+                const galData = await galRes.json();
+                
+                // Handle different response structures
+                manufacturers = mfgData.data || mfgData.results || mfgData || [];
+                models = modelsData.data || modelsData.results || modelsData || [];
+                categories = catData.data || catData.results || catData || [];
+                
+                // IMPORTANT: Handle paginated response for galleries
+                if (galData.results) {
+                    partGalleries = galData.results;
+                } else if (Array.isArray(galData)) {
+                    partGalleries = galData;
+                } else {
+                    partGalleries = [];
+                }
+                
+                console.log('✅ Loaded reference data:', { 
+                    manufacturers: manufacturers.length, 
+                    models: models.length, 
+                    categories: categories.length, 
+                    galleries: partGalleries.length 
+                });
+                
+                // Debug: Log first gallery item to verify structure
+                if (partGalleries.length > 0) {
+                    console.log('📦 Sample gallery item:', partGalleries[0]);
+                } else {
+                    console.warn('⚠️ No part galleries loaded!');
+                }
+                
+            } catch (error) {
+                console.error('❌ Failed to load reference data:', error);
+                alert('Warning: Could not load parts database. Manual entry will be required.');
+            }
+        }
+
+        /**
+         * Add a new part form section
+         */
+        function addPart() {
+            partCount++;
+            const container = document.getElementById('parts-container');
+            const partDiv = document.createElement('div');
+            partDiv.className = 'part-item';
+            partDiv.id = 'part-' + partCount;
+            const idx = partCount - 1;
+            
+            partDiv.innerHTML = `
+                <button type="button" class="remove-part-btn" onclick="removePart(${partCount})">✕ Remove</button>
+                <h4>Part #${partCount}</h4>
+                
+                <div class="api-filter-section">
+                    <h5 style="margin: 0 0 10px 0; color: #1e40af; font-size: 0.95rem;">🔍 Search Your Inventory</h5>
+                    <div class="grid-3">
+                        <div class="form-row">
+                            <label>Year</label>
+                            <input type="number" id="filter_year_${idx}" value="${inquiryYear}" 
+                                   onchange="filterParts(${idx})" placeholder="e.g., 2003" min="1980" max="2030">
+                        </div>
+                        <div class="form-row">
+                            <label>Manufacturer</label>
+                            <select id="filter_manufacturer_${idx}" onchange="filterModels(${idx}); filterParts(${idx});">
+                                <option value="">Select...</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label>Model</label>
+                            <select id="filter_model_${idx}" onchange="filterParts(${idx})">
+                                <option value="">Select...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2" style="margin-top: 10px;">
+                        <div class="form-row">
+                            <label>Part Category</label>
+                            <select id="filter_category_${idx}" onchange="filterParts(${idx})">
+                                <option value="">Select...</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label>Part Name</label>
+                            <select id="filter_part_${idx}" onchange="loadPartData(${idx})">
+                                <option value="">Select part first...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="fetch-btn" id="fetch_btn_${idx}" 
+                            onclick="loadPartData(${idx})" disabled>🔄 Load Part Data</button>
+                </div>
+                
+                <div class="grid-2">
+                    <div class="form-row">
+                        <label>Part Name * <span class="auto-badge" id="badge_name_${idx}" style="display:none;">AUTO</span></label>
+                        <input type="text" name="part_name_${idx}" id="part_name_${idx}" 
+                               required placeholder="Will auto-fill from selection">
+                    </div>
+                    <div class="form-row">
+                        <label>Part Number</label>
+                        <input type="text" name="part_number_${idx}" id="part_number_${idx}" 
+                               placeholder="Will auto-fill if available">
+                    </div>
+                </div>
+                
+                <div class="grid-2">
+                    <div class="form-row">
+                        <label>Condition <span class="auto-badge" id="badge_condition_${idx}" style="display:none;">AUTO</span></label>
+                        <select name="condition_${idx}" id="condition_${idx}">
+                            <option value="New">New</option>
+                            <option value="Used - Excellent">Used - Excellent</option>
+                            <option value="Used - Good" selected>Used - Good</option>
+                            <option value="Used - Fair">Used - Fair</option>
+                            <option value="Refurbished">Refurbished</option>
+                            <option value="OEM">OEM</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label>Price (USD) <span class="auto-badge" id="badge_price_${idx}" style="display:none;">AUTO</span></label>
+                        <input type="number" name="price_${idx}" id="price_${idx}" 
+                               step="0.01" min="0" placeholder="Will auto-fill from price data">
+                    </div>
+                </div>
+                
+                <div class="grid-2">
+                    <div class="form-row">
+                        <label>Availability <span class="auto-badge" id="badge_avail_${idx}" style="display:none;">AUTO</span></label>
+                        <select name="availability_${idx}" id="availability_${idx}">
+                            <option value="In Stock" selected>In Stock</option>
+                            <option value="Limited Stock">Limited Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                            <option value="2-3 Days">2-3 Days</option>
+                            <option value="1 Week">1 Week</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label>Warranty</label>
+                        <input type="text" name="warranty_${idx}" id="warranty_${idx}" 
+                               placeholder="e.g., 90 days">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label>Product Link (URL) 🔗 <span class="auto-badge" id="badge_link_${idx}" style="display:none;">AUTO</span></label>
+                    <input type="url" name="link_${idx}" id="link_${idx}" 
+                           placeholder="https://nexxaauto.com/product/...">
+                </div>
+                
+                <div class="form-row">
+                    <label>Description</label>
+                    <textarea name="description_${idx}" id="description_${idx}" 
+                              placeholder="Will auto-fill from database"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <label>Images <span class="auto-badge" id="badge_images_${idx}" style="display:none;">AUTO</span></label>
+                    <input type="hidden" name="image_url_1_${idx}" id="image_url_1_${idx}">
+                    <input type="hidden" name="image_url_2_${idx}" id="image_url_2_${idx}">
+                    <input type="hidden" name="image_url_3_${idx}" id="image_url_3_${idx}">
+                    <div class="image-preview" id="image_preview_${idx}">
+                        <small style="color: #6b7280;">Images will appear here when you select a part from inventory</small>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(partDiv);
+            document.getElementById('part_count').value = partCount;
+            
+            // Populate dropdowns
+            populateManufacturers(idx);
+            populateCategories(idx);
+            
+            // Pre-fill inquiry data after a brief delay
+            setTimeout(() => {
+                document.getElementById(`filter_year_${idx}`).value = inquiryYear;
+                
+                const mfgSel = document.getElementById(`filter_manufacturer_${idx}`);
+                for (let i = 0; i < mfgSel.options.length; i++) {
+                    if (mfgSel.options[i].text === inquiryManufacturer) { 
+                        mfgSel.selectedIndex = i; 
+                        break; 
+                    }
+                }
+                
+                filterModels(idx);
+                
+                setTimeout(() => {
+                    const modSel = document.getElementById(`filter_model_${idx}`);
+                    for (let i = 0; i < modSel.options.length; i++) {
+                        if (modSel.options[i].text === inquiryModel) { 
+                            modSel.selectedIndex = i; 
+                            break; 
+                        }
+                    }
+                    
+                    const catSel = document.getElementById(`filter_category_${idx}`);
+                    for (let i = 0; i < catSel.options.length; i++) {
+                        if (catSel.options[i].text === inquiryCategory) { 
+                            catSel.selectedIndex = i; 
+                            break; 
+                        }
+                    }
+                    
+                    filterParts(idx);
+                }, 100);
+            }, 100);
+        }
+
+        /**
+         * Populate manufacturers dropdown
+         */
+        function populateManufacturers(idx) {
+            const sel = document.getElementById(`filter_manufacturer_${idx}`);
+            sel.innerHTML = '<option value="">Select...</option>';
+            manufacturers.forEach(m => { 
+                const o = document.createElement('option'); 
+                o.value = o.textContent = m.name; 
+                sel.appendChild(o); 
+            });
+        }
+
+        /**
+         * Populate categories dropdown
+         */
+        function populateCategories(idx) {
+            const sel = document.getElementById(`filter_category_${idx}`);
+            sel.innerHTML = '<option value="">Select...</option>';
+            categories.forEach(c => { 
+                const o = document.createElement('option'); 
+                o.value = o.textContent = c.name; 
+                sel.appendChild(o); 
+            });
+        }
+
+        /**
+         * Filter models based on selected manufacturer
+         */
+        function filterModels(idx) {
+            const mfgSel = document.getElementById(`filter_manufacturer_${idx}`);
+            const modSel = document.getElementById(`filter_model_${idx}`);
+            modSel.innerHTML = '<option value="">Select...</option>';
+            
+            if (!mfgSel.value) return;
+            
+            models.filter(m => m.manufacturer_name === mfgSel.value).forEach(m => {
+                const o = document.createElement('option'); 
+                o.value = o.textContent = m.name; 
+                modSel.appendChild(o);
+            });
+        }
+
+        /**
+         * Filter parts based on year, manufacturer, model, and category
+         */
+        function filterParts(idx) {
+            const y = document.getElementById(`filter_year_${idx}`).value;
+            const mfg = document.getElementById(`filter_manufacturer_${idx}`).value;
+            const mod = document.getElementById(`filter_model_${idx}`).value;
+            const cat = document.getElementById(`filter_category_${idx}`).value;
+            const partSel = document.getElementById(`filter_part_${idx}`);
+            const btn = document.getElementById(`fetch_btn_${idx}`);
+            
+            partSel.innerHTML = '<option value="">Select...</option>';
+            btn.disabled = true;
+            
+            if (!y || !mfg || !mod || !cat) { 
+                partSel.innerHTML = '<option value="">Fill year/make/model/category first...</option>'; 
+                return; 
+            }
+            
+            const matches = partGalleries.filter(p => 
+                p.year == y && 
+                p.manufacturer_name === mfg && 
+                p.model_name === mod && 
+                p.part_category_name === cat
+            );
+            
+            console.log(`🔍 Filtering parts for: ${y} ${mfg} ${mod} ${cat} - Found ${matches.length} matches`);
+            
+            if (matches.length === 0) { 
+                partSel.innerHTML = '<option value="">No parts found in inventory</option>'; 
+                return; 
+            }
+            
+            matches.forEach(p => { 
+                const o = document.createElement('option'); 
+                o.value = p.id; 
+                o.textContent = p.part_name; 
+                o.dataset.partData = JSON.stringify(p); 
+                partSel.appendChild(o); 
+            });
+            
+            btn.disabled = false;
+        }
+
+        /**
+         * Load part data when a part is selected
+         */
+        function loadPartData(idx) {
+            const partSel = document.getElementById(`filter_part_${idx}`);
+            const opt = partSel.options[partSel.selectedIndex];
+            
+            if (!opt || !opt.dataset.partData) { 
+                alert('Please select a part first'); 
+                return; 
+            }
+            
+            const d = JSON.parse(opt.dataset.partData);
+            console.log('✅ Loading part data:', d);
+            
+            // Part Name
+            document.getElementById(`part_name_${idx}`).value = d.part_name;
+            document.getElementById(`badge_name_${idx}`).style.display = 'inline';
+            
+            // Part Number
+            if (d.part_number) {
+                document.getElementById(`part_number_${idx}`).value = d.part_number;
+            }
+            
+            // Description
+            if (d.description) {
+                document.getElementById(`description_${idx}`).value = d.description;
+            }
+            
+            // Product URL
+            if (d.slug && d.id) {
+                const url = `https://nexxaauto.com/product/${d.slug}/${d.id}`;
+                document.getElementById(`link_${idx}`).value = url;
+                document.getElementById(`badge_link_${idx}`).style.display = 'inline';
+                console.log('🔗 Generated URL:', url);
+            }
+            
+            // Price and Condition
+            if (d.prices && d.prices.length > 0) {
+                const p = d.prices[0];
+                document.getElementById(`price_${idx}`).value = p.price;
+                document.getElementById(`badge_price_${idx}`).style.display = 'inline';
+                
+                const condMap = { 
+                    'new': 'New', 
+                    'used_excellent': 'Used - Excellent', 
+                    'used_good': 'Used - Good', 
+                    'used_fair': 'Used - Fair', 
+                    'refurbished': 'Refurbished', 
+                    'oem': 'OEM' 
+                };
+                document.getElementById(`condition_${idx}`).value = condMap[p.condition] || 'Used - Good';
+                document.getElementById(`badge_condition_${idx}`).style.display = 'inline';
+                
+                document.getElementById(`availability_${idx}`).value = p.in_stock ? 'In Stock' : 'Out of Stock';
+                document.getElementById(`badge_avail_${idx}`).style.display = 'inline';
+            }
+            
+            // Images
+            const imgPrev = document.getElementById(`image_preview_${idx}`);
+            imgPrev.innerHTML = '';
+            
+            if (d.primary_image && d.primary_image.url) {
+                document.getElementById(`image_url_1_${idx}`).value = d.primary_image.url;
+                const img = document.createElement('img');
+                img.src = d.primary_image.url;
+                img.alt = d.part_name;
+                imgPrev.appendChild(img);
+                document.getElementById(`badge_images_${idx}`).style.display = 'inline';
+            } else {
+                imgPrev.innerHTML = '<small style="color: #dc2626;">No images available for this part</small>';
+            }
+            
+            alert(`✅ Loaded: ${d.part_name}\n💰 Price: $${d.prices[0]?.price || 'N/A'}\n📸 Images: ${d.primary_image ? '1' : '0'}\n🔗 URL: Generated automatically`);
+        }
+
+        /**
+         * Remove a part form section
+         */
+        function removePart(id) {
+            const el = document.getElementById('part-' + id);
+            if (el && document.querySelectorAll('.part-item').length > 1) {
+                el.remove();
+            } else {
+                alert('You must have at least one part in the email!');
+            }
+        }
+
+        /**
+         * Initialize on page load
+         */
+        window.addEventListener('DOMContentLoaded', async function() {
+            await loadReferenceData();
+            addPart();
+        });
+
+        /**
+         * Form validation on submit
+         */
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            if (document.querySelectorAll('.part-item').length === 0) { 
+                e.preventDefault(); 
+                alert('Please add at least one part to the email'); 
+                return false; 
+            }
+            
+            let hasValid = false;
+            for (let i = 0; i < partCount; i++) {
+                const pn = document.querySelector(`input[name="part_name_${i}"]`);
+                if (pn && pn.value.trim() !== '') { 
+                    hasValid = true; 
+                    break; 
+                }
+            }
+            
+            if (!hasValid) { 
+                e.preventDefault(); 
+                alert('Please fill in at least the Part Name for one part'); 
+                return false; 
+            }
+            
+            return true;
+        });
+    </script>
+</body>
+</html>

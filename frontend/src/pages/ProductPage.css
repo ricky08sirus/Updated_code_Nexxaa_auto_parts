@@ -1,0 +1,768 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+.nexxa-logo img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+.nexxa-header {
+  background: linear-gradient(45deg, rgb(0, 0, 0), rgb(22, 118, 135));
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nexxa-logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nexxa-heart-btn {
+  background: darkgrey;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+.nexxa-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.nexxa-logo-img {
+  height: 55px;
+  width: auto;
+  object-fit: contain;
+}
+.nexxa-heart-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nexxa-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.nexxa-product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.nexxa-image-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nexxa-thumbnails {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #c41e3a #f0f0f0;
+}
+
+.nexxa-thumbnails::-webkit-scrollbar {
+  height: 6px;
+}
+
+.nexxa-thumbnails::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 3px;
+}
+
+.nexxa-thumbnails::-webkit-scrollbar-thumb {
+  background: #c41e3a;
+  border-radius: 3px;
+}
+
+.nexxa-thumbnails::-webkit-scrollbar-thumb:hover {
+  background: #a01828;
+}
+
+.nexxa-thumbnail {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.nexxa-thumbnail.active {
+  border-color: #c41e3a;
+  box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.2);
+}
+
+.nexxa-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nexxa-main-image-container {
+  position: relative;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.nexxa-main-image {
+  /* aspect-ratio: 1; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fafafa;
+  padding: 16px;
+}
+
+.nexxa-main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.nexxa-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.nexxa-nav-btn:hover {
+  background-color: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nexxa-nav-btn.left {
+  left: 16px;
+}
+
+.nexxa-nav-btn.right {
+  right: 16px;
+}
+
+.nexxa-image-counter {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nexxa-share-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+  margin-top: -4px;
+}
+
+.nexxa-share-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.nexxa-details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nexxa-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.3;
+}
+
+.nexxa-description-box {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #c41e3a;
+  border-radius: 6px;
+  margin: -8px 0 8px 0;
+}
+
+.nexxa-description-text {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.nexxa-price {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.nexxa-info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.nexxa-info-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  min-width: 120px;
+}
+
+.nexxa-info-value {
+  color: #333;
+}
+
+.nexxa-condition-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nexxa-quantity-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nexxa-quantity-controls {
+  display: flex;
+  align-items: center;
+  border: 2px solid #c41e3a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.nexxa-quantity-btn {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border: none;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #c41e3a;
+}
+
+.nexxa-quantity-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.nexxa-quantity-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.nexxa-quantity-input {
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  border: none;
+  border-left: 2px solid #c41e3a;
+  border-right: 2px solid #c41e3a;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #fff;
+  width: 100%;
+  padding: 4px 2px;
+  outline: none;
+}
+
+.nexxa-buy-btn {
+  width: 100%;
+  padding: 16px;
+  background:linear-gradient(45deg, #971515, #4e978d);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nexxa-buy-btn:hover {
+  background:linear-gradient(45deg, #000000, #4e978d);
+}
+
+.nexxa-watchlist-btn {
+  width: 100%;
+  padding: 16px;
+  background-color: #fff;
+  color: #333;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: border-color 0.2s;
+}
+
+.nexxa-watchlist-btn:hover {
+  border-color: #c41e3a;
+}
+
+.nexxa-info-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #e3f2fd;
+  border: 1px solid #90caf9;
+  border-radius: 8px;
+}
+
+.nexxa-info-card-text {
+  color: #0d47a1;
+  font-weight: 600;
+}
+
+.nexxa-section {
+  padding-top: 24px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  gap: 32px;
+}
+
+.nexxa-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+
+.nexxa-section-content {
+  color: #555;
+  line-height: 1.6;
+}
+
+.nexxa-link {
+  color: #1976d2;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nexxa-link:hover {
+  text-decoration: underline;
+}
+
+.nexxa-payment-icons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.nexxa-payment-icon {
+  height: 32px;
+}
+
+.nexxa-alternative-section {
+  margin-top: 48px;
+}
+
+.nexxa-alternative-header {
+  /* display: flex; */
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.nexxa-alternative-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.nexxa-see-all {
+  color: #1976d2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nexxa-see-all:hover {
+  text-decoration: underline;
+}
+
+.nexxa-alternative-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding-bottom: 16px;
+}
+
+.nexxa-alternative-card {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #e0e0e0;
+}
+
+.nexxa-alternative-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.nexxa-alternative-image {
+  aspect-ratio: 1;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.nexxa-alternative-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nexxa-alternative-body {
+  padding: 16px;
+}
+
+.nexxa-alternative-year {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #ffebee;
+  color: #c41e3a;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.nexxa-alternative-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.nexxa-alternative-condition {
+  font-size: 14px;
+  color: #2e7d32;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.nexxa-alternative-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #c41e3a;
+  margin-bottom: 4px;
+}
+
+.nexxa-alternative-shipping {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.nexxa-alternative-seller {
+  font-size: 12px;
+  color: #999;
+}
+
+.nexxa-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nexxa-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e0e0e0;
+  border-top-color: #c41e3a;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.nexxa-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.nexxa-error-card {
+  background-color: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+}
+
+.nexxa-error-title {
+  font-size: 20px;
+  color: #c41e3a;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.nexxa-error-message {
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .nexxa-product-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nexxa-alternative-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .nexxa-alternative-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal Content Box */
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+/* Modal Close Button */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 32px;
+  color: #666;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #f5f5f5;
+  color: #333;
+  transform: rotate(90deg);
+}
+
+/* Modal Title */
+.modal-title {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  padding-right: 40px;
+  border-bottom: 2px solid #1976d2;
+  padding-bottom: 12px;
+}
+
+/* Modal Body */
+.modal-body {
+  color: #444;
+  line-height: 1.6;
+}
+
+.modal-body h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1976d2;
+  margin: 20px 0 12px 0;
+}
+
+.modal-body h3:first-child {
+  margin-top: 0;
+}
+
+.modal-body p {
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+.modal-body strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.modal-body ul,
+.modal-body ol {
+  margin: 10px 0;
+  padding-left: 25px;
+}
+
+.modal-body li {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+/* Scrollbar Styling for Modal */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Make link clickable */
+.nexxa-link {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+    max-height: 85vh;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .modal-body h3 {
+    font-size: 16px;
+  }
+
+  .modal-body p,
+  .modal-body li {
+    font-size: 14px;
+  }
+}

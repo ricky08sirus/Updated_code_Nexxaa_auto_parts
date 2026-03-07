@@ -1,0 +1,83 @@
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.warranty-page {
+  padding: 60px 52px;
+  background: #fff;
+  color: #111;
+  font-family: Arial, sans-serif;
+}
+
+.warranty-wrapper {
+  /* max-width: 900px; */
+  padding: 26px 93px;
+  margin: auto;
+  padding: 20px;
+}
+
+.warranty-wrapper h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: #c41e3a;
+    font-weight: 500;
+    font-weight: bold;
+    /* text-shadow: 1px 2px 5px black; */
+}
+
+.warranty-section {
+  margin-bottom: 30px;
+}
+
+.warranty-section h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.warranty-section p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: black;
+}
+
+/* LINKS */
+.warranty-section a {
+  color: red;
+  text-decoration: underline;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .warranty-wrapper h1 {
+    font-size: 30px;
+  }
+
+  .warranty-section h2 {
+    font-size: 20px;
+  }
+
+  .warranty-section p {
+    font-size: 15px;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  .warranty-wrapper h1 {
+    font-size: 26px;
+  }
+
+  .warranty-section h2 {
+    font-size: 18px;
+  }
+
+  .warranty-section p {
+    font-size: 14px;
+  }
+}

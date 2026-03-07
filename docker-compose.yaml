@@ -1,0 +1,103 @@
+version: "3.9"
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: nexxa_db
+      MYSQL_USER: nexxa_user
+      MYSQL_PASSWORD: "6394"
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 40s
+    networks:
+      - nexxa-network
+
+  # Backend (Django)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: django_backend
+    command: >
+      sh -c "
+      echo 'Waiting for MySQL to be ready...' &&
+      sleep 15 &&
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      python manage.py populate_sample_data &&
+      gunicorn nexxa_backend.wsgi:application --bind 0.0.0.0:8000 --workers 3 --reload
+      "
+    volumes:
+      - ./backend:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    env_file:
+      - ./backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8000"
+    networks:
+      - nexxa-network
+    restart: on-failure
+
+  # Frontend (React)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: https://nexxaauto.com/api
+    container_name: react_frontend
+    depends_on:
+      - backend
+    expose:
+      - "80"
+    networks:
+      - nexxa-network
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx_proxy
+    ports:
+      - "7070:80"
+      - "7444:443"
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /etc/ssl/certs:/etc/ssl/certs:ro
+      - /etc/ssl/safalogics:/etc/ssl/safalogics:ro
+      - /etc/ssl/takeano:/etc/ssl/takeano:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - nexxa-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  static_volume:
+  media_volume:
+
+networks:
+  nexxa-network:
+    driver: bridge
